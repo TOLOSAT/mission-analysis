@@ -1,0 +1,44 @@
+# Input file for Phasing
+# Lines starting with '#' are silently ignored
+
+# Object definition
+objectName: "Metop-A"
+objectId:   "2006-044A"
+
+# Orbit definition
+orbit:
+  date: "2011-02-25T00:00:00.000"
+  frameName: "MOD/1996"
+
+# Earth phasing parameters
+phasingOrbitsNumber: 412
+phasingDaysNumer: 29
+
+# Sun synchronous parameters (angles in degrees)
+referenceLatitude: 0.0
+referenceAscending: false
+meanSolarTime: "09:30:00"
+
+# Dynamical model
+gravity:
+  degree: 10
+  order: 10
+
+# Eccentricity fitting parameter
+maxMDaily: 6
+
+# ground track grid (angles in degrees)
+grids:
+  - latitude: -60.0
+    ascending: true
+  - latitude: -30.0
+    ascending: true
+  - latitude: 0.0
+    ascending: true
+  - latitude: 30.0
+    ascending: true
+  - latitude: 60.0
+    ascending: true
+
+# step of OEM in seconds (not generated if ≤ 0, beware that some frame names are not supported by CCSDS)
+oemStep: -1

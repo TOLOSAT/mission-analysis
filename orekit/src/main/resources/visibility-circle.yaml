@@ -1,0 +1,12 @@
+# Input file for VisibilityCircle
+# Lines starting with '#' are silently ignored
+
+# Ground station (name and [latitude (°), longitue (°), altitude (m)])
+station:
+  name: "Potsdam"
+  coordinates: [52.3800, 3.0649, 133.745]
+  
+# Visibility circle definition (angle in degrees and distance in meters)
+minElevation: 5.0
+spacecraftAltitude: 800000.0
+pointsNumber: 200

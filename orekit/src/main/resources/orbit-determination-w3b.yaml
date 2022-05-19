@@ -1,0 +1,221 @@
+# Input file for OrbitDetermination
+
+# This file must contain one orbit defined as keplerian, equinoctial, circular
+# or cartesian.
+
+# Lines starting with '#' are silently ignored
+
+# All dates are treated in UTC timescale.
+# The inertial frame for orbit definition and propagation is EME2000.
+# Physical data are read from the src/tutorial/resources/tutorial-orekit-data
+# directory.
+
+# Estimated parameters (clock offsets, atmospheric parameters, etc.)
+# are set into an array given by [initialValue, minValue, maxValue]
+
+# Orbit definition (position in meters, velocity in meter per seconds, angles in degrees, date in ISO 8601)
+orbit:
+  date: "2010-11-02T02:56:15.690"
+  frameName: "EME2000"
+  orbitType:
+    name: "CARTESIAN"
+    cartesian: 
+      x: -40517522.9
+      y: -10003079.9
+      z: 166792.8
+      vx: 762.559
+      vy: -1474.468
+      vz: 55.430
+
+# Spacecraft definition (mass in kilogrammes)
+spacecraft:
+  # On-board antenna phase center in spacecraft frame (m) [X, Y, Z]
+  antennaOffset: [0.0, 0.0, 0.0]
+  # Estimated On-board clock offset from com18836.sp3 (s)
+  clockOffset:
+    values: [0.0, -0.01, 0.01]
+    isEstimated: false
+  bias:
+    values: [5969.0, -50000, 50000]
+    isEstimated: false
+
+# Propagator definition
+propagator:
+  # Numerical integrator (min step (s), max step (s) and position error (m))
+  integrator:
+    minStep: 0.001
+    maxStep: 300
+    positionError: 10.0
+  # Force models used by the propagator (only the ones used)
+  forceModels:
+    # Central body gravity
+    gravity:
+      degree: 20
+      order: 20
+    # 3rd body attraction
+    thirdBody:
+      - name: "Sun"
+        withSolidTides: false
+      - name: "Moon"
+        withSolidTides: false
+    # Drag
+    drag:
+      cd:
+        values: [2.0, -10.0, 10.0]
+        isEstimated: true
+      area: 13.12
+    # Solar radiation pressure
+    solarRadiationPressure:
+      # Estimated solar radiation coefficient
+      cr:
+        values: [2.0, -10.0, 10.0]
+        isEstimated: false
+      area: 13.12
+    # Polynomial acceleration
+    polynomialAcceleration:
+      - name: "leak-X"
+        directions: [1.0, 0.0, 0.0]
+        coefficients: [0.0, 0.0]
+        isEstimated: true
+      - name: "leak-Y"
+        directions: [0.0, 1.0, 0.0]
+        coefficients: [0.0, 0.0]
+        isEstimated: true
+      - name: "leak-Z"
+        directions: [0.0, 0.0, 1.0]
+        coefficients: [0.0, 0.0]
+        isEstimated: true
+
+# Body definition (default is a WGS-84 ellipsoid with IERS-2010 conventions and simple EOP frame)
+body:
+  iersConventionYear: 2010
+  frameName: "CIO/2010-based ITRF simple EOP"
+  equatorialRadius: 6378137.0
+  inverseFlattening: 298.257223563
+
+# Measurements definition (azEl data (i.e. sigma and azElBias) are in degrees)
+measurements:
+  measurementFiles: ["W3B.aer"]
+  range:
+    sigma: 20.0
+    weight: 1.0
+  azEl:
+    sigma: 0.02
+    weight: 1.0
+    withRefractionCorrection: true
+  outlierRejectionMultiplier: 6
+  outlierRejectionStartingIteration: 2
+  withStationPositionEstimated: false
+  # Troposphere
+  # If estimated_model is true, tropospheric delay is computed by using an estimated model
+  # otherwise, it is computed according to the empirical Saastamoinen model.
+  troposphere:
+    isEstimatedModel: false
+    zenithDelay:
+      values: [0.0, 0.0, 0.0]
+      isEstimated: false
+    # Niell Mapping Function (NMF) or Global Mapping Function (GMF)
+    mappingFunction: ""
+    withWeatherModel: false
+    correctionDate: ""
+  # correction of ground stations displacements if remove_permanent_deformation is true,
+  # the station coordinates are considered *mean tide* and already include the permanent
+  # deformation, hence it should be removed from the displacement to avoid considering it
+  # twice if false, the station coordinates are considered *conventional tide free*
+  # so the permanent deformation must be included in the displacement
+  stationDisplacement:
+    withTidalCorrection: false
+    removePermanentDeformation: false
+    withOceanLoadingCorrection: false
+  # Stations
+  stations:
+    - name: "Fucino"
+      coordinates: [41.9774962512, 13.6004229863, 671.3542005921]
+      rangeBias:
+        values: [13468.956, -50000.0, +50000.0]
+        isEstimated: true
+      azElBias:
+        values: [0.01, -0.50, 0.50]
+        isEstimated: true
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false
+    - name: "Kumsan"
+      coordinates: [36.1247623774, 127.4871671976, 180.5488660489]
+      rangeBias:
+        values: [13527.381, -50000.0, +50000.0]
+        isEstimated: true
+      azElBias:
+        values: [0.01, -0.50, 0.50]
+        isEstimated: true
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false 
+    - name: "Uralla"
+      coordinates: [-30.632947613, 151.5650529068, 1163.2667864364]
+      rangeBias:
+        values: [13314.655, -50000.0, +50000.0]
+        isEstimated: true
+      azElBias:
+        values: [0.01, -0.50, 0.50]
+        isEstimated: true
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false
+    - name: "Pretoria"
+      coordinates: [-25.8854896226, 27.7074493158, 1566.6334663324]
+      rangeBias:
+        values: [13370.193, -50000.0, +50000.0]
+        isEstimated: true
+      azElBias:
+        values: [0.01, -0.50, 0.50]
+        isEstimated: true
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false
+    - name: "CastleRock"
+      coordinates: [39.2764477379, -104.8063531025, 2095.3769797949]
+      rangeBias:
+        values: [11473.623, -50000.0, +50000.0]
+        isEstimated: true
+      azElBias:
+        values: [0.01, -0.50, 0.50]
+        isEstimated: true
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false
+
+# Estimator definition
+estimator:
+  # normalized parameters p are computed from physical parameters x as p = (x - x0) / sx
+  # where x0 is the reference value for physical parameter x and sx is the associated
+  # scaling factor for orbital parameters normalization (m)
+  orbitalParametersPositionScale: 10.0
+  # Levenberg-Marquardt or a Gauss-Newton
+  optimizationEngine:
+    # levenbergMarquardt or gaussNewton
+    levenbergMarquardt:
+      initialStep: 1.0e6
+  maxIterations: 20
+  maxEvaluations: 25
+  # convergence is reached when max|p(k+1) - p(k)| < ε for each normalized estimated
+  # parameters p and iterations k and k+1 so the ε threshold
+  # Normalized values are computed as (x - x0) / sx, so convergence is reached when
+  # the following condition holds for all estimated parameters: |x[i+1] - x[i]| <= ε * sx
+  # So the convergence threshold specified here can be considered as a multiplication
+  # factor applied to scale. Since for all parameters the scale is often small,
+  # then the threshold should not be too small. A value  of 10⁻³ is often quite accurate.
+  convergenceThreshold: 1.0e-3
+
+# base name of the output files (log and residuals), no files created if empty
+outputBaseName: "orbit-determination"

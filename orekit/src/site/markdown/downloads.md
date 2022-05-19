@@ -1,0 +1,75 @@
+<!--- Copyright 2002-2021 CS GROUP
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+# Downloads
+
+## Development Library version
+
+The development version of the Orekit Tutorials library is always available to
+download from our version control system. We use [ Git](http://git-scm.com/)
+as our SCM. The anonymous read access to our Git repository  allows users who
+need the latest features and the latest bug fixes to get them even before an
+official release.
+
+The Git repository can be cloned using the following command, which can
+be easily adapted if you are using one of the numerous Git graphical
+user interface available or if Git is supported by you integrated
+development environment:
+
+    git clone -b develop https://gitlab.orekit.org:orekit/orekit-tutorials.git
+
+## Released Library versions
+
+Orekit Tutorials is provided as a source package only.
+At that point, releasing a jar version isn't deemed necessary.
+
+Released version are available on the [Gitlab forge releases page](https://gitlab.orekit.org/orekit/orekit-tutorials/-/releases)
+
+## Data
+
+For convenience, a zip archive containing some configuration data is available
+for download. Similar files can be custom made by users with updated data.
+Configuring data loading is explained in the configuration page. For a start,
+the simplest configuration is to download the
+[orekit-data-master.zip](https://gitlab.orekit.org/orekit/orekit-data/-/archive/master/orekit-data-master.zip)
+file from the forge, to unzip it anywhere you want, rename the `orekit-data-master` folder that will be created
+into `orekit-data` and add the following lines at the start of your program:
+
+    File orekitData = new File("/path/to/the/folder/orekit-data");
+    DataProvidersManager manager = DataProvidersManager.getInstance();
+    manager.addProvider(new DirectoryCrawler(orekitData));
+
+This file contains the following data sets. Note that the data is updated only
+from time to time, so users must check by themselves they cover the time range
+needed for their computation.
+
+  * leap seconds data,
+
+  * IERS Earth orientation parameters from 1973 (both IAU-1980 and IAU-2000),
+
+  * Marshall Solar Activity Future Estimation from 1999,
+
+  * JPL DE 430 planetary ephemerides from 1990 to 2069,
+
+  * Eigen 06S gravity field,
+
+  * FES 2004 ocean tides model.
+
+There are no guarantees that this file will be available indefinitely or that its
+content will be updated. It should be considered as a simple configuration example.
+Users are encouraged to set up their own configuration data.
+
+The file is available by following the
+[download](https://gitlab.orekit.org/orekit/orekit-data/-/archive/master/orekit-data-master.zip)
+link in the project dedicated to Orekit Data in the forge.

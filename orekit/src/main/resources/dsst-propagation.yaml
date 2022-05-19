@@ -1,0 +1,73 @@
+# Input file for DSSTPropagation
+# Lines starting with '#' are silently ignored
+# This file must contain one orbit defined as keplerian, equinoctial, circular or cartesian.
+
+# All dates are treated in UTC timescale.
+# The inertial frame for orbit definition and propagation is EME2000.
+# Physical data are read from the src/tutorial/resources/tutorial-orekit-data
+# directory.
+
+# Orbit definition (position in meters, velocity in meter per seconds, angles in degrees, date in ISO 8601)
+orbit:
+  date: "2011-12-12T11:57:20.000"
+  frameName: "EME2000"
+  orbitType:
+    name: "KEPLERIAN"
+    keplerian: 
+      a: 7204535.848109436
+      e: 0.0012402238462686
+      i: 98.74341600466740
+      pa: 111.1990175076630
+      raan: 43.32990110790340
+      v: 68.66852509725620
+      positionAngle: "MEAN"
+
+# Body definition
+body:
+  frameName: "CIO/2010-based ITRF simple EOP"
+
+# Propagator definition
+propagator:
+  # Numerical integrator (min step (s), max step (s) and position error (m))
+  integrator:
+    minStep: 6000.0
+    maxStep: 86400.0
+    positionError: 1.0
+  # Force models used by the propagator (only the ones used !!!)
+  forceModels:
+    # Central body gravity
+    gravity:
+      degree: 6
+      order: 6
+
+# Do we consider initial orbital elements as osculating? (true/false)
+initialOrbitIsOsculating: false
+
+# Do we output osculating orbital elements? (true/false)
+outputOrbitIsOsculating: false
+
+# Simulation parameters
+# Duration (days)
+durationInDays: 365.0
+# Time step between printed elements (seconds)
+outputStep: 86400.0
+
+# Short period coefficients to output (String array of coefficients names, or "none", or "all")
+# in order to get the list of available coefficients names, one should perform a first
+# run with a value set to all and then look at the output file header. Note that the
+# (a), (h), (k), (p), (q) and (L) parts do not belong to the coefficient names, they
+# describe the 6 columns that correspond to one coefficient.
+# Beware that the list is huge ...
+outputShortPeriodCoefficients:
+  - "none"
+
+# interpolation grid specification
+# only one of the two following options can be set: either fixed number
+# of points or maximum gap. If both options are specified, an error
+# will be generated.
+# if neither option is set, a fixed number of 3 points will be used
+maxTimeGapBetweenInterpolationPoints: 86400.0
+#fixedNumberOfInterpolationPoints: 3
+
+# Do we want to compare the DSST with the numerical propagator ?
+numericalComparison: false

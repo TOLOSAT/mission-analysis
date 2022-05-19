@@ -1,0 +1,529 @@
+# Measurement generation input file
+
+# Lines starting with '#' are silently ignored
+
+# Estimated parameters (clock offsets, atmospheric parameters, etc.)
+# are given by [initialValue, minValue, maxValue]
+
+# WARNING this file must have the same name as "measurementGenerationInputFile"
+# key in performance-testing.yaml file.
+
+# Measurement generation setting
+startDate: "2016-02-13T00:00:00.000Z"
+endDate: "2016-02-14T23:59:59.999Z"
+step: 240
+
+# Orbit definition (position in meters, velocity in meter per seconds, angles in degrees, date in ISO 8601)
+orbit:
+  date: "2016-02-13T02:31:30.000Z"
+  frameName: "EME2000"
+  orbitType:
+    name: "CARTESIAN"
+    cartesian: 
+      x: -2747606.681
+      y: 22572091.306
+      z: 13522761.402
+      vx: -2729.515
+      vy: 1142.663
+      vz: -2523.906
+
+# Spacecraft definition (mass in kilogrammes)
+spacecraft:
+  mass: 1630.0
+  id: "SatelliteID"
+  # Modes: NADIR_POINTING_WITH_YAW_COMPENSATION, CENTER_POINTING_WITH_YAW_STEERING,
+  #        LOF_ALIGNED_LVLH, LOF_ALIGNED_QSW, LOF_ALIGNED_TNW, LOF_ALIGNED_VNC, LOF_ALIGNED_VVLH
+  attitudeMode: "CENTER_POINTING_WITH_YAW_STEERING"
+  # On-board antenna phase center in spacecraft frame (m) [X, Y, Z]
+  antennaOffset: [-0.00040, 0.00500, 0.82240]
+  # Estimated On-board clock offset from com18836.sp3 (s)
+  clockOffset:
+    values: [469.873238e-6, -0.01, 0.01]
+    isEstimated: false
+  bias:
+    values: [0.0, -1.0e6, 1.0e6]
+    isEstimated: false
+
+# Propagator definition
+propagator:
+  # Numerical integrator (min step (s), max step (s) and position error (m))
+  integrator:
+    minStep: 0.001
+    maxStep: 300
+    fixedStep: 100
+    positionError: 0.01
+  # Force models used by the propagator (only the ones used !!!)
+  forceModels:
+    # Central body gravity
+    gravity:
+      degree: 20
+      order: 20
+    # 3rd body attraction
+    thirdBody:
+      - name: "Sun"
+        withSolidTides: true
+      - name: "Moon"
+        withSolidTides: true
+    # Solar radiation pressure
+    solarRadiationPressure:
+      # Estimated solar radiation coefficient
+      cr:
+        values: [1.8, -10.0, 10.0]
+        isEstimated: false
+      area: 50.0
+    # Post-Newtonian correction force due to general relativity ("isUsed: true" to not have an empty value)
+    relativity:
+      isUsed: true
+
+# Body definition (default is a WGS-84 ellipsoid with IERS-2010 conventions and simple EOP frame)
+body:
+  iersConventionYear: 2010
+  frameName: "CIO/2010-based ITRF simple EOP"
+  equatorialRadius: 6378137.0
+  inverseFlattening: 298.257223563
+
+# Measurements definition
+measurements:
+  range:
+    sigma: 1.0
+    weight: 1.0
+  outlierRejectionMultiplier: 6
+  outlierRejectionStartingIteration: 2
+  withStationPositionEstimated: false
+  # Troposphere
+  # If estimated_model is true, tropospheric delay is computed by using an estimated model
+  # otherwise, it is computed according to the empirical Saastamoinen model.
+  troposphere:
+    isEstimatedModel: true
+    zenithDelay:
+      values: [2.32, 0.0, 10.0]
+      isEstimated: false
+    # Niell Mapping Function (NMF) or Global Mapping Function (GMF)
+    mappingFunction: "NMF"
+    withWeatherModel: true
+
+  # Ionosphere
+  # If estimated_model is true, ionospheric delay is computed by using an estimated model
+  # otherwise, it is computed according to the empirical Klobuchar model.
+  ionosphere:
+    isEstimatedModel: true
+    vtec:
+      values: [9.47, 0.0, 1.0e3]
+      isEstimated: false
+    ionosphericLayer: 350e3
+  # Shapiro correction on range measurements
+  withShapiro: true
+  # correction of ground stations displacements if remove_permanent_deformation is true,
+  # the station coordinates are considered *mean tide* and already include the permanent
+  # deformation, hence it should be removed from the displacement to avoid considering it
+  # twice if false, the station coordinates are considered *conventional tide free*
+  # so the permanent deformation must be included in the displacement
+  stationDisplacement:
+    withTidalCorrection: false
+    removePermanentDeformation: false
+    withOceanLoadingCorrection: false
+  # Stations
+  stations:
+    - name: "Toulouse"
+      coordinates: [43.5606944, 1.4808722, 207.2]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-3.8e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Hailsham"
+      coordinates: [50.8673000, 0.3362000, 76.5]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [4.2e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Gavle"
+      coordinates: [60.5950528, 17.2584389, 74.3]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-1.7e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Ganovce"
+      coordinates: [49.0347139, 20.3229361, 746.0]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [9.3e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Ankara"
+      coordinates: [39.8875111, 32.7585778, 974.8]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [7.4e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Tromsoe"
+      coordinates: [69.6627139, 18.9396306, 138.0]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-5.7e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Kiruna"
+      coordinates: [67.8775722, 21.0602333, 498.0]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [1.4e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Libreville"
+      coordinates: [0.3539077, 9.6721263, 31.496]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-9.7e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Lusaka"
+      coordinates: [-15.4255408, 28.3110124, 1324.9144]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [5.6e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Cape-Town"
+      coordinates: [-33.9514333, 18.4685500, 83.596]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [4.3e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Ambalavao"
+      coordinates: [-21.9063000, 46.7932722, 1163.3]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-1.9e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Seychelles"
+      coordinates: [-4.6787318, 55.5306305, -37.085]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [7.2e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Bangalore"
+      coordinates: [13.0211659, 77.5703759, 843.7145]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [6.4e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Kitab"
+      coordinates: [39.1347667, 66.8854500, 622.6]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-2.5e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Ekaterinburg"
+      coordinates: [56.8382750, 60.6148583, 279.960]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [1.8e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Urumqi"
+      coordinates: [43.8079500, 87.6006722, 858.9]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [7.2e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Ulaanbataar"
+      coordinates: [47.8650667, 107.0523306, 1575.7]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-5.7e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Jiufeng"
+      coordinates: [30.5155654, 114.4910189, 71.324]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [9.2e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Singapore"
+      coordinates: [1.3429811, 103.6794383, 92.54]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [5.7e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Cibinong"
+      coordinates: [-6.4900000, 106.8500000, 158.18]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-7.4e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Gadong"
+      coordinates: [4.9711778, 114.9523611, 90.669]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-5.3e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Ishioka"
+      coordinates: [36.2088333, 140.2189556, 155.83]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-6.8e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Perth"
+      coordinates: [-31.8019000, 115.8852000, 12.9]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [3.7e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Sydney"
+      coordinates: [-33.7808845, 151.1503769, 85.6837]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [5.9e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Wellington"
+      coordinates: [-41.3234564, 174.8058931, 26.06]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-3.1e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Haleakala"
+      coordinates: [20.7075056, -156.2561944, 3049.00]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-6.6e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Rikitea"
+      coordinates: [-23.1303547, -134.9648236, 80.660]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [4.2e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Fairbanks"
+      coordinates: [65.6390501, -147.8428653, 319.3891]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [2.9e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Yellowknife"
+      coordinates: [62.4813211, -114.4808464, 181.008]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [8.6e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Calgary"
+      coordinates: [51.0799750, -114.1338500, 1118.8]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [6.5e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Pickle-Lake"
+      coordinates: [51.4798083, -90.1619750, 315.10]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-2.9e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Ottawa"
+      coordinates: [45.4542000, -75.6238000, 82.50]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [5.6e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Pasadena"
+      coordinates: [34.2048194, -118.1732250, 423.9843]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [2.3e-7, -0.001, 0.001]
+            isEstimated: false
+    - name: "Billings"
+      coordinates: [36.6041833, -97.4848222, 290.2]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-1.5e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Washington"
+      coordinates: [38.9205661, -77.0662766, 58.924]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-7.1e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Kourou"
+      coordinates: [5.0984709, -52.6397502, 107.248]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-3.3e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Belem"
+      coordinates: [-1.4087944, -48.4625472, 9.08]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [3.7e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Rio-Grande"
+      coordinates: [-53.7858385, -67.7515279, 32.364]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [7.4e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "Espargos"
+      coordinates: [16.7320620, -22.9349330, 94.089]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-4.5e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "Santa-Cruz"
+      coordinates: [39.0912000, -28.0260111, 91.9]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [-8.2e-8, -0.001, 0.001]
+            isEstimated: false
+
+# base name of the output measurement file, no files created if empty
+outputBaseName: "measurements.aer"

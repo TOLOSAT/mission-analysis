@@ -1,0 +1,17 @@
+# Input file for Orbit Determination performance testing
+# Lines starting with '#' are silently ignored
+
+# Flag for measurement generation
+generateMeasurements: true
+
+# Flag for orbit determination engine (true for Kalman filer or false of batch least squares)
+# Please don't forget to comment/uncomment the corresponding data in orbitDeterminationInputFile !
+isKalman: false
+
+# Name of the input file for measurement generation
+# Not used if generateMeasurements key is false
+measurementGenerationInputFile: "measurement-generation.yaml"
+
+# Name of the input file for orbit determination
+# !!! Mandatory file !!!
+orbitDeterminationInputFile: "testing.yaml"

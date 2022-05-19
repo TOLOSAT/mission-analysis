@@ -1,0 +1,332 @@
+#############################################
+# Input file for GPS 07 orbit determination #
+#############################################
+
+# Lines starting with '#' are silently ignored
+
+# This file contain one orbit defined keplerian, equinoctial, circular or cartesian
+
+# All dates are treated in UTC timescale.
+# The inertial frame for orbit definition and propagation is EME2000.
+
+# Estimated parameters (clock offsets, atmospheric parameters, etc.)
+# are given by [initialValue, minValue, maxValue]
+
+# Orbit definition (position in meters, velocity in meter per seconds, angles in degrees, date in ISO 8601)
+orbit:
+  date: "2016-02-13T02:31:30.000Z"
+  frameName: "EME2000"
+  orbitType:
+    name: "CARTESIAN"
+    cartesian: 
+      x: -2747600.0
+      y: 22572100.0
+      z: 13522760.0
+      vx: -2729.5
+      vy: 1142.7
+      vz: -2523.9
+
+# Spacecraft definition (mass in kilogrammes)
+spacecraft:
+  mass: 1630.0
+  id: "G07"
+  # Modes: NADIR_POINTING_WITH_YAW_COMPENSATION, CENTER_POINTING_WITH_YAW_STEERING,
+  #        LOF_ALIGNED_LVLH, LOF_ALIGNED_QSW, LOF_ALIGNED_TNW, LOF_ALIGNED_VNC, LOF_ALIGNED_VVLH
+  attitudeMode: "CENTER_POINTING_WITH_YAW_STEERING"
+  # On-board antenna phase center in spacecraft frame (m) [X, Y, Z]
+  antennaOffset: [-0.00040, 0.00500, 0.82240]
+  # Estimated On-board clock offset from com18836.sp3 (s)
+  clockOffset:
+    values: [469.873238e-6, -0.01, 0.01]
+    isEstimated: true
+
+# Propagator definition
+propagator:
+  # Numerical integrator (min step (s), max step (s) and position error (m))
+  integrator:
+    minStep: 0.001
+    maxStep: 300
+    positionError: 0.01
+  # Force models used by the propagator (only the ones used !!!)
+  forceModels:
+    # Central body gravity
+    gravity:
+      degree: 20
+      order: 20
+    # 3rd body attraction
+    thirdBody:
+      - name: "Sun"
+        withSolidTides: true
+      - name: "Moon"
+        withSolidTides: true
+    # Solar radiation pressure
+    solarRadiationPressure:
+      # Estimated solar radiation coefficient
+      cr:
+        values: [1.8, -10.0, 10.0]
+        isEstimated: true
+      area: 50.0
+    # Post-Newtonian correction force due to general relativity ("isUsed: true" to not have an empty value)
+    relativity:
+      isUsed: true
+
+# Body definition (default is a WGS-84 ellipsoid with IERS-2010 conventions and simple EOP frame)
+body:
+  iersConventionYear: 2010
+  frameName: "CIO/2010-based ITRF accurate EOP"
+  equatorialRadius: 6378137.0
+  inverseFlattening: 298.257223563
+
+# Measurements definition
+measurements:
+  measurementFiles: ["shld0440.16d.Z", "seat0440.16d.Z", "sbch0440.16d.Z", "brig0440.16d.Z", "azbh0440.16d.Z", "badg0440.16o.Z", "brmu0440.16o.Z", "irkm0440.16o.Z", "hnpt0440.16o.Z", "usn70440.16o.Z"]
+  range:
+    sigma: 1.0
+    weight: 1.0
+  outlierRejectionMultiplier: 6
+  outlierRejectionStartingIteration: 2
+  withStationPositionEstimated: false
+  # Troposphere
+  # If estimated_model is true, tropospheric delay is computed by using an estimated model
+  # otherwise, it is computed according to the empirical Saastamoinen model.
+  troposphere:
+    isEstimatedModel: true
+    zenithDelay:
+      values: [2.3, 0.0, 10.0]
+      isEstimated: true
+    # Niell Mapping Function (NMF) or Global Mapping Function (GMF)
+    mappingFunction: "NMF"
+    withWeatherModel: true
+    correctionDate: "2016-02-13T02:30:00.000"
+  # Ionosphere
+  # If estimated_model is true, ionospheric delay is computed by using an estimated model
+  # otherwise, it is computed according to the empirical Klobuchar model.
+  ionosphere:
+    isEstimatedModel: true
+    vtec:
+      values: [10.0, 0.0, 1.0e3]
+      isEstimated: true
+    ionosphericLayer: 350e3
+  # Shapiro correction on range measurements
+  withShapiro: true
+  # correction of ground stations displacements if remove_permanent_deformation is true,
+  # the station coordinates are considered *mean tide* and already include the permanent
+  # deformation, hence it should be removed from the displacement to avoid considering it
+  # twice if false, the station coordinates are considered *conventional tide free*
+  # so the permanent deformation must be included in the displacement
+  stationDisplacement:
+    withTidalCorrection: true
+    removePermanentDeformation: false
+    withOceanLoadingCorrection: false
+  # Stations
+  stations:
+    - name: "SHLD"
+      coordinates: [41.868362882, -119.015669632, 1458.088101]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: "/C1"
+          clockOffset:
+            values: [-3.266e-9, -0.001, 0.001]
+            isEstimated: false
+        - name: "/C2"    
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false
+        - name: "/P2"     
+          clockOffset:
+            values: [-4.764e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "SEAT"
+      coordinates: [47.653972656, -122.309458826, 44.666105]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: "/C1"
+          clockOffset:
+            values: [-6.069e-9, -0.001, 0.001]
+            isEstimated: false 
+        - name: "/C2"     
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false
+        - name: "/P2"     
+          clockOffset:
+            values: [-5.400e-8, -0.001, 0.001]
+            isEstimated: false 
+    - name: "SBCH"
+      coordinates: [29.868112727, -89.673232869, -14.853146]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: "/C1"
+          clockOffset:
+            values: [-1.027e-8, -0.001, 0.001]
+            isEstimated: false
+        - name: "/C2"     
+          clockOffset:
+            values: [-4.377e-9, -0.001, 0.001]
+            isEstimated: false
+        - name: "/P2"     
+          clockOffset:
+            values: [-4.245e-9, -0.001, 0.001]
+            isEstimated: false
+    - name: "BRIG"
+      coordinates: [42.520093759, -83.756648765, 262.449442]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: "/C1"
+          clockOffset:
+            values: [-7.733e-9, -0.001, 0.001]
+            isEstimated: false
+        - name: "/C2"     
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false
+        - name: "/P2"     
+          clockOffset:
+            values: [-3.210e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "AZBH"
+      coordinates: [35.107490239, -114.604973036, 152.410214]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: "/C1"
+          clockOffset:
+            values: [-7.997e-9, -0.001, 0.001]
+            isEstimated: false
+        - name: "/C2"    
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false
+        - name: "/P2"    
+          clockOffset:
+            values: [-1.537e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "BADG"
+      coordinates: [51.7697056, 102.2349806, 811.4]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: "/C1"
+          clockOffset:
+            values: [2.453614e-4, -0.001, 0.001]
+            isEstimated: false
+        - name: "/P1"
+          clockOffset:
+            values: [2.453607e-4, -0.001, 0.001]
+            isEstimated: false
+        - name: "/P2"   
+          clockOffset:
+            values: [2.453479e-4, -0.001, 0.001]
+            isEstimated: false
+    - name: "BRMU"
+      coordinates: [32.3704000, -64.6962722, -11.6]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: "/C1"
+          clockOffset:
+            values: [-4.130e-8, -0.001, 0.001]
+            isEstimated: false
+        - name: "/C2"     
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false
+        - name: "/C5"     
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false
+        - name: "/P2"     
+          clockOffset:
+            values: [-5.996e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "IRKM"
+      coordinates: [52.2190241, 104.3162403, 502.3170]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: "/C1"
+          clockOffset:
+            values: [1.975656e-4, -0.001, 0.001]
+            isEstimated: false
+        - name: "/P1"
+          clockOffset:
+            values: [1.975667e-4, -0.001, 0.001]
+            isEstimated: false
+        - name: "/P2"     
+          clockOffset:
+            values: [1.975727e-4, -0.001, 0.001]
+            isEstimated: false
+    - name: "HNPT"
+      coordinates: [38.5888167, -76.1303722, -28.0]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: "/C1"
+          clockOffset:
+            values: [-2.793e-8, -0.001, 0.001]
+            isEstimated: false
+        - name: "/C2"     
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false
+        - name: "/C5"     
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false
+        - name: "/P2"     
+          clockOffset:
+            values: [-3.981e-8, -0.001, 0.001]
+            isEstimated: false
+    - name: "USN7"
+      coordinates: [38.9205661, -77.0662766, 58.924]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: "/C1"
+          clockOffset:
+            values: [-2.093e-8, -0.001, 0.001]
+            isEstimated: false
+        - name: "/P1"
+          clockOffset:
+            values: [-2.093e-8, -0.001, 0.001]
+            isEstimated: false
+        - name: "/P2"     
+          clockOffset:
+            values: [-3.121e-8, -0.001, 0.001]
+            isEstimated: false
+
+# Estimator definition
+estimator:
+  # normalized parameters p are computed from physical parameters x as p = (x - x0) / sx
+  # where x0 is the reference value for physical parameter x and sx is the associated
+  # scaling factor for orbital parameters normalization (m)
+  orbitalParametersPositionScale: 100.0
+  # Levenberg-Marquardt or a Gauss-Newton
+  optimizationEngine:
+    # levenbergMarquardt or gaussNewton
+    levenbergMarquardt:
+      initialStep: 1.0e6
+  maxIterations: 20
+  maxEvaluations: 25
+  # convergence is reached when max|p(k+1) - p(k)| < ε for each normalized estimated
+  # parameters p and iterations k and k+1 so the ε threshold
+  # Normalized values are computed as (x - x0) / sx, so convergence is reached when
+  # the following condition holds for all estimated parameters: |x[i+1] - x[i]| <= ε * sx
+  # So the convergence threshold specified here can be considered as a multiplication
+  # factor applied to scale. Since for all parameters the scale is often small,
+  # then the threshold should not be too small. A value  of 10⁻³ is often quite accurate.
+  convergenceThreshold: 1.0e-3

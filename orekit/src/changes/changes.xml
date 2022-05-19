@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2002-2021 CS GROUP
+  Licensed to CS GROUP (CS) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  CS licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<document>
+  <properties>
+    <title>Orekit Tutorials Changes</title>
+  </properties>
+  <body>
+    <release version="11.0" date="2021-09-22"
+             description="Version 11.0 is a major release of Orekit tutorials.
+             New features introduced in 11.0 are: a new tutorial for
+             GNSS orbit propagation based on navigation messages and
+             the use of the new CCSDS framework in the Phasing tutorial.
+             The most important change is the update of the existing tutorials
+             to follow the major changes in Orekit.">
+    </release>
+    <release version="10.3" date="2020-12-21"
+             description="Version 10.3 is a minor release of Orekit tutorials.
+             It includes both new features and bug fixes. New features introduced
+             in 10.3 are: a new tutorial for constant thrust maneuvers and a
+             new tutorial for impulsive maneuvers.
+             See the list below for a full description of the changes.">
+      <action dev="luc" type="add" issue="7">
+        Added tutorial for constant thrust maneuvers.
+      </action>
+      <action dev="luc" type="add" issue="7">
+        Added tutorial for impulsive maneuvers.
+      </action>
+    </release>
+    <release version="10.2" date="2020-07-16"
+             description="Version 10.2 is the second release of the Orekit Tutorials.
+             The version number is 10.2 to follow Orekit version number.
+             This version includes new tutorials for: CR3BP model, Rinex loading,
+             GNSS orbit determination, Kalman orbit determination and measurement generation.
+             This version also includes an important change in tutorials input files.
+             Indeed, YAML format is now used to initialize Orekit tutorials.
+             See the list below for a full description of the changes.">
+      <action dev="bryan" type="add" >
+        Added tutorial for measurement generation and Orekit performance analysis.
+      </action>
+      <action dev="bryan" type="add" issue="5">
+        Added tutorial for Kalman orbit determination.
+      </action>
+      <action dev="bryan" type="update" issue="4">
+        Improved initialization of orbit determination tutorials.
+      </action>
+      <action dev="bryan" type="add" issue="3">
+        Added tutorial for GNSS orbit determination.
+      </action>
+      <action dev="bryan" type="add" issue="2">
+        Added tutorial for Rinex observation file reading.
+      </action>
+      <action dev="bryan" type="add" >
+        Added CR3BP tutorials implemented by Vincent Mouraux.
+      </action>
+    </release>
+    <release version="10.1" date="2020-02-19"
+		     description="Version 10.1 is the first official separate release of the Orekit Tutorials.
+             Before that the tutorials were embedded in the Orekit library.
+             The version number is 10.1 to follow Orekit version number.
+             This version includes two features. The first is a factorization of common code 
+             from numerical and DSST orbit determination. The second is a new tutorial to handle the Data context
+             feature introduced in Orekit.
+             See the list below for a full description of the changes.">
+      <action dev="maxime" type="update" >
+        Updated Checkstyle configuration and plugin version.
+        Updated copyright years.
+        Fixed SpotBugs warnings.
+      </action>
+      <action dev="luc" type="add" >
+        Added tutorial for Data context loading.
+      </action>
+      <action dev="luc" type="update" >
+        Synchronized tutorials description and code.
+      </action>
+      <action dev="luc" type="update" >
+        Factored common code from numerical and DSST orbit determination.
+      </action>
+      <action dev="luc" type="add" >
+        Created separate project from Orekit 10.0 tutorials.
+      </action>
+    </release>
+  </body>
+</document>

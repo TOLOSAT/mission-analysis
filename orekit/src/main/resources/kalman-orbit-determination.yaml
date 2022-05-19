@@ -1,0 +1,168 @@
+# Input file for Kalman orbit determination
+
+# Lines starting with '#' are silently ignored
+
+# This file must contain one orbit defined as
+# keplerian, equinoctial, circular or cartesian.
+
+# All dates are treated in UTC timescale.
+# The inertial frame for orbit definition and propagation is EME2000.
+# Physical data are read from the src/tutorial/resources/tutorial-orekit-data
+# directory
+
+# Estimated parameters (clock offsets, atmospheric parameters, etc.)
+# are given by [initialValue, minValue, maxValue]
+
+# Orbit definition (position in meters, velocity in meter per seconds, angles in degrees, date in ISO 8601)
+orbit:
+  date: "2016-02-14T12:14:48.132"
+  frameName: "EME2000"
+  orbitType:
+    name: "CARTESIAN"
+    cartesian: 
+      x: -5532232.334281051
+      y: 1.0025636857493076e7
+      z: -3578941.1097531132
+      vx: -3871.2032545876173
+      vy: -607.9056504788068
+      vz: 4281.008504966887
+
+# Spacecraft definition (mass in kilogrammes)
+spacecraft:
+  mass: 405.380
+  # Modes: NADIR_POINTING_WITH_YAW_COMPENSATION, CENTER_POINTING_WITH_YAW_STEERING,
+  #        LOF_ALIGNED_LVLH, LOF_ALIGNED_QSW, LOF_ALIGNED_TNW, LOF_ALIGNED_VNC, LOF_ALIGNED_VVLH
+  attitudeMode: "CENTER_POINTING_WITH_YAW_STEERING"
+  # On-board antenna phase center in spacecraft frame (m) [X, Y, Z]
+  antennaOffset: [0.0, 0.0, 0.0]
+  # On-board antenna phase center in spacecraft frame (m) [X, Y, Z]
+  # antennaOffset: [-0.00040, 0.00500, 0.82240]
+  # Estimated On-board clock offset from com18836.sp3 (s)
+  clockOffset:
+    values: [0.0, -0.01, 0.01]
+    isEstimated: false
+  bias:
+    values: [0.0, 0.0, 0.0]
+    isEstimated: false
+
+# Propagator definition
+propagator:
+  # Numerical integrator (min step (s), max step (s) and position error (m))
+  integrator:
+    minStep: 0.001
+    maxStep: 300
+    positionError: 10.0
+  # Force models used by the propagator (only the ones used !!!)
+  forceModels:
+    # Central body gravity
+    gravity:
+      degree: 8
+      order: 8
+    # 3rd body attraction
+    thirdBody:
+      - name: "Sun"
+        withSolidTides: false
+      - name: "Moon"
+        withSolidTides: false
+
+# Body definition (default is a WGS-84 ellipsoid with IERS-2010 conventions and simple EOP frame)
+body:
+  iersConventionYear: 2010
+  frameName: "CIO/2010-based ITRF simple EOP"
+  equatorialRadius: 6378137.0
+  inverseFlattening: 298.257223563
+
+# Measurements definition
+measurements:
+  measurementFiles: ["Lageos2_test.aer"]
+  range:
+    sigma: 20.0
+    weight: 1.0
+  rangeRate:
+    sigma: 1.0
+    weight: 1.0
+  azEl:
+    sigma: 1.0
+    weight: 1.0
+    withRefractionCorrection: false
+  pv:
+    sigmaPos: 1.0
+    sigmaVel: 0.01
+    weight: 1.0
+  phase:
+    sigma: 0.01
+    weight: 1.0
+  outlierRejectionMultiplier: 6
+  outlierRejectionStartingIteration: 2
+  withStationPositionEstimated: false
+  # Troposphere
+  # If estimated_model is true, tropospheric delay is computed by using an estimated model
+  # otherwise, it is computed according to the empirical Saastamoinen model.
+  troposphere:
+    isEstimatedModel: false
+    zenithDelay:
+      values: [0.0, 0.0, 10.0]
+      isEstimated: true
+    # Niell Mapping Function (NMF) or Global Mapping Function (GMF)
+    mappingFunction: ""
+    withWeatherModel: false
+    correctionDate: ""
+  # correction of ground stations displacements if remove_permanent_deformation is true,
+  # the station coordinates are considered *mean tide* and already include the permanent
+  # deformation, hence it should be removed from the displacement to avoid considering it
+  # twice if false, the station coordinates are considered *conventional tide free*
+  # so the permanent deformation must be included in the displacement
+  stationDisplacement:
+    withTidalCorrection: false
+    removePermanentDeformation: false
+    withOceanLoadingCorrection: false
+  # Stations
+  stations:
+    - name: "YARL"
+      coordinates: [-29.046495, 115.346744, 245.088103]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false
+    - name: "GODL"
+      coordinates: [39.020605 , 283.172305 , 19.882672]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false 
+    - name: "HA4T"
+      coordinates: [20.706489, 203.743079, 3056.971459]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false
+    - name: "SISL"
+      coordinates: [33.577694, 135.937039, 102.317142]
+      rangeBias:
+          values: [0.0, -1000.0, 1000.0]
+          isEstimated: false
+      observationTypes:
+        - name: ""
+          clockOffset:
+            values: [0.0, -0.001, 0.001]
+            isEstimated: false
+
+# kalman definition
+kalman:
+  cartesianOrbitalP: [1e4, 4e3, 1, 5e-3, 6e-5, 1e-4]
+  cartesianOrbitalQ: [1.e-4, 1.e-4, 1.e-4, 1.e-10, 1.e-10, 1.e-10]
+
+# base name of the output files (log and residuals), no files created if empty
+outputBaseName: "orbit-determination"
