@@ -7,7 +7,7 @@ import numpy as np
 import plotly.graph_objects as go
 from pyproj import Transformer
 
-input_data_path = str(Path(__file__).parents[1].joinpath('input_data'))
+input_data_path = str(Path(__file__).parents[0].joinpath('input_data'))
 
 
 def plot_sphere(ax, center, radius):
