@@ -1,0 +1,8 @@
+Iridium/big_savefile.dat
+Iridium/raan_scan_results.dat
+
+*.xml
+*.iml
+*.pyc
+OrbitInsertionErrors/pos_ECI_sat.csv
+OrbitInsertionErrors/pos_ECI_sun.csv

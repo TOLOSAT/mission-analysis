@@ -1,0 +1,365 @@
+ID;Name;Location;Total;Future;Antennas;Owner
+2;KB9JHU;EM69uf @280m;41688;17;Cross Yagi (VHF) Cross Yagi (UHF);Corey Shields
+6;Apomahon;KM18ub @119m;107069;18;Helical (UHF) Eggbeater (VHF);Dimitris Papadeas
+10;YFK;KM17vw @183m;10506;0;Turnstile (VHF);Ilias Daradimos
+12;W2BFJ;FN42fr @67m;21216;6;Lindenblad (VHF) Lindenblad (UHF);Burns Fisher
+26;SV1IYO/A;KM08vj @145m;11819;7;Turnstile (VHF) Turnstile (UHF);Vasilis Tsiligiannis
+27;NB3T - VHF;EM97se @634m;9974;0;Turnstile (VHF);Malcolm
+33;G7KSE VHF;IO84el @10m;10693;0;Turnstile (VHF);Alex Hill
+37;DL4PD;JO30cr @275m;33812;6;Other Omni-Directional (UHF);Patrick Dohmen
+38;Technikraum Lanzenhäusern;JN36qu @839m;8343;1;Turnstile (VHF);HB9FXQ HB9EHO DM9KS
+39;CGBSAT-VHF;JO32eu @10m;39053;8;Turnstile (VHF);Cees Bassa
+40;CGBSAT-UHF;JO32eu @10m;47018;8;Turnstile (UHF);Cees Bassa
+47;DB0RV;JN47tt @450m;20264;9;Turnstile (VHF, UHF);Alex DD1ALX
+49;OZ7SAT;JO65hp @10m;22969;25;Cross Yagi (VHF) Cross Yagi (UHF);AMSAT OZ Team
+50;N5CNB-UHF;EL19ru @100m;19841;5;Eggbeater (UHF);Remi N5CNB
+68;OE9CPV - stoffl;JN47wc @1034m;591;0;Turnstile (VHF);Christoph Purin
+77;N5CNB-VHF;EL19ru @100m;11580;3;Eggbeater (VHF);Remi N5CNB
+85;Alfeld;JO41wx @154m;6218;0;V-Dipole (VHF);Tobias Mädel
+91;M0EYT / 2E0NOG;IO80xs @60m;101528;80;Quadrafilar (VHF) Eggbeater (UHF) Eggbeater (UHF) Eggbeater (UHF) Helical (L);UHF Satcom
+92;APN01;EN85gb @182m;3948;0;Ground Plane (VHF);W8NRD
+96;sam210723 VHF/UHF;QF56pj @10m;8383;5;Quadrafilar (VHF) Dipole (UHF);sam210723
+98;Grove-UHF-01;FN42gh @62m;10950;5;Lindenblad (UHF);Henry Wychorski
+100;SV1RVP;KM17vx @215m;4084;10;Turnstile (VHF) Turnstile (UHF);Alexandros Tsourapas
+101;Marcs;JN18cp @110m;13301;4;Turnstile (VHF);n5fxh
+102;PA3RVG VHF;JO21sl @31m;8310;2;V-Dipole (VHF);Rico PA3RVG
+110;ok1phu-1;JN79xs @592m;7275;0;Quadrafilar (VHF);ok1phu
+120;F6HDW;JN02tt @612m;3039;6;Vertical (UHF) Vertical (VHF);Jean Claude GLOMSKI
+123;BG8DIV;OM20br @535m;3884;3;Yagi (UHF) Yagi (VHF) Quadrafilar (VHF);Zhou Kun
+129;Chabot Space and Science Center;CM87vt @300m;5929;1;Turnstile (VHF);ChabotSpaceAndScience
+130;XTOPHE;JN18cv @50m;9345;8;Turnstile (VHF) Turnstile (UHF);XtopheSwl
+142;CWVRPi3vhf;EM98di @270m;5190;0;Turnstile (VHF);cswiger
+146;RIYADH2;LL34is @612m;14735;0;Cross Yagi (VHF);Jacques Roux
+147;F6KKR;JN08vp @200m;13481;4;Turnstile (VHF);F6KKR Radio Club de Rambouillet
+150;OM1LD;JN88qa @124m;13925;8;Dipole (HF, VHF, UHF);ba55
+152;SOSA-OBSPE;JN98ep @200m;7667;7;Turnstile (UHF);Jakub Kapus
+158;Picosat Systems - UHF;OF78vf @40m;6160;4;Turnstile (UHF);ssshock
+167;G7ODQ-pi;IO90cr @50m;8775;5;Turnstile (VHF);Jason Singleton
+173;DF3LZ;JO53ck @10m;9991;7;Quadrafilar (VHF) Quadrafilar (UHF);Roland Proesch
+177;KO2F-VHF-1;FM08xn @186m;6406;0;Eggbeater (VHF);Bob KO2F
+187;K3RLD UHF Lindenblad;FN20gg @54m;17163;23;Parasitic Lindenblad (UHF);Roy Dean
+207;AAUSAT GND;JO47xa @20m;6837;12;Helical (UHF);aausat_gnd
+216;CWVRPi3uhf;EM98di @270m;9956;6;Turnstile (UHF);cswiger
+229;Neterra Sofia Teleport;KN12qp @550m;10042;10;Yagi (UHF) Yagi (VHF);LZ1KRN Neterra Ham Radio Club
+255;EA5BZ - Elche;IM98pg @120m;7444;59;Quadrafilar (VHF);Ruben Navarro Huedo
+272;K3RLD VHF QFH;FN20gg @60m;18367;24;Quadrafilar (VHF);Roy Dean
+282;Dolni Vlkys1;JN69ps @371m;12441;11;Dipole (HF, VHF, UHF);Tomas Vlas
+291;COSPAR 8049;CN89dk @40m;11180;0;Turnstile (VHF);ve7til
+305;VK5KJP-VHF;PF95gd @10m;5112;3;Turnstile (VHF);Joe Pereira
+310;CSPD-VA3TZA;FN03cf @92m;4965;5;Turnstile (UHF);Miloslav Miskar
+315;KK4YEL;EL98pk @6m;998;0;Turnstile (VHF);Super Cazzola
+318;DL1SAA;JN48ow @293m;6530;2;Turnstile (VHF);DL1SAA
+328;G7KSE UHF;IO84el @10m;7153;5;Turnstile (UHF);Alex Hill
+329;CU2ZG;HM77fr @80m;11877;6;Vertical (VHF) Vertical (UHF);Pedro Sousa
+331;VK5KJP-UHF;PF95gd @10m;9327;5;Patch (UHF);Joe Pereira
+335;ON4LS;JO20kl @175m;12810;7;Discone (HF, VHF, UHF, L);Jean-Luc Namur
+355;Black Mensa Ground Station;JN58ug @490m;7226;0;Vertical (VHF);mdz
+365;DS-1 (VHF);JO22ff @10m;4619;1;Turnstile (VHF);dutchspace
+376;AstroHD;JN48kt @460m;6481;1;Turnstile (VHF);Herwig Diessner
+377;IZ7BOJ;JN81ff @30m;7857;6;Turnstile (UHF);IZ7BOJ Alfredo
+378;LRG Ground Station;JN58tb @583m;1425;8;Eggbeater (VHF);mdz
+385;52HancockSt;FN42jk @70m;4030;5;Turnstile (UHF);tonyfromjupiter
+399;Patras, GR Station;KM08uf @20m;4141;0;Turnstile (VHF);Andreas Tsirogiannis
+404;HA3BT-2.0;JN96ar @185m;10866;6;Quadrafilar (VHF) Quadrafilar (UHF);Tibor Balazs
+405;blabs-satnogs-nr1;EM69rd @220m;7079;5;Lindenblad (VHF) Lindenblad (UHF);dosman
+411;SatNOGS Ground Station - KD2NFC;FN20wo @23m;6632;5;Turnstile (VHF) Turnstile (UHF);Joe KD2NFC
+426;OZ1SEJ;JO65ds @30m;4868;1;Turnstile (VHF);Steen Eiler Jørgensen
+430;Leonidio;KM17kd @20m;6790;9;Eggbeater (UHF);Manolis Surligas
+431;PE0SAT-U;JO21mr @10m;13176;9;Turnstile (UHF);PE0SAT
+432;kc1fha;FN42ft @73m;4477;5;Vertical (VHF) Vertical (UHF);John O'Neil
+438;Timisoara - VHF QHA;KN05or @80m;10605;4;Quadrafilar (VHF);Mircea
+439;EB1AO - VHF;IN52pe @30m;4276;4;Quadrafilar (VHF);Jose Elias Diaz
+444;Saclay1;JN18br @100m;10218;10;Dipole (HF, VHF, UHF);f6kbs
+447;MW6DHN;IO73xe @200m;10078;2;V-Dipole (VHF) Vertical (UHF);daveh
+458;ON5FB;JO20gr @96m;5063;1;Eggbeater (VHF);Jean-Luc Namur
+462;Universidad UTE;FI09st @2850m;3014;2;Cross Yagi (UHF);ffreire
+479;ON4API;JO10nw @20m;6477;1;Turnstile (VHF);Krist ON4API
+480;k7fle;CN85qm @50m;7127;8;Turnstile (UHF);k7fle
+484;DParabole;JN18ev @50m;862;0;Helical (L);Dimension Parabole
+488;W7KKE;CN75xa @30m;9748;11;Yagi (UHF);W7KKE Ken Swaggart
+490;hm5;JN88ee @200m;5542;7;Yagi (UHF) Yagi (VHF);wnagele
+499;LU7DID;GF05te @44m;11604;24;Vertical (VHF) Vertical (UHF);Dr. Pedro E. Colla
+526;W2GRK - UHF;FN20tp @29m;1435;7;Quadrafilar (UHF);w2grk
+544;HB9FMC Pascal Droux;JN37ne @680m;12855;8;Turnstile (VHF) Turnstile (UHF);Pascal Droux
+551;lu1esy;GF05qi @30m;5982;0;Yagi (VHF);Ignacio Mazzitelli
+555;CT1ETE;IN51uk @334m;4752;10;Discone (HF, VHF, UHF, L);Paulo Pinto
+568;VK2BYF-VHF;QF55hd @30m;3468;0;Quadrafilar (VHF);Wolfgang
+572;HB9FMC Pascal Droux 2;JN36mv @440m;6237;7;Discone (HF, VHF, UHF, L);Pascal Droux
+579;Um Alaish 4;LL49bc @20m;9409;15;Yagi (VHF, UHF);Orbital Space
+611;SPUTNIX-exp-VHF/UHF-;LN17cn @45m;8008;4;Quadrafilar (VHF) Quadrafilar (UHF);sputnix
+617;AAUSAT OZ0HPM;JO46us @9m;7622;4;Quadrafilar (UHF);aausat_gnd
+618;KS1G;FM18hx @100m;11051;6;Vertical (VHF) Vertical (UHF);Steve Greene
+619;Amfortas;JN59if @496m;6345;21;Turnstile (VHF);Andreas Wagner
+644;CalgaryVHF;DO21wc @1000m;5593;2;Turnstile (VHF);Graem Schmidt
+657;ZL2MST;RE79ub @125m;12721;31;Vertical (VHF) Vertical (UHF);max goodall
+663;KB4NKO - Jonesboro, VA, US UHF;FM07ms @250m;7823;4;Lindenblad (UHF);mdozier9
+667;Colossus;JO22qe @6m;6953;1;Turnstile (VHF);Marco
+669;WQ5C;EL09ws @209m;8825;5;Vertical (VHF) Vertical (UHF);wq5c
+673;CT7AFR;IN51oq @46m;6777;0;Other Omni-Directional (VHF);Emmanuel Lomba
+674;PG-GS1;IO85gv @100m;2542;4;Quadrafilar (UHF);peterg
+678;Santa Cruz;IM12oq @160m;459;5;Quadrafilar (VHF) Quadrafilar (UHF);nelsonfx
+680;M0RSX;JO02ul @7m;1490;6;Turnstile (VHF) Turnstile (UHF);Richard Stone
+692;VK4XSS-70;QG56oc @72m;8622;3;Turnstile (UHF);mwheeler
+693;VK4XSS-2;QG56oc @72m;4356;1;Turnstile (VHF);mwheeler
+695;Gilberstoun Satellite Tracking Station;IO85kw @60m;1468;1;Cross Yagi (VHF);David Mitchell
+702;CA,USA-Fixed UHF;DM13kl @310m;17081;7;Quadrafilar (UHF);thebaldgeek
+713;VA7EEX - VHF;CN89hi @50m;1459;1;Turnstile (VHF);va7eex
+724;VK2BYF-UHF;QF55hd @30m;4145;5;Quadrafilar (UHF);Wolfgang
+733;VAUBAN-IEPER ON7XX;JO10ku @30m;11967;6;Vertical (VHF) Vertical (UHF) Quadrafilar (VHF);jallewaert
+752;NZ-HMT-VHF;RF72pe @41m;4306;2;Quadrafilar (VHF);Deon Steyn
+753;UY0LL;KN79xx @180m;11525;6;Yagi (UHF);Alexander Doschich
+754;W6MSU / CH. A;CM98hb @8m;12180;6;Cross Yagi (UHF);G Mallery
+760;KD5QZG;EM30xe @8m;3157;0;V-Dipole (VHF);Adam Melancon
+763;Harwell;IO91io @71m;2258;5;Turnstile (UHF);Rob Spurrett
+766;Dunchurch;IO92ii @128m;56302;49;Turnstile (VHF) Turnstile (UHF);testmatch
+771;PF_DE_PL_TA1;JN48iv @300m;23893;2;Turnstile (VHF);Pablo Pita Leira
+804;S59MZ-UHF;JN76eg @460m;3429;6;Turnstile (UHF);Matjaz Zibert
+812;PF_DE_PL_ UHF_CROSS_DIPOLE;JN48iv @300m;32402;10;Turnstile (UHF);Pablo Pita Leira
+832;Round Hill - VA;FM19cd @175m;8834;6;Dipole (HF, VHF, UHF) Vertical (VHF);hwg5d6
+837;Gray Eagle;EM79ax @850m;7309;5;Discone (HF, VHF, UHF, L);tomn46037
+853;NewUlm-UHF-2;EL19ru @8m;12012;12;Yagi (UHF);n5fxh
+858;SM0TGU - VHF UHF;JO89wk @5m;3923;24;Turnstile (VHF) Yagi (UHF);Lars Thunberg SM0TGU
+871;lutgarugt;DM11qu @56m;6176;12;Eggbeater (UHF);lutgaru
+897;DS-2 (UHF);JO22ff @10m;878;7;Turnstile (UHF);dutchspace
+901;VE2WI - UHF;FN35gk @15m;50954;30;Turnstile (UHF);Laurent Beaudet
+912;HS3LIQ;OK14bx @15m;3790;0;Quadrafilar (VHF);HS3LIQ WiwatM
+913;Field Station Luxembourg VHF;JN39bq @245m;6875;5;Turnstile (VHF);Ben
+918;OL7M;JO80cf @330m;3758;0;Yagi (VHF) Turnstile (VHF);Jan OK2ZAW
+919;Nucleus;JN47ej @400m;1113;1;Quadrafilar (VHF);harzi
+935;CERDECAM;JO20fu @100m;5791;5;Vertical (VHF) Vertical (UHF);on6rf
+939;IU3IOK;JN65co @15m;4199;8;Turnstile (VHF);argo
+946;Homebrew Space Club @CamMakespace;JO02be @14m;5289;6;Discone (HF, VHF, UHF, L);Ward Hills
+958;GlastonburyUK-A;IO81pd @100m;5565;0;V-Dipole (VHF);tgk
+972;SWLJN26;JN26ph @238m;19162;6;Other Omni-Directional (VHF, UHF, L);swljn26
+977;Archodiko-UHF;KM16bx @5m;10174;8;Eggbeater (UHF);Pierros Papadeas
+980;PF_DE_ADSB;JN48iv @300m;4271;1;Yagi (L);Pablo Pita Leira
+981;TBC;GF05om @25m;5254;7;Turnstile (VHF) Eggbeater (UHF);Adrian Sinclair
+987;LA4TSA;JO59jw @160m;7262;6;Yagi (UHF);evenho
+1012;DragonLab-SatNOGS;IO83rn @90m;440;0;V-Dipole (VHF);mubok
+1029;NU8M QTH;EN82dl @289m;953;5;Eggbeater (VHF) Eggbeater (UHF);John Haworth
+1031;Romeo-Golf-VHF;IO91nj @50m;3123;0;Turnstile (VHF);romeo-golf
+1032;Bad Homburg;JO40hf @200m;9470;8;Turnstile (VHF, UHF);Wolfgang Tremmel
+1042;VK3XN - VHF;QF22pe @147m;2344;0;Turnstile (VHF);Michael Paul
+1052;KF5IDY RTL-SDR Egg 2m;EM12nw @196m;1385;0;Eggbeater (VHF);Jonathan Brandenburg
+1062;CCERES Ground Station;JN18ct @120m;5536;5;Cross Yagi (UHF) Cross Yagi (VHF);cceres_team
+1066;K2ZA;FM29lo @32m;9121;9;Eggbeater (VHF) Eggbeater (UHF);John Zaruba
+1068;VE2DTL-VHF;FN35dh @56m;3014;4;Dipole (VHF);André Léveillé VE2DTL
+1077;KC4LE 2-element VHF Turnstyle;EM63nh @231m;2924;0;Turnstile (VHF);Red Willoughby
+1089;ZR6AIC Ground Station;KG43ar @1700m;2339;4;Turnstile (UHF);Anton Janovsky
+1093;LU1KCQ Home;FG73ie @491m;5070;7;Eggbeater (UHF);Augusto Parra
+1118;sp8ncg-rtl1;KO11gg @200m;5898;7;Yagi (UHF);Tomek sp8ncg
+1122;BeachStation;EL97sw @5m;2833;0;Quadrafilar (VHF);swood5858c3
+1129;W6MSU / CH. B;CM98hb @9m;3402;2;Eggbeater (VHF);G Mallery
+1137;MANU F4HSE;JN38rb @190m;2095;6;Eggbeater (UHF);Emmanuel Dupré
+1145;VK4SMC;QH23qn @6m;4485;4;Yagi (UHF) Yagi (VHF);Steven McGuire
+1159;Villanova CubeSat Club W3YP;FN20ha @12m;3279;0;Lindenblad (VHF);w3yp
+1168;bbn;FN42kj @6m;1001;5;Yagi (UHF) Yagi (VHF);tonyfromjupiter
+1183;gi0vgv;IO64vl @70m;5738;4;Lindenblad (UHF);gi0vgv
+1187;Campus Borsbeek;JO21fe @8m;927;1;Cross Yagi (VHF);Tom Dierckx
+1207;HB9FXX;JN36hp @625m;6366;11;Turnstile (UHF);Martin Herren
+1208;GlastonburyUK-C;IO81pd @100m;3141;6;Quadrafilar (UHF);tgk
+1213;KE0RWZ-Mini-PC;EM47qu @242m;10387;5;V-Dipole (VHF) Vertical (UHF);ke0rwz
+1248;YO9HZN_1;KN24sv @327m;3534;8;Quadrafilar (VHF) Eggbeater (UHF);Badea Mircea Adrian
+1258;KC3ECG;FM19oh @114m;432;0;Quadrafilar (VHF);Cody Houck
+1271;YC1SCC;OI33hp @100m;6782;24;Vertical (VHF) Vertical (UHF);Sonny D. Harsono
+1272;FHAB GS1;JO66kt @67m;6927;7;V-Dipole (UHF);mfalkvidd
+1282;DJ0MDO;JN49ls @240m;2198;5;Lindenblad (UHF);Alex DJ0MDO
+1285;VK3XN - UHF;QF22pe @147m;2677;6;Lindenblad (UHF);Michael Paul
+1290;Shed Discone;EN91ak @2590m;3035;5;Discone (HF, VHF, UHF, L);phasewrap
+1295;MXL-FXB-AnnArbor;EN82dh @900m;1506;0;Eggbeater (UHF) Vertical (VHF) Ground Plane (VHF);mxl_operators
+1298;primoz;JN76db @300m;3578;8;Dipole (VHF, UHF);primoz (S56LKP) rus
+1337;Martin 9V1RM - UHF;OJ11wh @10m;19109;7;Turnstile (UHF);Martin RATH
+1343;EA1JBS - StationPueblu1;IN83bj @10m;2046;7;Quadrafilar (VHF, UHF);LuisE
+1346;The Garage;JO56bx @10m;2193;0;Quadrafilar (VHF);Anders
+1371;EX-EN90-VHF;EN90xj @363m;2231;0;Quadrafilar (VHF);e x
+1372;HHSstation-testing;FM19qn @187m;140;0;Yagi (VHF);hhsstation
+1376;Venables_Shed_Pi4;JO02pp @50m;12659;6;Eggbeater (UHF);Mark Venables
+1378;Wolbach Library;FN42kj @15m;10941;5;Eggbeater (UHF);Nico Carver
+1379;MSparc-EvoMetric;IO73uf @80m;1590;0;Turnstile (VHF);Rob Shepherd
+1381;Silicon Valley;CM87wj @15m;917;5;Lindenblad (UHF);driscollta
+1382;ITR UHF;PF95he @10m;4987;7;Yagi (UHF);itrgs
+1389;Martin 9V1RM - VHF;OJ11wh @10m;10172;5;Turnstile (VHF);Martin RATH
+1396;PH3V - The Netherlands;JO21hl @12m;2098;7;Vertical (VHF) Vertical (UHF);Rene Tuijtel
+1404;InSight 1 Ground Station;IO82xb @257m;2444;0;Turnstile (VHF);fixitdaz
+1408;N3KA Discone;CM87xi @30m;2744;8;Discone (HF, VHF, UHF, L);Kevin N3KA
+1416;PE2BZ-firstsetup;JO22ca @1m;10268;6;Quadrafilar (UHF);pe2bz
+1433;PE2BZ-secondsetup;JO22ca @11m;10038;6;Turnstile (UHF);pe2bz
+1452;VE2DTL-UHF;FN35dh @56m;516;13;Ground Plane (UHF);André Léveillé VE2DTL
+1456;Ticonderoga;EN82nh @188m;1013;0;Turnstile (VHF);Frank Fazio
+1461;VE2DSK-VHF-UHF;FN35fp @50m;3612;9;Eggbeater (VHF) Eggbeater (UHF);Real Martel
+1478;KI6TSF-1;CM87wj @10m;3192;7;Yagi (VHF, UHF);ki6tsf
+1492;DM1AS;JO62rl @23m;12876;3;Turnstile (VHF);Ansgar Schmidt
+1501;UY0LL;KN79xx @180m;1236;4;Yagi (VHF);Alexander Doschich
+1508;K8WTF VHF/UHF;EN91ci @285m;3253;5;Yagi (UHF) Yagi (VHF);k8wtf
+1509;N9NFB VHF;EN53ua @290m;1292;0;Quadrafilar (VHF);Vince Mulhollon
+1510;N9NFB UHF;EN53ua @290m;1414;5;Quadrafilar (UHF);Vince Mulhollon
+1519;Not Quite ESL;EM58an @173m;2315;6;Other Omni-Directional (UHF);chainsawleg
+1523;UHF Essendon;QF22lf @55m;1133;6;Eggbeater (UHF);dbradby
+1526;Budapest UHF (west only);JN97ml @190m;2759;6;Cross Yagi (UHF);nepe
+1536;KF5IDY RTL-SDR Egg 70cm;EM12nw @196m;944;5;Eggbeater (UHF);Jonathan Brandenburg
+1539;Muskego, WI - EN52 - N9CQQ;EN52ww @300m;2299;12;Cross Yagi (VHF) Cross Yagi (UHF);Bill Rupp
+1558;PE1MET QFH VHF;JO21fv @30m;868;1;Quadrafilar (VHF);F.J. Kraan
+1559;DB2OS-VHF-Omni;JO42vg @100m;2238;0;Eggbeater (VHF);DB2OS
+1561;KK6NOW - Palm Desert, CA, US;DM13tr @82m;1522;13;Yagi (VHF, UHF);Fredric Raab
+1562;Pete (vk2pet);QF45kg @565m;2356;7;Discone (VHF, UHF);vk2pet
+1568;Aetherbit LLC;DM13la @145m;1923;8;Other Omni-Directional (UHF) Other Omni-Directional (VHF);nigel
+1575;Greenbelt MD;FM18nx @41m;1019;6;Turnstile (UHF);Marc Lichtman
+1585;Malyi UHF;KN08ja @155m;1362;7;Yagi (UHF);nepe
+1592;PE1RXU;JO21lo @12m;1631;6;Turnstile (VHF) Turnstile (UHF);Alex. de Vogel
+1594;VK2PET #2 Trial Station;QF45kg @565m;1142;3;Other Directional (UHF);vk2pet
+1601;YC5ABK;OI08kc @20m;11400;13;Quadrafilar (VHF, UHF);Rian Irwansyah
+1606;Ziggy;DN15kf @1463m;140;0;Eggbeater (VHF);Gary Zeigler
+1609;Silicon Valley-test;CM87wj @15m;86;5;Other Directional (UHF);driscollta
+1629;jengelsm;JO22kg @1m;1103;1;Turnstile (VHF);Jaap den Engelsman
+1640;VA7EEX - UHF;CN89gl @50m;454;5;Other Directional (UHF);va7eex
+1649;Enlightened Labs;FN31nu @157m;1068;7;Discone (VHF, UHF);enlightened
+1659;LepoSat Canada - looking North-West;FN36aa @300m;1452;5;Yagi (VHF, UHF);nik0p0
+1661;DK0SB-APT;JO31ok @165m;910;14;Turnstile (VHF);Bochum Observatory
+1662;DK0SB-VHF-Omni;JO31ok @165m;1045;15;Eggbeater (VHF);Bochum Observatory
+1663;DK0SB-UHF-Omni;JO31ok @165m;827;18;Eggbeater (UHF);Bochum Observatory
+1667;AAS Berga Carballada;JN02wc @625m;6639;12;Quadrafilar (VHF, UHF);carballada
+1672;AAS Ager Carballada;JN02ia @755m;9616;12;Quadrafilar (VHF, UHF);carballada
+1676;TI3WTI-Paraiso;EJ89bt @1358m;198;4;Quadrafilar (VHF);TI3WTI
+1685;EA4ADJ;IM88jw @650m;962;6;Yagi (VHF) Yagi (UHF) Vertical (VHF, UHF);pedro
+1690;QRA NOAA Station;JN18cv @50m;255;0;V-Dipole (VHF);F4HVQ
+1694;F4IAI - Moussac;JN23cx @125m;220;0;V-Dipole (VHF);Enzo Becamel
+1696;PE0SAT-Y;JO21mr @10m;1190;6;Yagi (UHF);PE0SAT
+1698;DD1US/2 VHF/UHF/L-Omni;JN49qf @200m;400;6;Discone (VHF, UHF, L);Matthias Bopp
+1709;Wizado;JN25te @320m;1180;8;Vertical (VHF, UHF);wizado
+1710;EU1AEM;KO33tu @200m;1884;87;Yagi (UHF);EU1AEM
+1715;Enlightened-labs-Kona;BK29an @5m;195;4;Vertical (VHF, UHF);enlightened
+1718;YD0NXX;OI33jr @50m;118;0;Lindenblad (VHF);yd0nxx
+1729;CSPDHQ;JN95vf @85m;738;7;Turnstile (VHF, UHF);cspdhq
+1730;Marathon Library;DM80je @1240m;110;4;Eggbeater (UHF);mpl
+1735;Paddock wood ground station;JO01fe @20m;340;5;V-Dipole (VHF, UHF, L);sammyh1
+1768;EA3AGB;JN00gq @8m;1288;2;Eggbeater (VHF);ea3agb
+1787;NCG;KO29di @25m;417;5;Other Directional (UHF);ncg
+1793;SV1QZZ VHF #1;KM18va @208m;470;9;Turnstile (VHF);Fredy Damkalis
+1795;DL8LAQ;JO43xu @35m;912;10;Vertical (VHF, UHF, L);Norbert Goettsche
+1797;DL4EEC-SAT;JO33xp @6m;616;27;Ground Plane (VHF, UHF);Alexander Barz
+1804;Olomouc;JN89on @260m;379;7;Ground Plane (VHF, UHF);Leo
+1836;Vega80;EL29kn @7m;112;0;V-Dipole (VHF);J.P. Ruiz
+1841;VHF Turnstile IO82;IO82vx @100m;121;0;Cross Yagi (VHF);Carl Plant
+1852;SIBPABHAS E24MTA;OK03hq @6m;200;13;Vertical (VHF);Sibpabhas N.
+1863;Museum of Science and Technology;FN13wb @125m;40;14;Cross Yagi (UHF);phasewrap
+1;Hackerspace.gr 1;KM18ua @104m;7980;0;Yagi (VHF, UHF);Aris Nikas
+4;SV1IYO;KM18ua @120m;985;0;Turnstile (VHF) Turnstile (UHF);Vasilis Tsiligiannis
+36;oe8rke;JN76mu @1641m;8684;0;Yagi (UHF) Yagi (VHF) Helical (S) Helical (L);Robert Kiendl
+83;YO3GCF-VHF-1;KN34bp @90m;369;0;V-Dipole (VHF, UHF);YO3GCF
+87;M0IEB;IO91rf @30m;3171;5;Yagi (UHF) Yagi (VHF);drchrisbridges
+105;KU2Y;FN20ha @122m;4093;0;Eggbeater (VHF);Alan Johnston
+106;BEEGND-1;JO62fb @159m;1023;9;Turnstile (UHF);Technische Universität Berlin (TU Berlin)
+132;KEREL-UHF;JO30os @57m;3022;6;Yagi (UHF);kerel
+183;SPUTNIX-R2ANF-VHF/UHF-stationary;KO85qq @203m;12257;0;Quadrafilar (VHF) Quadrafilar (UHF);sputnix
+201;KO2F-UHF-1;FM08xn @186m;6756;0;Eggbeater (UHF);Bob KO2F
+208;YC2SAT_test;OI52ex @32m;905;18;Quadrafilar (VHF, UHF);Gie
+232;VK5QI-AZ/EL;PF95ig @80m;2331;7;Cross Yagi (UHF) Cross Yagi (VHF);Mark Jessop
+271;F5SNV;JN16nx @189m;5022;0;Turnstile (VHF);Didier ROUX
+280;Grove-VHF-01;FN42gh @62m;214;0;Turnstile (VHF);Henry Wychorski
+283;groundstation;IO92xt @1m;230;0;Vertical (VHF) Vertical (UHF);groundstation
+294;Nedap - Groenlo 01 - UHF Cross Yagi;JO32ha @33m;42;0;Cross Yagi (UHF);Nedap
+311;I3VFJ-1;JN65ds @5m;969;0;Eggbeater (UHF) Dipole (HF);i3vfj
+327;PA1RB - Geldrop Netherlands;JO21sk @9m;3508;0;Cross Yagi (VHF) Cross Yagi (UHF);Ralph PA1RB
+336;Chicago2;EN61eu @189m;1998;12;Vertical (VHF, UHF);William Gaylord
+375;AB3DC;EN82gj @230m;155;0;Turnstile (VHF) Turnstile (UHF);Dinesh Cyanam
+380;jle-tum-VHF;JN58ug @500m;1777;0;Turnstile (VHF);JLE
+384;PI9CAM;JO32et @10m;136;0;Yagi (UHF);pi9cam
+414;PKPingu Test Station BB;MM50qd @133m;252;0;Turnstile (UHF);Junaid Uppal
+449;LuSpace_NL;JO22fd @0m;11975;0;Lindenblad (VHF) Lindenblad (UHF);LuSpace
+471;blabs-satnogs-nr2;EM69rd @220m;183;0;Lindenblad (VHF) Lindenblad (UHF);dosman
+478;Mobile Station 1;KM17vx @178m;7;0;Yagi (UHF);Ilias Daradimos
+491;M0MMS;JN49ij @110m;787;0;Turnstile (UHF);Mark Mattingley-Scott
+492;Marcs-UHF;JN18cp @3m;6463;0;Turnstile (UHF);n5fxh
+500;SWSU Omnidirectional;KO81br @280m;6261;0;Quadrafilar (UHF);SWSU Observer
+507;Monkey One;CN85rm @70m;64;0;Discone (HF, VHF, UHF, L);chriscrewdson
+515;CU2JX;HM77es @122m;61;0;Vertical (VHF);pedro cruz
+517;DL1SSK Experimental;JN39we @225m;3640;0;Turnstile (VHF) Turnstile (UHF);ar3itrary
+531;SLU_SSRL;EM48vp @160m;269;0;Cross Yagi (UHF) Cross Yagi (VHF);slu_ssrl
+539;OZ3RF;JO47xa @1m;2272;0;Vertical (UHF);aausat_gnd
+546;5DSP;PF95hc @50m;135;0;Yagi (UHF) Turnstile (UHF);Bill Cowley
+557;LU4BMG;GF05rj @22m;238;0;Discone (HF, VHF, UHF, L);mario moriconi
+600;LA1K;JP53ek @25m;950;0;Helical (UHF) Cross Yagi (VHF) Cross Yagi (UHF);la1k
+642;k8zk;EM95oa @183m;257;0;Vertical (VHF) Vertical (UHF);David Strubbe
+683;Kenidowa_VHS;DN13up @803m;394;0;Dipole (HF, VHF, UHF);ken O'Hara
+689;EARTHI;IO91qf @69m;139;0;Vertical (VHF);spiruel
+704;kc1ist;FN42kj @30m;35920;40;Vertical (UHF) Ground Plane (UHF) Ground Plane (VHF);kc1ist
+780;OZ0AEK;JO47xa @15m;980;0;Vertical (UHF);aausat_gnd
+781;DE-FRE-VHF;JO32sl @25m;35;0;Dipole (HF, VHF, UHF) Vertical (VHF) Quadrafilar (VHF);DE-FRE
+822;oe2wnl;JN67kk @750m;4600;0;Yagi (UHF) Yagi (VHF);wolfman22
+834;Valpo WIRED Lab 1;EN61ll @240m;8524;0;Cross Yagi (UHF) Cross Yagi (VHF);wiredlab
+836;SF_GROUNDSTATION;IO91ml @40m;64;0;Dipole (HF, VHF, UHF);rds
+839;ESA Academy @ESTEC;JO22ff @0m;1445;0;Cross Yagi (UHF) Cross Yagi (VHF);esa_academy
+843;BEEGND-2;JO62mj @100m;1180;9;Cross Yagi (UHF);Technische Universität Berlin (TU Berlin)
+860;W7DM-6;CN87wq @100m;0;0;Vertical (VHF);w7dm
+869;White Rock New Mexico;DM65vt @1962m;61;0;Dipole (HF, VHF, UHF);David Palmer
+874;LizGS;KO28sj @92m;1790;0;Eggbeater (UHF);Kadi Ki
+905;Troy-1 GS;KN30ec @46m;3920;0;Turnstile (VHF);Deniz Menekay
+934;Satellite Attachment Terminal (SAT);IO91xn @30m;4295;3;Quadrafilar (VHF, UHF);Bogdan
+942;Sophon;GG76fu @630m;1245;0;V-Dipole (VHF);yurimdias
+952;Day of Radio SPb;KP50da @50m;109;0;Turnstile (VHF);dayofradiospb
+963;9V1AI;OJ11vh @92m;93;0;Discone (HF, VHF, UHF, L);Jayaram.
+967;YO8SDE;KN37sd @60m;230;0;Ground Plane (UHF) Ground Plane (VHF);yo8sde
+968;CE3VRT;FF46pi @550m;7;0;Turnstile (VHF);Alejandro CE3VRT
+984;KJ6DZB Pi4;CM87uv @15m;2481;0;Turnstile (VHF);Mathison Ott
+1000;Avia S;KM16bx @20m;760;0;Parabolic (S);Pierros Papadeas
+1003;Primary;CM98kq @1004m;1260;0;Quadrafilar (VHF);Kevin Elliott
+1013;ve4drk-test;EN19lu @239m;238;0;Vertical (UHF);ve4drk
+1023;VK5SAM- 2M;PF95jj @93m;172;0;Vertical (VHF);Sam Jackson
+1033;K8MU;EN82ml @200m;211;0;Vertical (VHF) Vertical (UHF);Larry Koziel
+1034;KD6SKJ;DM03tx @95m;1658;0;Quadrafilar (VHF);nazmul.ula
+1036;WizRd;PF95hd @103m;48;0;Dipole (HF, VHF, UHF);wizrd
+1040;Home;EN82cl @305m;1445;0;Vertical (VHF);K8ERS Eric
+1059;Test.KO85ws;KO85ws @151m;322;0;Vertical (VHF);ivantaran
+1069;SQ3XZ;JO82ik @100m;3038;0;Lindenblad (VHF) Lindenblad (UHF);Adam SQ3XZ
+1082;SATNOGS-PI3;JO99ei @16m;4;0;Turnstile (VHF);Steve Jacobsson
+1099;iw2lsi;JN45tq @260m;20;0;Yagi (UHF);Giampaolo Bellini
+1126;notch;FN44dg @370m;23672;43;Vertical (UHF) Ground Plane (UHF) Ground Plane (VHF);kc1ist
+1136;satnogs-gp;JN48tr @346m;161;0;Cross Yagi (VHF);superingole
+1156;VA2WBT;FN35em @70m;1171;0;V-Dipole (VHF);Andreas Warburton
+1197;RoInSpace, ISS;KN34ai @70m;36;0;Quadrafilar (VHF) Quadrafilar (UHF);cclaudiu
+1199;Hackerspace.gr 3;KM18ua @104m;2585;0;Eggbeater (VHF);Aris Nikas
+1231;Hanoi satellite station;OL21va @15m;14;0;Eggbeater (UHF) Eggbeater (UHF) Eggbeater (UHF);Tony Tran
+1233;PicoSatLab;NL53es @20m;89;0;Quadrafilar (VHF);nazmul.ula
+1306;Calne;IO91ak @200m;95;0;V-Dipole (VHF);mattgayton
+1390;VHF-UHF basic Station;JN06cp @300m;17;0;Vertical (VHF) Vertical (UHF);f5oeo
+1391;HB9FXX-Docker;JN36hp @100m;1194;0;Parabolic (L, S);Martin Herren
+1397;YC8NYJ;PI08jo @10m;4553;0;Quadrafilar (VHF, UHF);YC8NYJ
+1400;F4GPM;JN09mg @15m;3169;0;Quadrafilar (VHF) Quadrafilar (UHF) Turnstile (VHF);f4gpm
+1413;SV8SMW;JM99xo @70m;1853;0;Eggbeater (VHF) Discone (HF, VHF, UHF, L);ccsat
+1425;Eddyosp-Dva;EK09kh @2260m;15874;47;Turnstile (UHF);Eduardo Salazar Pérez XESWL-09125
+1426;ITR VHF;PF95he @10m;0;0;Yagi (VHF);itrgs
+1459;South Arm;QE36qx @7m;203;0;Vertical (VHF) Vertical (UHF);Herman Westerhof
+1462;EA4EKH;IN80nd @900m;586;0;Vertical (VHF);Raul EA4EKH
+1472;OK1KOM-Komorina;JN89eb @250m;385;0;Cross Yagi (UHF) Cross Yagi (VHF);PEKASAT SE
+1486;va2em-vhf-uhf;FN35io @56m;2833;9;Quadrafilar (VHF) Other Omni-Directional (UHF);Jacques Castonguay
+1497;USU GAS Team;DN41cr @1382m;6;0;Yagi (UHF);usugasteam
+1498;KG6JFY;CM87uu @15m;87;0;Quadrafilar (UHF);atom_bomb
+1503;trgo.sk BA1;JN88md @202m;306;0;Other Directional (UHF);trgo.sk
+1520;Rokantiskes;KO24qq @217m;2143;0;Dipole (HF, VHF, UHF) Discone (HF, VHF, UHF, L);emilis-net
+1544;IK7HTB David;JN80pj @10m;32;0;Cross Yagi (VHF) Yagi (UHF);David
+1547;GS_SAT_TEST;JN18dw @20m;40;0;V-Dipole (VHF);douby
+1565;Mosnita Noua - VHF - YO2MKE;KN05or @90m;60;0;Quadrafilar (VHF);Bogdan-Ioan BRUDIU
+1573;Moxon Turnstiled;JO02fe @98m;0;0;Other Omni-Directional (UHF);c0llabor8
+1589;EA5WA Bazooka Dipole;IM98bx @700m;1938;0;Dipole (UHF);Juan Carlos EA5WA
+1602;IT9HRE;JM78le @20m;1761;0;Vertical (VHF, UHF);it9hre
+1650;station-01;EK37mx @20m;613;0;Quadrafilar (UHF);Abraham Diaz de Leon Camou
+1653;PY3PK Testbed;GG40kh @50m;197;0;Ground Plane (VHF) Ground Plane (UHF);Pedro Kopper
+1673;XE1SEW;EK09vc @2450m;683;0;Other Directional (VHF, UHF);XE1SEW
+1720;Eureka Valley VHF;CM87ss @72m;120;0;Quadrafilar (VHF);kn6csd
+1723;ve2esm;FN35io @57m;1850;2;Turnstile (VHF) Eggbeater (UHF);J C
+1731;Helpringham;IO92uw @4m;15;0;Turnstile (VHF);Chris Payne
+1736;G4ZJH;JO02rf @10m;24;0;Other Omni-Directional (VHF);Ian Tickle
+1760;Lw9edz;GF05sh @17m;508;7;Turnstile (VHF, UHF);ROBERTO BENITEZ
+1766;hurl;PM00cg @19m;0;0;;curl
+1775;Vi3w Roy4l;CN88gk @9m;1043;34;Other Directional (VHF, UHF);vi3wroy4l
+1786;AkangGS;OI33tc @756m;9;0;Ground Plane (VHF, UHF);akangexperience
+1798;LSI home-station;IN83cl @56m;20;0;Vertical (VHF, UHF);luisobri
+1801;EA1FDQ;IN52qk @30m;214;0;Discone (VHF, UHF, L);ea1fdq
+1806;ve4drk-azel;EN19lu @239m;5;0;Cross Yagi (VHF, UHF);ve4drk
+1808;DH6BB-VHF-Omni;JO33uk @10m;62;0;Eggbeater (VHF);DH6BB Jens
+1814;YO8SDE2;KN37se @60m;54;0;Ground Plane (VHF, UHF);yo8sde
+1818;F5LZN;JN24ne @340m;22;0;Vertical (VHF, UHF);f5lzn
+1819;Ohio University Airport KUNI;EM89vf @220m;22;0;Helical (L, S);Ohio University
+1825;VK3YYZ-Omni;QF11eq @51m;96;0;Vertical (VHF, UHF);hughhalf
+1848;Test Ground #1;JN55jf @36m;0;0;Quadrafilar (VHF);noizeroger
+1857;VU2YQ-1;MK75aj @10m;51;1;Discone (VHF, UHF);Amey Pandit
