@@ -9,6 +9,9 @@ from pyproj import Transformer
 
 input_data_path = str(Path(__file__).parents[0].joinpath('input_data'))
 
+output_columns = ["time", "eci_x", "eci_y", "eci_z", "eci_vx", "eci_vy", "eci_vz", "kep_sma", "kep_ecc", "kep_inc",
+                  "kep_aop", "kep_raan", "kep_ta", "ecef_x", "ecef_y", "ecef_z", "ecef_vx", "ecef_vy", "ecef_vz"]
+
 
 def plot_sphere(ax, center, radius):
     u, v = np.mgrid[0:2 * np.pi:50j, 0:np.pi:50j]
@@ -121,9 +124,10 @@ def compute_visibility(pos_ecf, station):
     return visibility, elevation
 
 
-def write_results(propagation_name, spacecraft_name, orbit_name, dates_name, array):
+def write_results(spacecraft_name, orbit_name, dates_name, array):
     """
     Export propagation results to a CSV file.
     """
-    makedirs('results/' + propagation_name, exist_ok=True)
-    np.savetxt(f'results/{propagation_name}/{spacecraft_name}_{orbit_name}_{dates_name}.csv', array, delimiter=",")
+    makedirs('results/', exist_ok=True)
+    for ii in enumerate(output_columns):
+        np.savetxt(f'results/{spacecraft_name}_{orbit_name}_{dates_name}_{ii[1]}.csv', array, delimiter=",")
