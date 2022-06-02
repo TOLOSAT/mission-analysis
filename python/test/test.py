@@ -10,9 +10,8 @@ from tudatpy.util import result2array
 from useful_functions import *
 
 # Initial settings (independent of tudat)
-propagation_name = 'complete'  # 'keplerian', 'earthZonalJ5' or 'complete'
 orbit_name = 'SSO6'
-dates_name = '30days'
+dates_name = '5days'
 spacecraft_name = 'Tolosat'
 groundstation_name = 'test_station'
 
@@ -27,7 +26,7 @@ simulation_end_epoch = time_conversion.julian_day_to_seconds_since_epoch(
     time_conversion.calendar_date_to_julian_day(dates["end_date"]))
 
 # Create default body settings and bodies system
-bodies_to_create = ["Earth", "Sun", "Moon"]
+bodies_to_create = ["Earth", "Sun", "Moon", "Jupiter"]
 global_frame_origin = "Earth"
 global_frame_orientation = "J2000"
 body_settings = environment_setup.get_default_body_settings(
@@ -62,31 +61,22 @@ bodies_to_propagate = ["Spacecraft"]
 central_bodies = ["Earth"]
 
 # Define accelerations acting on the spacecraft
-acceleration_settings_spacecraft = {}
-if propagation_name == "keplerian":
-    acceleration_settings_spacecraft = dict(
-        Earth=[propagation_setup.acceleration.point_mass_gravity()]
-    )
-elif propagation_name == "earthZonalJ5":
-    acceleration_settings_spacecraft = dict(
-        Earth=[propagation_setup.acceleration.spherical_harmonic_gravity(5, 0)]
-    )
-elif propagation_name == "complete":
-    acceleration_settings_spacecraft = dict(
-        Sun=[
-            propagation_setup.acceleration.cannonball_radiation_pressure(),
-            propagation_setup.acceleration.point_mass_gravity()
-        ],
-        Earth=[
-            propagation_setup.acceleration.spherical_harmonic_gravity(5, 0),
-            propagation_setup.acceleration.aerodynamic()
-        ],
-        Moon=[
-            propagation_setup.acceleration.point_mass_gravity()
-        ]
-    )
-else:
-    print('Propagation name not recognized')
+acceleration_settings_spacecraft = dict(
+    Sun=[
+        propagation_setup.acceleration.cannonball_radiation_pressure(),
+        propagation_setup.acceleration.point_mass_gravity()
+    ],
+    Earth=[
+        propagation_setup.acceleration.spherical_harmonic_gravity(10, 10),
+        propagation_setup.acceleration.aerodynamic()
+    ],
+    Moon=[
+        propagation_setup.acceleration.point_mass_gravity()
+    ],
+    Jupiter=[
+        propagation_setup.acceleration.point_mass_gravity()
+    ]
+)
 
 acceleration_settings = {"Spacecraft": acceleration_settings_spacecraft}
 
@@ -139,7 +129,7 @@ dynamics_simulator = numerical_simulation.SingleArcSimulator(
     bodies, integrator_settings, propagator_settings
 )
 
-# Extract the resulting state history and convert it to an ndarray
+# Extract the resulting state history and convert it to a ndarray
 states = dynamics_simulator.state_history
 states_array = result2array(states)
 dependent_variables_history = dynamics_simulator.dependent_variable_history
@@ -147,6 +137,7 @@ dependent_variables_history_array = result2array(dependent_variables_history)
 
 sun_radius = bodies.get("Sun").shape_model.average_radius
 earth_radius = bodies.get("Earth").shape_model.average_radius
+states_array[:, 0] = states_array[:, 0] - states_array[0, 0]
 satellite_position = states_array[:, 1:4]
 sun_position = dependent_variables_history_array[:, 1:4]
 earth_position = dependent_variables_history_array[:, 4:7]
@@ -164,7 +155,7 @@ groundstation = get_station(groundstation_name)
 visibility, elevation = compute_visibility(ecef_position, groundstation)
 
 # Export results to a CSV file
-write_results(propagation_name, spacecraft_name, orbit_name, dates_name,
+write_results(spacecraft_name, orbit_name, dates_name,
               np.concatenate((states_array, keplerian_states, ecef_position), axis=1))
 
 # Create a static 3D figure of the trajectory
@@ -180,7 +171,7 @@ ax.legend()
 ax.set_xlabel('x [km]')
 ax.set_ylabel('y [km]')
 ax.set_zlabel('z [km]')
-plt.savefig(f'results/{propagation_name}/{spacecraft_name}_{orbit_name}_{dates_name}.png')
+plt.savefig(f'results/{spacecraft_name}_{orbit_name}_{dates_name}.png')
 plt.show()
 
 # Plot the shadow function
@@ -190,7 +181,7 @@ ax.set_title(f'Spacecraft shadow function')
 ax.plot((states_array[:, 0] - states_array[0, 0]) / 3600, satellite_shadow_function, label=bodies_to_propagate[0],
         linestyle='-')
 ax.set(xlabel='Time [h]', ylabel='Shadow function')
-plt.savefig(f'results/{propagation_name}/{spacecraft_name}_{orbit_name}_{dates_name}_shadow_function.png')
+plt.savefig(f'results/{spacecraft_name}_{orbit_name}_{dates_name}_shadow_function.png')
 plt.show()
 
 # Plot the visibility function
@@ -200,9 +191,9 @@ ax.set_title(f'Spacecraft ground station visibility function')
 ax.plot((states_array[:, 0] - states_array[0, 0]) / 3600, visibility, label=bodies_to_propagate[0],
         linestyle='-')
 ax.set(xlabel='Time [h]', ylabel='Visibility function')
-plt.savefig(f'results/{propagation_name}/{spacecraft_name}_{orbit_name}_{dates_name}_visibility_function.png')
+plt.savefig(f'results/{spacecraft_name}_{orbit_name}_{dates_name}_visibility_function.png')
 plt.show()
 
 # Write an interactive HTML visualization of the trajectory
 fig = plotly_trajectory_ecef(states_array)
-fig.write_html(f'results/{propagation_name}/{spacecraft_name}_{orbit_name}_{dates_name}.html')
+fig.write_html(f'results/{spacecraft_name}_{orbit_name}_{dates_name}.html')
