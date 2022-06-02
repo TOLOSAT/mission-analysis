@@ -10,7 +10,7 @@ The Mission Analysis subsystem is dedicated to the following tasks :
 - Identify how the evolution of the orbit impacts mission operations and payloads performance.
 - Provide other subsystems with support and training in orbital mechanics to help them ensure their subsystem is able to satisfy performance requirements in the short and long-term.
 
-## Structure of the repository
+## Table of Contents
 <!-- Start TOC (do not remove me) -->
 * [CelestLab](celestlab)
   * [Setup guide](celestlab/Celestlabsetup)
