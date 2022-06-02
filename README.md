@@ -11,5 +11,18 @@ The Mission Analysis subsystem is dedicated to the following tasks :
 - Provide other subsystems with support and training in orbital mechanics to help them ensure their subsystem is able to satisfy performance requirements in the short and long-term.
 
 ## Structure of the repository
-
---- WIP ---
+<!-- Start TOC (do not remove me) -->
+* [CelestLab](celestlab)
+  * [Setup guide](celestlab/Celestlabsetup)
+  * [Solar activity data](celestlab/Data)
+  * [Export trajectory for other subsystems](celestlab/ExportTrajectory)
+  * [Iridium studies](celestlab/Iridium)
+  * [Impact of launch year on mission duration](celestlab/LaunchYearMissionDuration)
+  * [Long-term eclipses](celestlab/LongTermEclipses)
+  * [Impacts of orbit insertion errors](celestlab/OrbitInsertionErrors)
+  * [Generate pretty visuals](celestlab/PrettyVisuals)
+  * [Generate plots with python](celestlab/PythonPlots)
+  * [SATNOGS studies](celestlab/SATNOGS)
+* [Python](python)
+* [Orekit](orekit)
+<!-- End TOC (do not remove me) -->
