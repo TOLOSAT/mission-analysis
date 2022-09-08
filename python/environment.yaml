@@ -1,7 +1,7 @@
-name: tudat-space
+name: tolosat-tudatpy
 channels:
   - conda-forge
-  - tudat-team
+  - tudat-team/label/dev
 dependencies:
   - tudatpy
   - matplotlib
