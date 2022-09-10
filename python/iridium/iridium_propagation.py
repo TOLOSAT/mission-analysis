@@ -1,16 +1,17 @@
+import pandas as pd
 from tudatpy.kernel import numerical_simulation
 from tudatpy.kernel.astro import time_conversion
 from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
 
-from iridium_TLEs import *
+from iridium_TLEs import iridium_states, iridium_NEXT_states, iridium_names, iridium_NEXT_names
 from useful_functions import get_dates
 
 # Load spice kernels
 spice.load_standard_kernels([])
 
-dates_name = "5days"
+dates_name = "1year"
 
 # Set simulation start and end epochs (in seconds since J2000 = January 1, 2000 at 00:00:00)
 dates = get_dates(dates_name)
@@ -27,7 +28,7 @@ body_settings = environment_setup.get_default_body_settings(
     bodies_to_create, global_frame_origin, global_frame_orientation)
 bodies = environment_setup.create_system_of_bodies(body_settings)
 
-# Define list of Irinum satellites and the acceleration model to be used
+# Define list of Iridium satellites and the acceleration model to be used
 iridium_all_names = iridium_names + iridium_NEXT_names
 acceleration_settings_iridium = dict(
     Earth=[
@@ -51,18 +52,7 @@ acceleration_models = propagation_setup.create_acceleration_models(
 )
 
 # Set initial conditions for the satellite
-iridium_states = np.concatenate((iridium_r, iridium_v), axis=1)
-iridium_NEXT_states = np.concatenate((iridium_NEXT_r, iridium_NEXT_v), axis=1)
 initial_state = iridium_states.flatten().tolist() + iridium_NEXT_states.flatten().tolist()
-
-# Setup dependent variables to be save
-# sun_position_dep_var = propagation_setup.dependent_variable.relative_position("Sun", "Earth")
-# earth_position_dep_var = propagation_setup.dependent_variable.relative_position("Earth", "Earth")
-# keplerian_states_dep_var = propagation_setup.dependent_variable.keplerian_state("Spacecraft", "Earth")
-# ecef_pos_dep_var = propagation_setup.dependent_variable.central_body_fixed_cartesian_position("Spacecraft", "Earth")
-# dependent_variables_to_save =
-# [sun_position_dep_var, earth_position_dep_var, keplerian_states_dep_var, ecef_pos_dep_var]
-dependent_variables_to_save = []
 
 # Create termination settings
 termination_condition = propagation_setup.propagator.time_termination(simulation_end_epoch)
@@ -73,8 +63,7 @@ propagator_settings = propagation_setup.propagator.translational(
     acceleration_models,
     bodies_to_propagate,
     initial_state,
-    termination_condition,
-    output_variables=dependent_variables_to_save
+    termination_condition
 )
 
 # Create numerical integrator settings
@@ -91,14 +80,9 @@ dynamics_simulator = numerical_simulation.SingleArcSimulator(
 # Extract the resulting state history and convert it to a ndarray
 states = dynamics_simulator.state_history
 states_array = result2array(states)
-# dependent_variables_history = dynamics_simulator.dependent_variable_history
-# dependent_variables_history_array = result2array(dependent_variables_history)
+states_dataframe = pd.DataFrame(states_array)
 
-# sun_radius = bodies.get("Sun").shape_model.average_radius
-# earth_radius = bodies.get("Earth").shape_model.average_radius
-# states_array[:, 0] = states_array[:, 0] - states_array[0, 0]
-# satellite_position = states_array[:, 1:4]
-# sun_position = dependent_variables_history_array[:, 1:4]
-# earth_position = dependent_variables_history_array[:, 4:7]
-# keplerian_states = dependent_variables_history_array[:, 7:13]
-# ecef_position = dependent_variables_history_array[:, 13:16]
+# Export results to files
+states_dataframe.iloc[:, 0].to_pickle("iridium_states/epochs.pkl")
+for sat in enumerate(iridium_all_names):
+    states_dataframe.iloc[:, (sat[0] * 6 + 1):(sat[0] * 6 + 7)].to_pickle(f"iridium_states/{sat[1]}.pkl")
