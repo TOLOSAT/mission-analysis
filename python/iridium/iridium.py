@@ -10,7 +10,7 @@ from tudatpy.kernel.astro.fundamentals import compute_shadow_function
 from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
-from iridium_states import *
+from iridium_TLEs import *
 
 from useful_functions import *
 

@@ -1,13 +1,16 @@
-from matplotlib import pyplot as plt
 from tudatpy.kernel import numerical_simulation
 from tudatpy.kernel.astro import time_conversion
 from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
-from iridium_states import *
+
+from iridium_TLEs import *
+from useful_functions import get_dates
 
 # Load spice kernels
 spice.load_standard_kernels([])
+
+dates_name = "5days"
 
 # Set simulation start and end epochs (in seconds since J2000 = January 1, 2000 at 00:00:00)
 dates = get_dates(dates_name)
@@ -53,11 +56,13 @@ iridium_NEXT_states = np.concatenate((iridium_NEXT_r, iridium_NEXT_v), axis=1)
 initial_state = iridium_states.flatten().tolist() + iridium_NEXT_states.flatten().tolist()
 
 # Setup dependent variables to be save
-sun_position_dep_var = propagation_setup.dependent_variable.relative_position("Sun", "Earth")
-earth_position_dep_var = propagation_setup.dependent_variable.relative_position("Earth", "Earth")
-keplerian_states_dep_var = propagation_setup.dependent_variable.keplerian_state("Spacecraft", "Earth")
-ecef_pos_dep_var = propagation_setup.dependent_variable.central_body_fixed_cartesian_position("Spacecraft", "Earth")
-dependent_variables_to_save = [sun_position_dep_var, earth_position_dep_var, keplerian_states_dep_var, ecef_pos_dep_var]
+# sun_position_dep_var = propagation_setup.dependent_variable.relative_position("Sun", "Earth")
+# earth_position_dep_var = propagation_setup.dependent_variable.relative_position("Earth", "Earth")
+# keplerian_states_dep_var = propagation_setup.dependent_variable.keplerian_state("Spacecraft", "Earth")
+# ecef_pos_dep_var = propagation_setup.dependent_variable.central_body_fixed_cartesian_position("Spacecraft", "Earth")
+# dependent_variables_to_save =
+# [sun_position_dep_var, earth_position_dep_var, keplerian_states_dep_var, ecef_pos_dep_var]
+dependent_variables_to_save = []
 
 # Create termination settings
 termination_condition = propagation_setup.propagator.time_termination(simulation_end_epoch)
@@ -86,14 +91,14 @@ dynamics_simulator = numerical_simulation.SingleArcSimulator(
 # Extract the resulting state history and convert it to a ndarray
 states = dynamics_simulator.state_history
 states_array = result2array(states)
-dependent_variables_history = dynamics_simulator.dependent_variable_history
-dependent_variables_history_array = result2array(dependent_variables_history)
+# dependent_variables_history = dynamics_simulator.dependent_variable_history
+# dependent_variables_history_array = result2array(dependent_variables_history)
 
-sun_radius = bodies.get("Sun").shape_model.average_radius
-earth_radius = bodies.get("Earth").shape_model.average_radius
-states_array[:, 0] = states_array[:, 0] - states_array[0, 0]
-satellite_position = states_array[:, 1:4]
-sun_position = dependent_variables_history_array[:, 1:4]
-earth_position = dependent_variables_history_array[:, 4:7]
-keplerian_states = dependent_variables_history_array[:, 7:13]
-ecef_position = dependent_variables_history_array[:, 13:16]
+# sun_radius = bodies.get("Sun").shape_model.average_radius
+# earth_radius = bodies.get("Earth").shape_model.average_radius
+# states_array[:, 0] = states_array[:, 0] - states_array[0, 0]
+# satellite_position = states_array[:, 1:4]
+# sun_position = dependent_variables_history_array[:, 1:4]
+# earth_position = dependent_variables_history_array[:, 4:7]
+# keplerian_states = dependent_variables_history_array[:, 7:13]
+# ecef_position = dependent_variables_history_array[:, 13:16]
