@@ -25,7 +25,10 @@ def get_iridium_state(tle_set):
     for tle in enumerate(tle_set):
         names.append(tle[1].name)
         epochs.append(tle[1].epoch)
-        orbit_tmp = tle[1].to_orbit()
+    epoch_max = max(epochs)
+    for tle in enumerate(tle_set):
+        epochs[tle[0]] = epoch_max
+        orbit_tmp = tle[1].to_orbit().propagate(epoch_max) # ATTENTION A LA METHODE DE PROPAGATION
         r[tle[0], :] = orbit_tmp.r.to_value(u.m)
         v[tle[0], :] = orbit_tmp.v.to_value(u.m / u.s)
     return names, epochs, r, v

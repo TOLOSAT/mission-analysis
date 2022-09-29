@@ -2,6 +2,7 @@ import csv
 from datetime import datetime, timedelta
 from os import makedirs
 from pathlib import Path
+import pandas as pd
 
 import numpy as np
 import plotly.graph_objects as go
@@ -36,12 +37,12 @@ def plotly_sphere(center, radius):
     return x - center[0], y - center[1], z - center[2]
 
 
-def plotly_trajectory_ecef(states_array):
+def plotly_trajectory(time, sat_x, sat_y, sat_z):
     fig = go.Figure(data=go.Scatter3d(
-        x=states_array[:, 1] / 1E3, y=states_array[:, 2] / 1E3, z=states_array[:, 3] / 1E3,
+        x=sat_x, y=sat_y, z=sat_z,
         marker=dict(
             size=2,
-            color=states_array[:, 0]
+            color=time
         )
     ))
     [earth_x, earth_y, earth_z] = plotly_sphere([0, 0, 0], 6371008.366666666)
@@ -124,6 +125,18 @@ def compute_visibility(pos_ecf, station):
     return visibility, elevation
 
 
+def ecf2lla(pos_ecf):
+    """
+    Convert ECF coordinates to LLA coordinates.
+    """
+    transformer = Transformer.from_crs(
+        {"proj": 'geocent', "ellps": 'WGS84', "datum": 'WGS84'},
+        {"proj": 'latlong', "ellps": 'WGS84', "datum": 'WGS84'}
+    )
+    out_lla = transformer.transform(pos_ecf[:, 0], pos_ecf[:, 1], pos_ecf[:, 2], radians=False)
+    return np.array(out_lla).T
+
+
 def write_results(spacecraft_name, orbit_name, dates_name, array):
     """
     Export propagation results to a CSV file.
@@ -131,3 +144,80 @@ def write_results(spacecraft_name, orbit_name, dates_name, array):
     makedirs('results/', exist_ok=True)
     for ii in enumerate(output_columns):
         np.savetxt(f'results/{spacecraft_name}_{orbit_name}_{dates_name}_{ii[1]}.csv', array, delimiter=",")
+
+
+def remove_html_margins(path):
+    with open(path, 'r') as f:
+        lines = f.readlines()
+    with open(path, 'w') as f:
+        for line in lines:
+            if '<head>' in line:
+                f.write(line.replace('<head>', '<head><style>body { margin: 0; }</style>'))
+            else:
+                f.write(line)
+
+
+def finish_plotly_figure(fig, path):
+    fig.write_html(path)
+    remove_html_margins(path)
+
+
+def plotly_groundtrack(time, lon, lat):
+    df = pd.DataFrame({'lon': lon, 'lat': lat, 'time': time})
+    df['time'] = pd.to_timedelta(df['time'], unit="seconds")
+
+    frames = []
+    for time in df['time']:
+        frames.append(
+            go.Frame(
+                name=str(pd.to_timedelta(time, unit="seconds")),
+                data=[go.Scattergeo(
+                    lon=df[(df['time'] <= time) & (df['time'] >= time - pd.to_timedelta(90, unit="minutes"))]['lon'],
+                    lat=df[(df['time'] <= time) & (df['time'] >= time - pd.to_timedelta(90, unit="minutes"))]['lat'],
+                    mode="lines",
+                    line=dict(width=2, color="blue"),
+                ),
+                    go.Scattergeo(
+                        lon=df[df['time'] == time]['lon'],
+                        lat=df[df['time'] == time]['lat'],
+                        mode="markers",
+                        marker=dict(size=5, color="orange"),
+                        text="Tolosat"
+                    )
+                ]
+
+            )
+        )
+
+    # now create figure and add play button and slider
+    fig = go.Figure(
+        data=frames[0].data,
+        frames=frames,
+        layout={
+            # "updatemenus": [
+            #     {
+            #         "type": "buttons",
+            #         "buttons": [{"label": "Play", "method": "animate", "args": [None]}],
+            #     }
+            # ],
+            "sliders": [
+                {
+                    "active": 0,
+                    "steps": [
+                        {
+                            "label": f.name,
+                            "method": "animate",
+                            "args": [[f.name]],
+                        }
+                        for f in frames
+                    ],
+                }
+            ],
+        },
+    ).update_geos(
+        scope="world",
+    )
+
+    fig.update_traces(hovertemplate=None, hoverinfo='skip')
+    fig.update_layout(template='plotly_dark')
+    return fig
