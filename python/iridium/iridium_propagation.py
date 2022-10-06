@@ -6,11 +6,16 @@ from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
 
-from iridium_TLEs import iridium_states, iridium_NEXT_states, iridium_names, iridium_NEXT_names
+from iridium_synchronisation import iridium_all_data_synced, iridium_all_names
 from useful_functions import get_dates, get_spacecraft, get_orbit
+
+print("Starting propagation of Iridium satellites...")
 
 # Load spice kernels
 spice.load_standard_kernels([])
+
+# Isolate states
+iridium_all_states = iridium_all_data_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
 
 # Get input data
 dates_name = "5days"
@@ -36,7 +41,6 @@ body_settings = environment_setup.get_default_body_settings(
 bodies = environment_setup.create_system_of_bodies(body_settings)
 
 # Define list of Iridium satellites and the acceleration model to be used
-iridium_all_names = iridium_names + iridium_NEXT_names
 all_spacecraft_names = ["Tolosat"] + iridium_all_names
 
 acceleration_settings_iridium = dict(
@@ -106,8 +110,7 @@ Tolosat_initial_state = element_conversion.keplerian_to_cartesian_elementwise(
     true_anomaly=np.deg2rad(Tolosat_orbit["true_anomaly"]),
 )
 
-initial_state = Tolosat_initial_state.tolist() + iridium_states.flatten().tolist() + \
-                iridium_NEXT_states.flatten().tolist()
+initial_state = Tolosat_initial_state.tolist() + iridium_all_states.flatten().tolist()
 
 # Create termination settings
 termination_condition = propagation_setup.propagator.time_termination(simulation_end_epoch)
@@ -141,3 +144,5 @@ states_dataframe = pd.DataFrame(states_array)
 states_dataframe.iloc[:, 0].to_pickle("iridium_states/epochs.pkl")
 for sat in enumerate(all_spacecraft_names):
     states_dataframe.iloc[:, (sat[0] * 6 + 1):(sat[0] * 6 + 7)].to_pickle(f"iridium_states/{sat[1]}.pkl")
+
+print("Done with Iridium propagation.")
