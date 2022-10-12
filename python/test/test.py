@@ -195,5 +195,5 @@ plt.savefig(f'results/{spacecraft_name}_{orbit_name}_{dates_name}_visibility_fun
 plt.show()
 
 # Write an interactive HTML visualization of the trajectory
-fig = plotly_trajectory_ecef(states_array)
+fig = plotly_trajectory(states_array)
 fig.write_html(f'results/{spacecraft_name}_{orbit_name}_{dates_name}.html')
