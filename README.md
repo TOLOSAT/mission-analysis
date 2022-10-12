@@ -11,7 +11,7 @@ The Mission Analysis subsystem is dedicated to the following tasks :
 - Provide other subsystems with support and training in orbital mechanics to help them ensure their subsystem is able to satisfy performance requirements in the short and long-term.
 
 ## Project Management
-The dashboard of the Mission Analysis team can be foud [here](https://github.com/orgs/TOLOSAT/projects/1/views/1).
+The dashboard of the Mission Analysis team can be found [here](https://github.com/orgs/TOLOSAT/projects/1/views/1).
 Open issues are available [here](https://github.com/TOLOSAT/mission-analysis/issues).
 Progress on the main milestones is visible [here](https://github.com/TOLOSAT/mission-analysis/milestones).
 
