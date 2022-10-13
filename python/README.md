@@ -5,11 +5,12 @@
 The TU Delft Astrodynamics Toolbox in Python, or tudatpy, is a python library that primarily exposes the powerful set
 of [Tudat](https://tudat.tudelft.nl/) C++ libraries for orbit propagation.
 
-The Tudat documentation, including generic tudatpy installation instructions and other links, is
-available [here](https://docs.tudat.space/en/stable/). The tudatpy API reference is
+The Tudat documentation is available [here](https://docs.tudat.space/en/stable/). The tudatpy API reference is
 available [here](https://py.api.tudat.space/en/latest/).
 
 ## Installation
+
+A more thorough setup guide is available [here](setup_guide/README.md).
 
 It is recommended to use [Anaconda](https://www.anaconda.com/) (includes Spyder, jupyter notebooks, etc.)
 or [Miniforge](https://github.com/conda-forge/miniforge) (lightweight alternative with `conda` only).
