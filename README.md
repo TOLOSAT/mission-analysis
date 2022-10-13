@@ -31,3 +31,9 @@ Progress on the main milestones is visible [here](https://github.com/TOLOSAT/mis
 * [Python](python)
 * [Orekit](orekit)
 <!-- End TOC (do not remove me) -->
+
+## How to use GitHub
+If you are new to git and GitHub, we recommend using [https://desktop.github.com/](GitHub Desktop).
+
+Once installed and logged in, `clone` this repository, then `fetch` and `pull` to download the repository on your machine.
+When ready to upload your work, select which changes to include, fill in some basic description then `commit` & `push`.
