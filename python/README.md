@@ -10,7 +10,7 @@ available [here](https://py.api.tudat.space/en/latest/).
 
 ## Installation
 
-**--------> A more thorough setup guide is available [here](setup_guide/README.md). <--------**
+**--------> A MORE DETAILED SETUP GUIDE IS AVAILABLE [HERE](setup_guide/README.md). <--------**
 
 It is recommended to use [Anaconda](https://www.anaconda.com/) (includes Spyder, jupyter notebooks, etc.)
 or [Miniforge](https://github.com/conda-forge/miniforge) (lightweight alternative with `conda` only).
