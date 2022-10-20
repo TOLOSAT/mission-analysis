@@ -6,7 +6,7 @@
 
 If you are an **experienced** git user, you can skip this section and go to the next one.
 
-To contribute work to the GitHub repository, we recommend using (GitHub Desktop)[https://desktop.github.com/].
+To contribute work to the GitHub repository, we recommend using [GitHub Desktop](https://desktop.github.com/).
 It has an easy to use graphical interface that allows you to `clone`, `pull`, `commit`, and `push` to repositories.
 
 Download the installer, follow the instructions, then open the application and log in with your GitHub account.
