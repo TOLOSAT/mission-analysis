@@ -1,13 +1,11 @@
 # Import statements
-import numpy as np
-from matplotlib import pyplot as plt
 from tudatpy.kernel import numerical_simulation
 from tudatpy.kernel.astro import element_conversion, time_conversion
 from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
 
-from useful_functions import eclipses, get_input_data, communication_windows, read_write, plot_functions
+from useful_functions import *
 
 # Initial settings (independent of tudat)
 orbit_name = 'SSO6'
