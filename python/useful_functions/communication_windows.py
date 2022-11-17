@@ -18,3 +18,4 @@ def compute_visibility(pos_ecf, station):
     elevation = 90 - np.arccos(dot_product) * 180 / np.pi
     visibility = elevation >= station["minimum_elevation"]
     return visibility, elevation
+    # a
