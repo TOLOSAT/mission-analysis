@@ -1,17 +1,19 @@
 # Import statements
+import numpy as np
+from matplotlib import pyplot as plt
 from tudatpy.kernel import numerical_simulation
 from tudatpy.kernel.astro import element_conversion, time_conversion
 from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
 
-from useful_functions import compute_eclipses, get_input_data,
+from useful_functions import eclipses, get_input_data, communication_windows, read_write, plot_functions
 
 # Initial settings (independent of tudat)
 orbit_name = 'SSO6'
 dates_name = '5days'
 spacecraft_name = 'Tolosat'
-groundstation_name = 'test_station'
+groundstation_name = 'toulouse'
 
 # Load spice kernels
 spice.load_standard_kernels([])
@@ -142,15 +144,15 @@ earth_position = dependent_variables_history_array[:, 4:7]
 keplerian_states = dependent_variables_history_array[:, 7:13]
 ecef_position = dependent_variables_history_array[:, 13:16]
 
-satellite_shadow_function = compute_eclipses.compute_shadow_vector(satellite_position, sun_position, earth_position,
-                                                                   sun_radius, earth_radius)
+satellite_shadow_function = eclipses.compute_shadow_vector(satellite_position, sun_position, earth_position,
+                                                           sun_radius, earth_radius)
 
-groundstation = get_station(groundstation_name)
-visibility, elevation = compute_visibility(ecef_position, groundstation)
+groundstation = get_input_data.get_station(groundstation_name)
+visibility, elevation = communication_windows.compute_visibility(ecef_position, groundstation)
 
 # Export results to a CSV file
-write_results(spacecraft_name, orbit_name, dates_name,
-              np.concatenate((states_array, keplerian_states, ecef_position), axis=1))
+read_write.write_results(spacecraft_name, orbit_name, dates_name,
+                         np.concatenate((states_array, keplerian_states, ecef_position), axis=1))
 
 # Create a static 3D figure of the trajectory
 fig = plt.figure(figsize=(7, 5.2), dpi=500)
@@ -158,7 +160,7 @@ ax = fig.add_subplot(111, projection='3d')
 ax.set_title(f'Spacecraft trajectory around the Earth')
 ax.plot(states_array[:, 1] / 1E3, states_array[:, 2] / 1E3, states_array[:, 3] / 1E3, label=bodies_to_propagate[0],
         linestyle='-.')
-plot_sphere(ax, [0, 0, 0], earth_radius / 1E3)
+plot_functions.plot_sphere(ax, [0, 0, 0], earth_radius / 1E3)
 
 # Add the legend and labels, then show the plot
 ax.legend()
@@ -189,6 +191,6 @@ plt.savefig(f'results/{spacecraft_name}_{orbit_name}_{dates_name}_visibility_fun
 plt.show()
 
 # Write an interactive HTML visualization of the trajectory
-fig = plotly_trajectory(states_array[:, 0], states_array[:, 1], states_array[:, 2],
-                        states_array[:, 3])
+fig = plot_functions.plotly_trajectory(states_array[:, 0], states_array[:, 1], states_array[:, 2],
+                                       states_array[:, 3])
 fig.write_html(f'results/{spacecraft_name}_{orbit_name}_{dates_name}.html')

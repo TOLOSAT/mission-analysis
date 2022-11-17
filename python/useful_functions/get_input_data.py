@@ -3,7 +3,7 @@ from datetime import datetime
 from datetime import timedelta
 from pathlib import Path
 
-input_data_path = str(Path(__file__).parents[0].joinpath('input_data'))
+input_data_path = str(Path(__file__).parents[1].joinpath('input_data'))
 
 
 def get_spacecraft(filename):
