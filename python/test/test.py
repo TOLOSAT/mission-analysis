@@ -7,6 +7,8 @@ from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
 
+from useful_functions import compute_eclipses
+
 from useful_functions import *
 
 # Initial settings (independent of tudat)
