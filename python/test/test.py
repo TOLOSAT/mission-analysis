@@ -1,15 +1,11 @@
 # Import statements
-from matplotlib import pyplot as plt
 from tudatpy.kernel import numerical_simulation
 from tudatpy.kernel.astro import element_conversion, time_conversion
-from tudatpy.kernel.astro.fundamentals import compute_shadow_function
 from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
 
-from useful_functions import compute_eclipses
-
-from useful_functions import *
+from useful_functions import compute_eclipses, get_input_data,
 
 # Initial settings (independent of tudat)
 orbit_name = 'SSO6'
@@ -21,7 +17,7 @@ groundstation_name = 'test_station'
 spice.load_standard_kernels([])
 
 # Set simulation start and end epochs (in seconds since J2000 = January 1, 2000 at 00:00:00)
-dates = get_dates(dates_name)
+dates = get_input_data.get_dates(dates_name)
 simulation_start_epoch = time_conversion.julian_day_to_seconds_since_epoch(
     time_conversion.calendar_date_to_julian_day(dates["start_date"]))
 simulation_end_epoch = time_conversion.julian_day_to_seconds_since_epoch(
@@ -37,11 +33,11 @@ bodies = environment_setup.create_system_of_bodies(body_settings)
 
 # Add vehicle object to system of bodies
 bodies.create_empty_body("Spacecraft")
-bodies.get("Spacecraft").mass = get_spacecraft(spacecraft_name)["mass"]
+bodies.get("Spacecraft").mass = get_input_data.get_spacecraft(spacecraft_name)["mass"]
 
 # Create aerodynamic coefficient interface settings, and add to vehicle
-reference_area = get_spacecraft(spacecraft_name)["drag_area"]
-drag_coefficient = get_spacecraft(spacecraft_name)["drag_coefficient"]
+reference_area = get_input_data.get_spacecraft(spacecraft_name)["drag_area"]
+drag_coefficient = get_input_data.get_spacecraft(spacecraft_name)["drag_coefficient"]
 aero_coefficient_settings = environment_setup.aerodynamic_coefficients.constant(
     reference_area, [drag_coefficient, 0, 0]
 )
@@ -49,8 +45,8 @@ environment_setup.add_aerodynamic_coefficient_interface(
     bodies, "Spacecraft", aero_coefficient_settings)
 
 # Create radiation pressure settings, and add to vehicle
-reference_area_radiation = get_spacecraft(spacecraft_name)["srp_area"]
-radiation_pressure_coefficient = get_spacecraft(spacecraft_name)["reflectivity_coefficient"]
+reference_area_radiation = get_input_data.get_spacecraft(spacecraft_name)["srp_area"]
+radiation_pressure_coefficient = get_input_data.get_spacecraft(spacecraft_name)["reflectivity_coefficient"]
 occulting_bodies = ["Earth"]
 radiation_pressure_settings = environment_setup.radiation_pressure.cannonball(
     "Sun", reference_area_radiation, radiation_pressure_coefficient, occulting_bodies
@@ -89,7 +85,7 @@ acceleration_models = propagation_setup.create_acceleration_models(
 
 # Set initial conditions for the satellite
 earth_gravitational_parameter = bodies.get("Earth").gravitational_parameter
-orbit = get_orbit(orbit_name)
+orbit = get_input_data.get_orbit(orbit_name)
 initial_state = element_conversion.keplerian_to_cartesian_elementwise(
     gravitational_parameter=earth_gravitational_parameter,
     semi_major_axis=orbit["semi_major_axis"],
@@ -146,12 +142,8 @@ earth_position = dependent_variables_history_array[:, 4:7]
 keplerian_states = dependent_variables_history_array[:, 7:13]
 ecef_position = dependent_variables_history_array[:, 13:16]
 
-satellite_shadow_function = np.empty(len(satellite_position))
-satellite_shadow_function[:] = np.NaN
-
-for ii in range(len(satellite_position)):
-    satellite_shadow_function[ii] = compute_shadow_function(sun_position[ii], sun_radius, earth_position[ii],
-                                                            earth_radius, satellite_position[ii])
+satellite_shadow_function = compute_eclipses.compute_shadow_vector(satellite_position, sun_position, earth_position,
+                                                                   sun_radius, earth_radius)
 
 groundstation = get_station(groundstation_name)
 visibility, elevation = compute_visibility(ecef_position, groundstation)
@@ -190,12 +182,13 @@ plt.show()
 fig = plt.figure(figsize=(7, 5.2), dpi=500)
 ax = fig.add_subplot(111)
 ax.set_title(f'Spacecraft ground station visibility function')
-ax.plot((states_array[:, 0] - states_array[0, 0]) / 3600, visibility, label=bodies_to_propagate[0],
+ax.plot(states_array[:, 0] / 3600, visibility, label=bodies_to_propagate[0],
         linestyle='-')
 ax.set(xlabel='Time [h]', ylabel='Visibility function')
 plt.savefig(f'results/{spacecraft_name}_{orbit_name}_{dates_name}_visibility_function.png')
 plt.show()
 
 # Write an interactive HTML visualization of the trajectory
-fig = plotly_trajectory(states_array)
+fig = plotly_trajectory(states_array[:, 0], states_array[:, 1], states_array[:, 2],
+                        states_array[:, 3])
 fig.write_html(f'results/{spacecraft_name}_{orbit_name}_{dates_name}.html')
