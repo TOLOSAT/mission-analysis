@@ -1,4 +1,5 @@
 # Import statements
+import numpy as np
 from matplotlib import pyplot as plt
 from tudatpy.kernel import numerical_simulation
 from tudatpy.kernel.astro import element_conversion, time_conversion
@@ -9,11 +10,12 @@ from tudatpy.util import result2array
 
 from useful_functions import *
 
+
 # Initial settings (independent of tudat)
 orbit_name = 'SSO6'
-dates_name = '1year'
+dates_name = '5days'
 spacecraft_name = 'Tolosat'
-groundstation_name = 'test_station'
+groundstation_name = 'toulouse'
 
 # Load spice kernels
 spice.load_standard_kernels([])
@@ -144,9 +146,19 @@ ecef_position = dependent_variables_history_array[:, 13:16]
 satellite_shadow_function = np.empty(len(satellite_position))
 satellite_shadow_function[:] = np.NaN
 
-for ii in range(len(satellite_position)):
-    satellite_shadow_function[ii] = compute_shadow_function(sun_position[ii], sun_radius, earth_position[ii],
-                                                            earth_radius, satellite_position[ii])
+#Compute shadow function and eclipses
+satellite_shadow_function = compute_shadow_vector(satellite_position, sun_position, earth_position,
+                                                  sun_radius, earth_radius)
+
+epochs = np.empty(len(satellite_position))
+for i in range(len(satellite_position)):
+    epochs[i] = simulation_start_epoch + i*fixed_step_size
+
+all_eclipses = compute_eclipses(satellite_position, sun_position, sun_radius, earth_position, earth_radius,
+                                epochs, fixed_step_size)
+
+print(all_eclipses)
+
 
 groundstation = get_station(groundstation_name)
 visibility, elevation = compute_visibility(ecef_position, groundstation)
@@ -191,6 +203,19 @@ ax.set(xlabel='Time [h]', ylabel='Visibility function')
 plt.savefig(f'results/{spacecraft_name}_{orbit_name}_{dates_name}_visibility_function.png')
 plt.show()
 
-# Write an interactive HTML visualization of the trajectory
-fig = plotly_trajectory_ecef(states_array)
-fig.write_html(f'results/{spacecraft_name}_{orbit_name}_{dates_name}.html')
+# # Write an interactive HTML visualization of the trajectory
+# fig = plotly_trajectory(states_array);
+# fig.write_html(f'results/{spacecraft_name}_{orbit_name}_{dates_name}.html')
+
+## ECLIPSES ##
+# --> load the solar activity
+#--> compute the solar pression force line 49 53
+# --> re-run the simulation
+
+
+
+
+## PLOT THE ORBIT EVOLUTION ##
+# new radiation_pressure_settings taking into accounts solar activity
+#stela_solar_activity = open(,'rt')
+
