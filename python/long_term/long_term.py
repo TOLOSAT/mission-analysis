@@ -10,9 +10,8 @@ from tudatpy.util import result2array
 
 from useful_functions import *
 
-
 # Initial settings (independent of tudat)
-orbit_name = 'SSO6'
+orbit_name = 'test_orbit3'
 dates_name = '5days'
 spacecraft_name = 'Tolosat'
 groundstation_name = 'toulouse'
@@ -146,62 +145,61 @@ ecef_position = dependent_variables_history_array[:, 13:16]
 satellite_shadow_function = np.empty(len(satellite_position))
 satellite_shadow_function[:] = np.NaN
 
-#Compute shadow function and eclipses
-satellite_shadow_function = compute_shadow_vector(satellite_position, sun_position, earth_position,
-                                                  sun_radius, earth_radius)
+# Compute shadow function and eclipses
+shadow_vector = compute_shadow_vector(satellite_position, sun_position, earth_position,
+                                      sun_radius, earth_radius)
 
 epochs = np.empty(len(satellite_position))
 for i in range(len(satellite_position)):
-    epochs[i] = simulation_start_epoch + i*fixed_step_size
+    epochs[i] = simulation_start_epoch + i * fixed_step_size
 
 all_eclipses = compute_eclipses(satellite_position, sun_position, sun_radius, earth_position, earth_radius,
-                                epochs, fixed_step_size)
+                                epochs, fixed_step_size, eclipse_type="Umbra")
 
 print(all_eclipses)
 
-
-groundstation = get_station(groundstation_name)
-visibility, elevation = compute_visibility(ecef_position, groundstation)
-
-# Export results to a CSV file
-write_results(spacecraft_name, orbit_name, dates_name,
-              np.concatenate((states_array, keplerian_states, ecef_position), axis=1))
-
-# Create a static 3D figure of the trajectory
-fig = plt.figure(figsize=(7, 5.2), dpi=500)
-ax = fig.add_subplot(111, projection='3d')
-ax.set_title(f'Spacecraft trajectory around the Earth')
-ax.plot(states_array[:, 1] / 1E3, states_array[:, 2] / 1E3, states_array[:, 3] / 1E3, label=bodies_to_propagate[0],
-        linestyle='-.')
-plot_sphere(ax, [0, 0, 0], earth_radius / 1E3)
-
-# Add the legend and labels, then show the plot
-ax.legend()
-ax.set_xlabel('x [km]')
-ax.set_ylabel('y [km]')
-ax.set_zlabel('z [km]')
-plt.savefig(f'results/{spacecraft_name}_{orbit_name}_{dates_name}.png')
-plt.show()
-
-# Plot the shadow function
-fig = plt.figure(figsize=(7, 5.2), dpi=500)
-ax = fig.add_subplot(111)
-ax.set_title(f'Spacecraft shadow function')
-ax.plot((states_array[:, 0] - states_array[0, 0]) / 3600, satellite_shadow_function, label=bodies_to_propagate[0],
-        linestyle='-')
-ax.set(xlabel='Time [h]', ylabel='Shadow function')
-plt.savefig(f'results/{spacecraft_name}_{orbit_name}_{dates_name}_shadow_function.png')
-plt.show()
-
-# Plot the visibility function
-fig = plt.figure(figsize=(7, 5.2), dpi=500)
-ax = fig.add_subplot(111)
-ax.set_title(f'Spacecraft ground station visibility function')
-ax.plot((states_array[:, 0] - states_array[0, 0]) / 3600, visibility, label=bodies_to_propagate[0],
-        linestyle='-')
-ax.set(xlabel='Time [h]', ylabel='Visibility function')
-plt.savefig(f'results/{spacecraft_name}_{orbit_name}_{dates_name}_visibility_function.png')
-plt.show()
+# groundstation = get_station(groundstation_name)
+# visibility, elevation = compute_visibility(ecef_position, groundstation)
+#
+# # Export results to a CSV file
+# write_results(spacecraft_name, orbit_name, dates_name,
+#               np.concatenate((states_array, keplerian_states, ecef_position), axis=1))
+#
+# # Create a static 3D figure of the trajectory
+# fig = plt.figure(figsize=(7, 5.2), dpi=500)
+# ax = fig.add_subplot(111, projection='3d')
+# ax.set_title(f'Spacecraft trajectory around the Earth')
+# ax.plot(states_array[:, 1] / 1E3, states_array[:, 2] / 1E3, states_array[:, 3] / 1E3, label=bodies_to_propagate[0],
+#         linestyle='-.')
+# plot_sphere(ax, [0, 0, 0], earth_radius / 1E3)
+#
+# # Add the legend and labels, then show the plot
+# ax.legend()
+# ax.set_xlabel('x [km]')
+# ax.set_ylabel('y [km]')
+# ax.set_zlabel('z [km]')
+# plt.savefig(f'results/{spacecraft_name}_{orbit_name}_{dates_name}.png')
+# plt.show()
+#
+# # Plot the shadow function
+# fig = plt.figure(figsize=(7, 5.2), dpi=500)
+# ax = fig.add_subplot(111)
+# ax.set_title(f'Spacecraft shadow function')
+# ax.plot((states_array[:, 0] - states_array[0, 0]) / 3600, satellite_shadow_function, label=bodies_to_propagate[0],
+#         linestyle='-')
+# ax.set(xlabel='Time [h]', ylabel='Shadow function')
+# plt.savefig(f'results/{spacecraft_name}_{orbit_name}_{dates_name}_shadow_function.png')
+# plt.show()
+#
+# # Plot the visibility function
+# fig = plt.figure(figsize=(7, 5.2), dpi=500)
+# ax = fig.add_subplot(111)
+# ax.set_title(f'Spacecraft ground station visibility function')
+# ax.plot((states_array[:, 0] - states_array[0, 0]) / 3600, visibility, label=bodies_to_propagate[0],
+#         linestyle='-')
+# ax.set(xlabel='Time [h]', ylabel='Visibility function')
+# plt.savefig(f'results/{spacecraft_name}_{orbit_name}_{dates_name}_visibility_function.png')
+# plt.show()
 
 # # Write an interactive HTML visualization of the trajectory
 # fig = plotly_trajectory(states_array);
@@ -209,13 +207,10 @@ plt.show()
 
 ## ECLIPSES ##
 # --> load the solar activity
-#--> compute the solar pression force line 49 53
+# --> compute the solar pression force line 49 53
 # --> re-run the simulation
-
-
 
 
 ## PLOT THE ORBIT EVOLUTION ##
 # new radiation_pressure_settings taking into accounts solar activity
-#stela_solar_activity = open(,'rt')
-
+# stela_solar_activity = open(,'rt')
