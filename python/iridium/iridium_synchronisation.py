@@ -1,11 +1,11 @@
 import numpy as np
 from tudatpy.kernel import numerical_simulation
-from tudatpy.kernel.astro import time_conversion
 from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
 
 from iridium_TLEs import iridium_all_data
+from useful_functions import datetime_to_epoch, epoch_to_datetime
 
 # Create new synced Iridium DataFrame
 iridium_all_data_synced = iridium_all_data.copy()
@@ -19,8 +19,7 @@ iridium_all_epochs = iridium_all_data["epoch"].to_list()
 
 # Set simulation end epoch (in seconds since J2000 = January 1, 2000 at 00:00:00)
 end_date = max(iridium_all_epochs).to_datetime()
-simulation_end_epoch = time_conversion.julian_day_to_seconds_since_epoch(
-    time_conversion.calendar_date_to_julian_day(end_date))
+simulation_end_epoch = datetime_to_epoch(end_date)
 
 # Create default body settings and bodies system
 bodies_to_create = ["Earth"]
@@ -54,8 +53,7 @@ for spacecraft in iridium_all_names:
     print("Synchronising " + spacecraft + "...")
     # Set simulation start epoch (in seconds since J2000 = January 1, 2000 at 00:00:00)
     start_date = iridium_all_data[iridium_all_data["name"] == spacecraft]["epoch"].item().to_datetime()
-    simulation_start_epoch = time_conversion.julian_day_to_seconds_since_epoch(
-        time_conversion.calendar_date_to_julian_day(start_date))
+    simulation_start_epoch = datetime_to_epoch(start_date)
 
     Delta_t = simulation_end_epoch - simulation_start_epoch
 
@@ -95,8 +93,7 @@ for spacecraft in iridium_all_names:
     states = dynamics_simulator.state_history
     states_array = result2array(states)
     end_date_actual = states_array[-1, 0]
-    end_epoch = time_conversion.julian_day_to_calendar_date(
-        time_conversion.seconds_since_epoch_to_julian_day(end_date_actual))
+    end_epoch = epoch_to_datetime(end_date_actual)
 
     iridium_all_data_synced.loc[iridium_all_data_synced["name"] == spacecraft, ["x", "y", "z", "vx", "vy", "vz"]] = \
         states_array[-1, 1:7]
