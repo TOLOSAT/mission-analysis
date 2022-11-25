@@ -12,11 +12,3 @@ for file in files:
             columns[column[1]] = column_names[column[0]]
 
         results[file].rename(columns=columns, inplace=True)
-
-
-# delta f = 37500 Hz dopper shift max +/-
-# delta f dot = 350-375 Hz/s +/-
-# f0 = 1621.25 MHz
-# satellite visibility : semi angle = 30-40 deg
-# pointage zenith // pointage soleil
-

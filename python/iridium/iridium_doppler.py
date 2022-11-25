@@ -27,3 +27,9 @@ for sat in results:
         beta = dv / c
         gamma = 1 / np.sqrt(1 - beta ** 2)
         results[sat]["doppler"] = 1 / (gamma * (1 + beta * np.cos(theta_r)))
+
+# delta f = 37500 Hz doppler shift max +/-
+# delta f dot = 350-375 Hz/s +/-
+# f0 = 1621.25 MHz
+# satellite visibility : semi angle = 30-40 deg
+# pointage zenith // pointage soleil
