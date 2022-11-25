@@ -1,10 +1,12 @@
-from results_processing import results
 import numpy as np
+
+from results_processing import results
+from useful_functions import date_transformations as dt
 
 c = 299792458  # m/s
 f0 = 1621.25e6  # H
 delta_f_limit = 37500  # Hz doppler shift max +/-
-delta_f_dot_limit = 350 - 375  # Hz/s doppler rate max +/-
+delta_f_dot_limit = 350  # 375  # Hz/s doppler rate max +/-
 semi_angle_limit_tolosat = 30  # deg semi-angle visibility
 semi_angle_limit_iridium = 30  # deg semi-angle visibility
 # pointage zenith // pointage soleil ??
@@ -16,9 +18,9 @@ sat_sun = sat_sun / np.linalg.norm(sat_sun, axis=1)[:, None]
 tmp_vector = np.cross(sat_sun, zenith)
 top_pointing = np.cross(tmp_vector, sat_sun)
 
-print("Starting Iridium analysis...")
+print("Starting Iridium Doppler analysis...")
 for sat in results:
-    if sat == "epochs" or sat == "Tolosat" or sat == "sun_position":
+    if "IRIDIUM" not in sat:
         continue
     else:
         iridium_position = results[sat][["x", "y", "z"]].to_numpy()
@@ -67,5 +69,8 @@ for sat in results:
 
         if results[sat]["all_OK"].any():
             print(f"{sat} OK")
+
+results['datetime'] = dt.epoch_to_datetime(results['epochs'])
+results["timedelta"] = results["datetime"] - results["datetime"][0]
 
 print("Done")

@@ -9,7 +9,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from PIL import Image
 
-assets_path = str(Path(__file__).parents[1].joinpath('assets'))
+assets_path = str(Path(__file__).parents[2].joinpath('assets'))
 
 
 # Function to prepare output folder and return path
@@ -56,7 +56,7 @@ def finish_dark_figure(fig, path, show=True):
     plt.tight_layout()
     fig.subplots_adjust(bottom=0.20)
     fig_axes1 = fig.add_axes([0.772, 0.01, 0.22, 0.3], anchor='SE', zorder=1)
-    Badge_TOLOSAT_dark = Image.open(assets_path + 'TOLOSAT_dark.png')
+    Badge_TOLOSAT_dark = Image.open(assets_path + '/TOLOSAT_dark.png')
     fig_axes1.imshow(Badge_TOLOSAT_dark)
     Badge_TOLOSAT_dark.close()
     fig_axes1.axis('off')
@@ -74,7 +74,7 @@ def finish_light_figure(fig, path, show=True):
     plt.tight_layout()
     fig.subplots_adjust(bottom=0.20)
     fig_axes1 = fig.add_axes([0.772, 0.01, 0.22, 0.3], anchor='SE', zorder=1)
-    Badge_TOLOSAT_light = Image.open(assets_path + 'TOLOSAT_light.png')
+    Badge_TOLOSAT_light = Image.open(assets_path + '/TOLOSAT_light.png')
     fig_axes1.imshow(Badge_TOLOSAT_light)
     Badge_TOLOSAT_light.close()
     fig_axes1.axis('off')

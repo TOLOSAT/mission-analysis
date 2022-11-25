@@ -18,7 +18,7 @@ spice.load_standard_kernels([])
 iridium_all_states = iridium_all_data_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
 
 # Get input data
-dates_name = "30days"
+dates_name = "1year_10sec"
 spacecraft_name = "Tolosat"
 orbit_name = "SSO6"
 
