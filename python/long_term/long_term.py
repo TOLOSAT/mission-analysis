@@ -2,7 +2,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from tudatpy.kernel import numerical_simulation
-from tudatpy.kernel.astro import element_conversion, time_conversion
+from tudatpy.kernel.astro import element_conversion
 from tudatpy.kernel.astro.fundamentals import compute_shadow_function
 from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
@@ -21,10 +21,8 @@ spice.load_standard_kernels([])
 
 # Set simulation start and end epochs (in seconds since J2000 = January 1, 2000 at 00:00:00)
 dates = get_dates(dates_name)
-simulation_start_epoch = time_conversion.julian_day_to_seconds_since_epoch(
-    time_conversion.calendar_date_to_julian_day(dates["start_date"]))
-simulation_end_epoch = time_conversion.julian_day_to_seconds_since_epoch(
-    time_conversion.calendar_date_to_julian_day(dates["end_date"]))
+simulation_start_epoch = datetime_to_epoch(dates["start_date"])
+simulation_end_epoch = datetime_to_epoch(dates["end_date"])
 
 # Create default body settings and bodies system
 bodies_to_create = ["Earth", "Sun", "Moon"]
@@ -145,16 +143,12 @@ ecef_position = dependent_variables_history_array[:, 13:16]
 satellite_shadow_function = np.empty(len(satellite_position))
 satellite_shadow_function[:] = np.NaN
 
-# Compute shadow function and eclipses
-shadow_vector = compute_shadow_vector(satellite_position, sun_position, earth_position,
-                                      sun_radius, earth_radius)
-
 epochs = np.empty(len(satellite_position))
 for i in range(len(satellite_position)):
     epochs[i] = simulation_start_epoch + i * fixed_step_size
 
 all_eclipses = compute_eclipses(satellite_position, sun_position, sun_radius, earth_position, earth_radius,
-                                epochs, fixed_step_size, eclipse_type="Umbra")
+                                epoch_to_datetime(epochs), eclipse_type="Umbra")
 
 print(all_eclipses)
 

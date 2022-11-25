@@ -26,7 +26,6 @@ def compute_shadow_vector(satellite_position, sun_position, earth_position, sun_
          - 1 if the satellite is fully sunlit
          - a value between 0 and 1 if the satellite is in penumbra
     """
-    print("Computing shadow vector")
     shadow_vector = np.empty(len(satellite_position))
     shadow_vector[:] = np.NaN
     for ii in range(len(satellite_position)):
@@ -36,7 +35,7 @@ def compute_shadow_vector(satellite_position, sun_position, earth_position, sun_
 
 
 def compute_eclipses(satellite_position, sun_position, sun_radius, earth_position, earth_radius, epochs,
-                     step_size, eclipse_type="Umbra"):
+                     eclipse_type="Umbra"):
     shadow_vector = compute_shadow_vector(satellite_position, sun_position,
                                           earth_position, sun_radius, earth_radius)
 
@@ -48,10 +47,26 @@ def compute_eclipses(satellite_position, sun_position, sun_radius, earth_positio
     else:
         raise ValueError("Type must be Umbra or Penumbra")
 
+    # Code steps from https://joshdevlin.com/blog/calculate-streaks-in-pandas/
     shadow_df['start_bool'] = shadow_df["bool"].ne(shadow_df["bool"].shift(1))
     shadow_df['end_bool'] = shadow_df["bool"].ne(shadow_df["bool"].shift(-1))
     shadow_df['streak_id'] = shadow_df['start_bool'].cumsum()
 
-    # https://joshdevlin.com/blog/calculate-streaks-in-pandas/
+    shadow_df.loc[shadow_df['start_bool'], 'start'] = shadow_df['epochs']
+    shadow_df['start'] = shadow_df['start'].fillna(method="ffill")
+    shadow_df = shadow_df[shadow_df['end_bool']]
+    shadow_df = shadow_df.rename({
+        "epochs": "end",
+        "bool": "eclipse"
+    }, axis=1)
+    shadow_df = shadow_df[["eclipse", "start", "end"]]
+    shadow_df = shadow_df[shadow_df['eclipse']].drop("eclipse", axis=1)
+    shadow_df['duration'] = shadow_df['end'] - shadow_df['start']
+    shadow_df = shadow_df.reset_index(drop=True)
 
+    shadow_df['partial'] = False
+    if shadow_df.loc[0, "start"] == epochs[0]:
+        shadow_df.loc[0, 'partial'] = True
+    if shadow_df.loc[shadow_df.index[-1], "end"] == epochs[-1]:
+        shadow_df.loc[shadow_df.index[-1], 'partial'] = True
     return shadow_df
