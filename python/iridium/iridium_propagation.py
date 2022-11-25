@@ -18,7 +18,7 @@ spice.load_standard_kernels([])
 iridium_all_states = iridium_all_data_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
 
 # Get input data
-dates_name = "5days"
+dates_name = "30days"
 spacecraft_name = "Tolosat"
 orbit_name = "SSO6"
 
@@ -112,6 +112,10 @@ Tolosat_initial_state = element_conversion.keplerian_to_cartesian_elementwise(
 
 initial_state = Tolosat_initial_state.tolist() + iridium_all_states.flatten().tolist()
 
+# Setup dependent variables
+sun_position_dep_var = propagation_setup.dependent_variable.relative_position("Sun", "Earth")
+dependent_variables_to_save = [sun_position_dep_var]
+
 # Create termination settings
 termination_condition = propagation_setup.propagator.time_termination(simulation_end_epoch)
 
@@ -121,7 +125,8 @@ propagator_settings = propagation_setup.propagator.translational(
     acceleration_models,
     bodies_to_propagate,
     initial_state,
-    termination_condition
+    termination_condition,
+    output_variables=dependent_variables_to_save
 )
 
 # Create numerical integrator settings
@@ -140,7 +145,12 @@ states = dynamics_simulator.state_history
 states_array = result2array(states)
 states_dataframe = pd.DataFrame(states_array)
 
+dependent_variables_history = dynamics_simulator.dependent_variable_history
+dependent_variables_history_array = result2array(dependent_variables_history)
+sun_position_dataframe = pd.DataFrame(dependent_variables_history_array)
+
 # Export results to files
+sun_position_dataframe.iloc[:, 1:4].to_pickle("iridium_states/sun_position.pkl")
 states_dataframe.iloc[:, 0].to_pickle("iridium_states/epochs.pkl")
 for sat in enumerate(all_spacecraft_names):
     states_dataframe.iloc[:, (sat[0] * 6 + 1):(sat[0] * 6 + 7)].to_pickle(f"iridium_states/{sat[1]}.pkl")
