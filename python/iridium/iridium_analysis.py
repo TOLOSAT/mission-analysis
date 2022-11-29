@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from iridium_doppler import results
+from iridium_doppler import results, IRIDIUM_visibility
 from useful_functions import plot_functions as pf
 
 fig, axes = pf.dark_figure()
@@ -38,3 +38,12 @@ axes[0].set_xlabel("Time [hours]")
 axes[0].set_ylabel("Visibility")
 axes[0].set_xlim(0, time_limit.total_seconds() / 3600)
 pf.finish_dark_figure(fig, "IRIDIUM_visibility.png", show=True)
+
+fig, axes = pf.dark_figure()
+axes[0].plot(results["timedelta"].dt.total_seconds() / 86400, IRIDIUM_visibility["sum_ok"].to_list(), linestyle="none",
+             marker=".")
+axes[0].set_title("Visibility of IRIDIUM satellites satisfying all 4 conditions")
+axes[0].set_xlabel("Time [days]")
+axes[0].set_ylabel("Number of satellites [-]")
+axes[0].set_xlim(0, max(results["timedelta"].dt.total_seconds()) / 86400)
+pf.finish_dark_figure(fig, "IRIDIUM_all_ok.png", show=True)

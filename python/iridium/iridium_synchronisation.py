@@ -44,7 +44,8 @@ acceleration_models = propagation_setup.create_acceleration_models(
 )
 
 # Create termination settings
-termination_condition = propagation_setup.propagator.time_termination(simulation_end_epoch)
+termination_condition = propagation_setup.propagator.time_termination(simulation_end_epoch,
+                                                                      terminate_exactly_on_final_condition=True)
 
 print("Starting sync of Iridium satellites...")
 # Synchronise all Iridium spacecraft to the maximum epoch

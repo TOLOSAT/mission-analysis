@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 from results_processing import results
 from useful_functions import date_transformations as dt
@@ -19,6 +20,7 @@ tmp_vector = np.cross(sat_sun, zenith)
 top_pointing = np.cross(tmp_vector, sat_sun)
 
 print("Starting Iridium Doppler analysis...")
+IRIDIUM_visibility = [results["epochs"].copy().rename("epochs")]
 for sat in results:
     if "IRIDIUM" not in sat:
         continue
@@ -67,9 +69,13 @@ for sat in results:
         results[sat]["all_OK"] = results[sat]["doppler_shift_OK"] & results[sat]["doppler_rate_OK"] & results[sat][
             "tolosat_visibility_OK"] & results[sat]["iridium_visibility_OK"]
 
+        IRIDIUM_visibility.append(results[sat]["all_OK"].rename(sat))
+
         if results[sat]["all_OK"].any():
             print(f"{sat} OK")
 
+IRIDIUM_visibility = pd.concat(IRIDIUM_visibility, axis=1)
+IRIDIUM_visibility["sum_ok"] = IRIDIUM_visibility.select_dtypes(include=['bool']).sum(axis=1)
 results['datetime'] = dt.epoch_to_datetime(results['epochs'])
 results["timedelta"] = results["datetime"] - results["datetime"][0]
 
