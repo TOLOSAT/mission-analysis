@@ -29,7 +29,7 @@ body_settings = environment_setup.get_default_body_settings(
     bodies_to_create, global_frame_origin, global_frame_orientation)
 acceleration_settings_iridium = dict(
     Earth=[
-        propagation_setup.acceleration.spherical_harmonic_gravity(10, 10)
+        propagation_setup.acceleration.spherical_harmonic_gravity(2, 0)
     ]
 )
 bodies_to_propagate = ["Iridium"]

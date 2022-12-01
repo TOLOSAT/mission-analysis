@@ -43,7 +43,7 @@ all_spacecraft_names = ["Tolosat"] + iridium_all_names
 
 acceleration_settings_iridium = dict(
     Earth=[
-        propagation_setup.acceleration.spherical_harmonic_gravity(10, 10)
+        propagation_setup.acceleration.spherical_harmonic_gravity(2, 0)
     ]
 )
 acceleration_settings_tolosat = dict(
