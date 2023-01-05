@@ -6,7 +6,7 @@ from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
 
-from iridium_synchronisation import iridium_all_data_synced, iridium_all_names
+from iridium_synchronisation import iridium_data_synced, iridium_names
 from useful_functions import get_dates, get_spacecraft, get_orbit, datetime_to_epoch
 
 print("Starting propagation of Iridium satellites...")
@@ -15,7 +15,7 @@ print("Starting propagation of Iridium satellites...")
 spice.load_standard_kernels([])
 
 # Isolate states
-iridium_all_states = iridium_all_data_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
+iridium_all_states = iridium_data_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
 
 # Get input data
 dates_name = "1year_10sec"
@@ -39,7 +39,7 @@ body_settings = environment_setup.get_default_body_settings(
 bodies = environment_setup.create_system_of_bodies(body_settings)
 
 # Define list of Iridium satellites and the acceleration model to be used
-all_spacecraft_names = ["Tolosat"] + iridium_all_names
+all_spacecraft_names = ["Tolosat"] + iridium_names
 
 acceleration_settings_iridium = dict(
     Earth=[
@@ -69,7 +69,7 @@ bodies.create_empty_body("Tolosat")
 bodies.get("Tolosat").mass = Tolosat["mass"]
 
 # Create bodies to propagate and define their acceleration settings
-for spacecraft in iridium_all_names:
+for spacecraft in iridium_names:
     bodies.create_empty_body(spacecraft)
     acceleration_settings[spacecraft] = acceleration_settings_iridium
 
