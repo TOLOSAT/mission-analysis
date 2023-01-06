@@ -4,20 +4,20 @@ from iridium_doppler import results, IRIDIUM_visibility
 from useful_functions import plot_functions as pf
 
 fig, axes = pf.dark_figure()
-axes[0].plot(results["timedelta"].dt.total_seconds() / 86400, results['IRIDIUM 73']["doppler_shift"])
-axes[0].set_title("Doppler shift of IRIDIUM 73")
+axes[0].plot(results["timedelta"].dt.total_seconds() / 86400, results['IRIDIUM 100']["doppler_shift"])
+axes[0].set_title("Doppler shift of IRIDIUM 100")
 axes[0].set_xlabel("Time [days]")
 axes[0].set_ylabel("Doppler shift [Hz]")
 axes[0].set_xlim(0, max(results["timedelta"].dt.total_seconds()) / 86400)
-pf.finish_dark_figure(fig, "IRIDIUM_73_doppler_shift.png", show=True)
+pf.finish_dark_figure(fig, "IRIDIUM_100_doppler_shift.png", show=True)
 
 fig, axes = pf.dark_figure()
-axes[0].plot(results["timedelta"].dt.total_seconds() / 86400, results['IRIDIUM 73']["doppler_rate"])
-axes[0].set_title("Doppler rate of IRIDIUM 73")
+axes[0].plot(results["timedelta"].dt.total_seconds() / 86400, results['IRIDIUM 100']["doppler_rate"])
+axes[0].set_title("Doppler rate of IRIDIUM 100")
 axes[0].set_xlabel("Time [days]")
 axes[0].set_ylabel("Doppler rate [Hz/s]")
 axes[0].set_xlim(0, max(results["timedelta"].dt.total_seconds()) / 86400)
-pf.finish_dark_figure(fig, "IRIDIUM_73_doppler_rate.png", show=True)
+pf.finish_dark_figure(fig, "IRIDIUM_100_doppler_rate.png", show=True)
 
 IRIDIUM_visible = None
 for sat in results:
