@@ -1,13 +1,13 @@
 import numpy as np
 import pandas as pd
 from tudatpy.kernel import numerical_simulation
-from tudatpy.kernel.astro import time_conversion, element_conversion
+from tudatpy.kernel.astro import element_conversion
 from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
 
-from iridium_synchronisation import iridium_all_data_synced, iridium_all_names
-from useful_functions import get_dates, get_spacecraft, get_orbit
+from iridium_synchronisation import iridium_data_synced, iridium_names
+from useful_functions import get_dates, get_spacecraft, get_orbit, datetime_to_epoch
 
 print("Starting propagation of Iridium satellites...")
 
@@ -15,10 +15,10 @@ print("Starting propagation of Iridium satellites...")
 spice.load_standard_kernels([])
 
 # Isolate states
-iridium_all_states = iridium_all_data_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
+iridium_all_states = iridium_data_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
 
 # Get input data
-dates_name = "5days"
+dates_name = "1year_10sec"
 spacecraft_name = "Tolosat"
 orbit_name = "SSO6"
 
@@ -27,10 +27,8 @@ Tolosat_orbit = get_orbit(orbit_name)
 
 # Set simulation start and end epochs (in seconds since J2000 = January 1, 2000 at 00:00:00)
 dates = get_dates(dates_name)
-simulation_start_epoch = time_conversion.julian_day_to_seconds_since_epoch(
-    time_conversion.calendar_date_to_julian_day(dates["start_date"]))
-simulation_end_epoch = time_conversion.julian_day_to_seconds_since_epoch(
-    time_conversion.calendar_date_to_julian_day(dates["end_date"]))
+simulation_start_epoch = datetime_to_epoch(dates["start_date"])
+simulation_end_epoch = datetime_to_epoch(dates["end_date"])
 
 # Create default body settings and bodies system
 bodies_to_create = ["Earth", "Sun", "Moon", "Jupiter"]
@@ -41,11 +39,11 @@ body_settings = environment_setup.get_default_body_settings(
 bodies = environment_setup.create_system_of_bodies(body_settings)
 
 # Define list of Iridium satellites and the acceleration model to be used
-all_spacecraft_names = ["Tolosat"] + iridium_all_names
+all_spacecraft_names = ["Tolosat"] + iridium_names
 
 acceleration_settings_iridium = dict(
     Earth=[
-        propagation_setup.acceleration.spherical_harmonic_gravity(10, 10)
+        propagation_setup.acceleration.spherical_harmonic_gravity(2, 0)
     ]
 )
 acceleration_settings_tolosat = dict(
@@ -71,7 +69,7 @@ bodies.create_empty_body("Tolosat")
 bodies.get("Tolosat").mass = Tolosat["mass"]
 
 # Create bodies to propagate and define their acceleration settings
-for spacecraft in iridium_all_names:
+for spacecraft in iridium_names:
     bodies.create_empty_body(spacecraft)
     acceleration_settings[spacecraft] = acceleration_settings_iridium
 
@@ -112,6 +110,10 @@ Tolosat_initial_state = element_conversion.keplerian_to_cartesian_elementwise(
 
 initial_state = Tolosat_initial_state.tolist() + iridium_all_states.flatten().tolist()
 
+# Setup dependent variables
+sun_position_dep_var = propagation_setup.dependent_variable.relative_position("Sun", "Earth")
+dependent_variables_to_save = [sun_position_dep_var]
+
 # Create termination settings
 termination_condition = propagation_setup.propagator.time_termination(simulation_end_epoch)
 
@@ -121,7 +123,8 @@ propagator_settings = propagation_setup.propagator.translational(
     acceleration_models,
     bodies_to_propagate,
     initial_state,
-    termination_condition
+    termination_condition,
+    output_variables=dependent_variables_to_save
 )
 
 # Create numerical integrator settings
@@ -140,7 +143,12 @@ states = dynamics_simulator.state_history
 states_array = result2array(states)
 states_dataframe = pd.DataFrame(states_array)
 
+dependent_variables_history = dynamics_simulator.dependent_variable_history
+dependent_variables_history_array = result2array(dependent_variables_history)
+sun_position_dataframe = pd.DataFrame(dependent_variables_history_array)
+
 # Export results to files
+sun_position_dataframe.iloc[:, 1:4].to_pickle("iridium_states/sun_position.pkl")
 states_dataframe.iloc[:, 0].to_pickle("iridium_states/epochs.pkl")
 for sat in enumerate(all_spacecraft_names):
     states_dataframe.iloc[:, (sat[0] * 6 + 1):(sat[0] * 6 + 7)].to_pickle(f"iridium_states/{sat[1]}.pkl")

@@ -3,24 +3,26 @@ from tudatpy.kernel import numerical_simulation
 from tudatpy.kernel.astro import time_conversion
 from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
+from tudatpy.kernel.astro.element_conversion import keplerian_to_cartesian
 from tudatpy.util import result2array
 
-from iridium_TLEs import iridium_all_data
+from iridium_TLEs import iridium_data
+from useful_functions import datetime_to_epoch, epoch_to_datetime
 
 # Create new synced Iridium DataFrame
-iridium_all_data_synced = iridium_all_data.copy()
+iridium_data_synced = iridium_data.copy()
 
 # Load spice kernels
 spice.load_standard_kernels([])
 
 # Define list of Iridium satellites and the acceleration model to be used
-iridium_all_names = iridium_all_data["name"].to_list()
-iridium_all_epochs = iridium_all_data["epoch"].to_list()
+iridium_names = iridium_data["name"].to_list()
+iridium_epochs = iridium_data["epoch"].to_list()
 
 # Set simulation end epoch (in seconds since J2000 = January 1, 2000 at 00:00:00)
-end_date = max(iridium_all_epochs).to_datetime()
-simulation_end_epoch = time_conversion.julian_day_to_seconds_since_epoch(
-    time_conversion.calendar_date_to_julian_day(end_date))
+
+simulation_end_epoch = max(iridium_epochs)
+end_date = epoch_to_datetime(simulation_end_epoch)
 
 # Create default body settings and bodies system
 bodies_to_create = ["Earth"]
@@ -49,33 +51,30 @@ termination_condition = propagation_setup.propagator.time_termination(simulation
 
 print("Starting sync of Iridium satellites...")
 # Synchronise all Iridium spacecraft to the maximum epoch
-for spacecraft in iridium_all_names:
+for spacecraft in iridium_names:
     print("--------------------------------")
     print("Synchronising " + spacecraft + "...")
     # Set simulation start epoch (in seconds since J2000 = January 1, 2000 at 00:00:00)
-    start_date = iridium_all_data[iridium_all_data["name"] == spacecraft]["epoch"].item().to_datetime()
-    simulation_start_epoch = time_conversion.julian_day_to_seconds_since_epoch(
-        time_conversion.calendar_date_to_julian_day(start_date))
+
+    simulation_start_epoch = iridium_data[iridium_data["name"] == spacecraft]["epoch"].item()
+    start_date = epoch_to_datetime(simulation_start_epoch)
 
     Delta_t = simulation_end_epoch - simulation_start_epoch
 
     # Create numerical integrator settings
-
-    if Delta_t == 0:
-        print("No need to synchronise " + spacecraft + ".")
-        continue
-    elif Delta_t < 10:
+    if Delta_t < 10:
         step_size = Delta_t
     else:
         step_size = Delta_t / (10 ** np.floor(np.log10(Delta_t)))
-    print(f"Start_epoch: {str(start_date)}, End_epoch: {str(end_date)}, Delta_t: {Delta_t}, Step_size: {step_size}")
+    print(f"Start: {str(start_date)}, End: {str(end_date)}, Delta_t: {Delta_t}, Step_size: {step_size}")
     integrator_settings = propagation_setup.integrator.runge_kutta_4(
         simulation_start_epoch, step_size
     )
 
     # Set initial conditions for the satellite
-    initial_state = iridium_all_data[iridium_all_data["name"] == spacecraft][
-        ["x", "y", "z", "vx", "vy", "vz"]].to_numpy().tolist()[0]
+    initial_state = keplerian_to_cartesian(iridium_data[iridium_data["name"] == spacecraft]
+                                           [["sma", "ecc", "inc", "aop", "raan", "tan"]].to_numpy().tolist()[0],
+                                           bodies.get("Earth").gravitational_parameter)
 
     # Create propagation settings
     propagator_settings = propagation_setup.propagator.translational(
@@ -88,7 +87,7 @@ for spacecraft in iridium_all_names:
 
     # Create simulation object and propagate the dynamics
     dynamics_simulator = numerical_simulation.SingleArcSimulator(
-        bodies, integrator_settings, propagator_settings, print_state_data=False
+        bodies, integrator_settings, propagator_settings, print_state_data=False, print_dependent_variable_data=False
     )
 
     # Extract the resulting state history and convert it to a ndarray
@@ -98,9 +97,9 @@ for spacecraft in iridium_all_names:
     end_epoch = time_conversion.julian_day_to_calendar_date(
         time_conversion.seconds_since_epoch_to_julian_day(end_date_actual))
 
-    iridium_all_data_synced.loc[iridium_all_data_synced["name"] == spacecraft, ["x", "y", "z", "vx", "vy", "vz"]] = \
+    iridium_data_synced.loc[iridium_data_synced["name"] == spacecraft, ["x", "y", "z", "vx", "vy", "vz"]] = \
         states_array[-1, 1:7]
-    iridium_all_data_synced.loc[iridium_all_data_synced["name"] == spacecraft, "epoch"] = end_epoch
+    iridium_data_synced.loc[iridium_data_synced["name"] == spacecraft, "epoch"] = end_epoch
 
     print(f"Done synchronising {spacecraft} to {end_epoch}.")
 print("--------------------------------")
