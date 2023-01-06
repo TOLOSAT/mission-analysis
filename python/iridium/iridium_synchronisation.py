@@ -62,15 +62,11 @@ for spacecraft in iridium_names:
     Delta_t = simulation_end_epoch - simulation_start_epoch
 
     # Create numerical integrator settings
-
-    if Delta_t == 0:
-        print("No need to synchronise " + spacecraft + ".")
-        continue
-    elif Delta_t < 10:
+    if Delta_t < 10:
         step_size = Delta_t
     else:
         step_size = Delta_t / (10 ** np.floor(np.log10(Delta_t)))
-    print(f"Start_epoch: {str(start_date)}, End_epoch: {str(end_date)}, Delta_t: {Delta_t}, Step_size: {step_size}")
+    print(f"Start: {str(start_date)}, End: {str(end_date)}, Delta_t: {Delta_t}, Step_size: {step_size}")
     integrator_settings = propagation_setup.integrator.runge_kutta_4(
         simulation_start_epoch, step_size
     )
