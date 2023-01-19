@@ -79,4 +79,24 @@ IRIDIUM_visibility["sum_ok"] = IRIDIUM_visibility.select_dtypes(include=['bool']
 results['datetime'] = dt.epoch_to_datetime(results['epochs'])
 results["timedelta"] = results["datetime"] - results["datetime"][0]
 
+IRIDIUM_windows = IRIDIUM_visibility.copy()
+IRIDIUM_windows["bool"] = IRIDIUM_windows["sum_ok"] > 0
+
+# Code steps from https://joshdevlin.com/blog/calculate-streaks-in-pandas/
+IRIDIUM_windows['start_bool'] = IRIDIUM_windows["bool"].ne(IRIDIUM_windows["bool"].shift(1))
+IRIDIUM_windows['end_bool'] = IRIDIUM_windows["bool"].ne(IRIDIUM_windows["bool"].shift(-1))
+IRIDIUM_windows['streak_id'] = IRIDIUM_windows['start_bool'].cumsum()
+
+IRIDIUM_windows.loc[IRIDIUM_windows['start_bool'], 'start'] = IRIDIUM_windows['epochs']
+IRIDIUM_windows['start'] = IRIDIUM_windows['start'].fillna(method="ffill")
+IRIDIUM_windows = IRIDIUM_windows[IRIDIUM_windows['end_bool']]
+IRIDIUM_windows = IRIDIUM_windows.rename({
+    "epochs": "end",
+    "bool": "eclipse"
+}, axis=1)
+IRIDIUM_windows = IRIDIUM_windows[["eclipse", "start", "end"]]
+IRIDIUM_windows = IRIDIUM_windows[IRIDIUM_windows['eclipse']].drop("eclipse", axis=1)
+IRIDIUM_windows['duration'] = IRIDIUM_windows['end'] - IRIDIUM_windows['start']
+IRIDIUM_windows = IRIDIUM_windows.reset_index(drop=True)
+
 print("Done")
