@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from iridium_doppler import results, IRIDIUM_visibility
+from iridium_doppler import results, IRIDIUM_visibility, IRIDIUM_windows
 from useful_functions import plot_functions as pf
 
 fig, axes = pf.dark_figure()
@@ -61,9 +61,8 @@ axes[0].set_xlim(min(results["timedelta"].loc[mask].dt.total_seconds()),
                  max(results["timedelta"].loc[mask].dt.total_seconds()))
 pf.finish_dark_figure(fig, "IRIDIUM_all_ok_1day_doppler_shift.png", show=True)
 
-
 mask = (results["timedelta"] > timedelta(hours=2325, minutes=10)) & (
-        results["timedelta"] <= timedelta(hours=2335,minutes=13))
+        results["timedelta"] <= timedelta(hours=2335, minutes=13))
 fig, axes = pf.dark_figure()
 axes[0].plot(results["timedelta"].loc[mask].dt.total_seconds(),
              IRIDIUM_visibility.loc[mask, "sum_ok"].to_list(), linestyle="none",
@@ -71,12 +70,22 @@ axes[0].plot(results["timedelta"].loc[mask].dt.total_seconds(),
 axes[0].set_title("Visibility of IRIDIUM satellites satisfying all 4 conditions")
 axes[0].set_xlabel("Time [seconds]")
 axes[0].set_ylabel("Number of satellites [-]")
-axes[0].set_xlim(min(results["timedelta"].loc[mask].dt.total_seconds()), max(results["timedelta"].loc[mask].dt.total_seconds()))
+axes[0].set_xlim(min(results["timedelta"].loc[mask].dt.total_seconds()),
+                 max(results["timedelta"].loc[mask].dt.total_seconds()))
 pf.finish_dark_figure(fig, "IRIDIUM_all_ok_1day.png", show=True)
 
 for sat in results:
     if "IRIDIUM" not in sat:
         continue
-    if any(results[sat].loc[mask,"all_OK"]):
+    if any(results[sat].loc[mask, "all_OK"]):
         print(sat)
-        print(results["datetime"].loc[mask].loc[results[sat].loc[mask,"all_OK"]].to_list())
+        print(results["datetime"].loc[mask].loc[results[sat].loc[mask, "all_OK"]].to_list())
+
+fig, axes = pf.dark_figure()
+axes[0].vlines(IRIDIUM_windows['elapsed'].dt.total_seconds() / 86400, 0, IRIDIUM_windows['duration'] / 60)
+axes[0].set_title("Visibility windows of at least one IRIDIUM satellite")
+axes[0].set_xlabel("Elapsed time [days]")
+axes[0].set_ylabel("Window duration [mins]")
+axes[0].set_ylim(0, IRIDIUM_windows['duration'].max() / 60)
+axes[0].set_xlim(0, max(IRIDIUM_windows['elapsed'].tail(1).dt.total_seconds() / 86400))
+pf.finish_dark_figure(fig, "IRIDIUM_windows.png", show=True)

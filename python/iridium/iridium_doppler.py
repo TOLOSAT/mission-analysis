@@ -96,7 +96,15 @@ IRIDIUM_windows = IRIDIUM_windows.rename({
 }, axis=1)
 IRIDIUM_windows = IRIDIUM_windows[["eclipse", "start", "end"]]
 IRIDIUM_windows = IRIDIUM_windows[IRIDIUM_windows['eclipse']].drop("eclipse", axis=1)
-IRIDIUM_windows['duration'] = IRIDIUM_windows['end'] - IRIDIUM_windows['start']
+IRIDIUM_windows.rename({"start": "start_epoch", "end": "end_epoch"}, axis=1, inplace=True)
+IRIDIUM_windows["start"] = dt.epoch_to_datetime(IRIDIUM_windows["start_epoch"])
+IRIDIUM_windows["end"] = dt.epoch_to_datetime(IRIDIUM_windows["end_epoch"])
+IRIDIUM_windows['duration'] = IRIDIUM_windows['end_epoch'] - IRIDIUM_windows['start_epoch']
+IRIDIUM_windows['duration_timedelta'] = IRIDIUM_windows['end'] - IRIDIUM_windows['start']
+IRIDIUM_windows['elapsed']=IRIDIUM_windows['start']-IRIDIUM_windows['start'][0]
 IRIDIUM_windows = IRIDIUM_windows.reset_index(drop=True)
+
+
+
 
 print("Done")
