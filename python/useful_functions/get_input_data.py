@@ -46,6 +46,8 @@ def get_dates(filename):
         for row in reader:
             if row[0] == 'step_size':
                 info = timedelta(seconds=int(row[1]))
+            elif row[0] == 'propagation_days':
+                info = timedelta(days=int(row[1]))
             else:
                 info = datetime.strptime(row[1], '%Y-%m-%d-%H:%M:%S')
             dates[row[0]] = info
