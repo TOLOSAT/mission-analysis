@@ -132,7 +132,7 @@ while propagation_end_date - propagation_duration < simulation_end_date:
         acceleration_models,
         bodies_to_propagate,
         initial_state,
-        termination_condition,
+        termination_settings,
         output_variables=[sun_position_dep_var]
     )
 
