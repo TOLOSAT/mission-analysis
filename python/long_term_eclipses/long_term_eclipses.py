@@ -116,7 +116,15 @@ while propagation_end_date - propagation_duration < simulation_end_date:
     propagation_end_epoch = datetime_to_epoch(propagation_end_date)
 
     # Create termination settings
-    termination_condition = propagation_setup.propagator.time_termination(propagation_end_epoch)
+    termination_time = propagation_setup.propagator.time_termination(propagation_end_epoch)
+    termination_altitude = propagation_setup.propagator.dependent_variable_termination(
+        dependent_variable_settings=propagation_setup.dependent_variable.altitude("Spacecraft", "Earth"),
+        limit_value=100.0E3,
+        use_as_lower_limit=True,
+        terminate_exactly_on_final_condition=False
+    )
+    termination_settings = propagation_setup.propagator.hybrid_termination([termination_time, termination_altitude],
+                                                                           fulfill_single_condition=True)
 
     # Create propagation settings
     propagator_settings = propagation_setup.propagator.translational(
