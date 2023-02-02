@@ -162,7 +162,7 @@ while propagation_end_date - propagation_duration < simulation_end_date:
     # Store the eclipses results
     eclipses = compute_eclipses(satellite_position, sun_position, sun_radius, earth_radius,
                                 epoch_to_datetime(epochs), eclipse_type="Umbra")
-    eclipses["partial"] = eclipses["partial"].astype("boolean")
+
     all_eclipses = pd.concat([all_eclipses, eclipses], ignore_index=True)
 
     # Update initial conditions
@@ -171,6 +171,7 @@ while propagation_end_date - propagation_duration < simulation_end_date:
     # Update propagation dates
     propagation_start_date = propagation_end_date
     propagation_end_date = propagation_start_date + propagation_duration
+all_eclipses["partial"] = all_eclipses["partial"].astype("boolean")
 print("Done!")
 print(all_eclipses)
 
