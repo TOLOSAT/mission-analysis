@@ -8,14 +8,14 @@ from useful_functions import date_transformations as dt
 c = 299792458  # m/s
 f0 = 1621.25e6  # H
 delta_f_limit = 37500  # Hz doppler shift max +/-
-delta_f_dot_limit = 350  # 375  # Hz/s doppler rate max +/-
+delta_f_dot_limit = 350  # 375 # Hz/s doppler rate max +/-
 semi_angle_limit_tolosat = 30  # deg semi-angle visibility
 semi_angle_limit_iridium = 30  # deg semi-angle visibility
 
 
 # pointage zenith // pointage soleil ??
 
-def compute_doppler_visibility(results_dict, f1, f2):
+def compute_doppler_visibility(results_dict):
     zenith = results_dict["Tolosat"][["x", "y", "z"]]
     zenith = zenith / np.linalg.norm(zenith, axis=1)[:, None]
     sat_sun = results_dict["sun_position"] - zenith
@@ -23,7 +23,7 @@ def compute_doppler_visibility(results_dict, f1, f2):
     tmp_vector = np.cross(sat_sun, zenith)
     top_pointing = np.cross(tmp_vector, sat_sun)
     visibility = [results_dict["epochs"].copy().rename("epochs")]
-    for sat in tqdm(results_dict, ncols=80, desc=f"Dataset {f1}/{f2}"):
+    for sat in tqdm(results_dict, ncols=80, desc=f"Satellites", position=1, leave=False):
         if "IRIDIUM" not in sat:
             continue
         else:
@@ -117,9 +117,9 @@ folders = [int(x) for x in folders]
 folders.sort()
 
 print(f"Starting Doppler processing of {len(folders)} datasets...")
-for folder in folders:
+for folder in tqdm(folders, ncols=80, desc="Datasets", position=0, leave=True):
     results = get_results_dict(f"iridium_states/{folder}")
-    tmp_visibility, tmp_windows = compute_doppler_visibility(results, folder + 1, folders[-1] + 1)
+    tmp_visibility, tmp_windows = compute_doppler_visibility(results)
     IRIDIUM_visibility = pd.concat([IRIDIUM_visibility, tmp_visibility], ignore_index=True)
     IRIDIUM_windows = pd.concat([IRIDIUM_windows, tmp_windows], ignore_index=True)
 
