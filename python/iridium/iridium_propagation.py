@@ -2,6 +2,7 @@ from os import makedirs
 
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 from tudatpy.kernel import numerical_simulation
 from tudatpy.kernel.astro import element_conversion
 from tudatpy.kernel.interface import spice
@@ -11,8 +12,6 @@ from tudatpy.util import result2array
 from iridium_synchronisation import iridium_data_synced, iridium_names
 from useful_functions import get_dates, get_spacecraft, get_orbit, datetime_to_epoch
 
-print("Starting propagation of Iridium satellites...")
-
 # Load spice kernels
 spice.load_standard_kernels([])
 
@@ -20,7 +19,7 @@ spice.load_standard_kernels([])
 iridium_all_states = iridium_data_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
 
 # Get input data
-dates_name = "1year_10sec_iter"
+dates_name = "3years_10sec_iter"
 spacecraft_name = "Tolosat"
 orbit_name = "SSO6"
 
@@ -30,7 +29,7 @@ Tolosat_orbit = get_orbit(orbit_name)
 # Set simulation start and end epochs (in seconds since J2000 = January 1, 2000 at 00:00:00)
 dates = get_dates(dates_name)
 simulation_start_date = iridium_data_synced["epoch"].iloc[0]
-simulation_end_date = dates["end_date"]-dates["start_date"]+simulation_start_date
+simulation_end_date = dates["end_date"] - dates["start_date"] + simulation_start_date
 propagation_duration = dates["propagation_days"]
 
 # Create default body settings and bodies system
@@ -125,9 +124,8 @@ propagation_start_date = simulation_start_date
 propagation_end_date = propagation_start_date + propagation_duration
 
 # Propagation loop
-propagation_number = 0
-while propagation_end_date - propagation_duration < simulation_end_date:
-    print(f"Propagating from {propagation_start_date} to {propagation_end_date}...")
+for propagation_number in tqdm(range(int((simulation_end_date - simulation_start_date) / propagation_duration) + 1),
+                               desc='Propagation', ncols=80):
     # Convert to epochs
     propagation_start_epoch = datetime_to_epoch(propagation_start_date)
     propagation_end_epoch = datetime_to_epoch(propagation_end_date)
@@ -186,8 +184,5 @@ while propagation_end_date - propagation_duration < simulation_end_date:
     # Update propagation dates
     propagation_start_date = propagation_end_date
     propagation_end_date = propagation_start_date + propagation_duration
-
-    # Update propagation number
-    propagation_number += 1
 
 print("Done with Iridium propagation.")

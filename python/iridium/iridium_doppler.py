@@ -15,7 +15,7 @@ semi_angle_limit_iridium = 30  # deg semi-angle visibility
 
 # pointage zenith // pointage soleil ??
 
-def compute_doppler_visibility(results_dict):
+def compute_doppler_visibility(results_dict, f1, f2):
     zenith = results_dict["Tolosat"][["x", "y", "z"]]
     zenith = zenith / np.linalg.norm(zenith, axis=1)[:, None]
     sat_sun = results_dict["sun_position"] - zenith
@@ -23,7 +23,7 @@ def compute_doppler_visibility(results_dict):
     tmp_vector = np.cross(sat_sun, zenith)
     top_pointing = np.cross(tmp_vector, sat_sun)
     visibility = [results_dict["epochs"].copy().rename("epochs")]
-    for sat in tqdm(results_dict):
+    for sat in tqdm(results_dict, ncols=80, desc=f"Dataset {f1}/{f2}"):
         if "IRIDIUM" not in sat:
             continue
         else:
@@ -113,12 +113,20 @@ IRIDIUM_visibility = pd.DataFrame(columns=[])
 IRIDIUM_windows = pd.DataFrame(columns=[])
 
 folders = get_list_of_contents("iridium_states")
+folders = [int(x) for x in folders]
+folders.sort()
+
+print(f"Starting Doppler processing of {len(folders)} datasets...")
 for folder in folders:
-    print(f"Performing Doppler analysis for propagation {folder}...")
     results = get_results_dict(f"iridium_states/{folder}")
-    tmp_visibility, tmp_windows = compute_doppler_visibility(results)
+    tmp_visibility, tmp_windows = compute_doppler_visibility(results, folder + 1, folders[-1] + 1)
     IRIDIUM_visibility = pd.concat([IRIDIUM_visibility, tmp_visibility], ignore_index=True)
     IRIDIUM_windows = pd.concat([IRIDIUM_windows, tmp_windows], ignore_index=True)
-IRIDIUM_windows.sort_values(by="start", inplace=True)
-IRIDIUM_visibility.sort_values(by="epochs", inplace=True)
+
+IRIDIUM_windows["timedelta"] = IRIDIUM_windows["start"] - IRIDIUM_windows["start"][0]
+IRIDIUM_windows["seconds"] = IRIDIUM_windows["timedelta"].dt.total_seconds()
+IRIDIUM_visibility["seconds"] = IRIDIUM_visibility["epochs"] - IRIDIUM_visibility["epochs"][0]
+
+IRIDIUM_visibility.to_csv("iridium_visibility.csv")
+IRIDIUM_windows.to_csv("iridium_windows.csv")
 print("Done")

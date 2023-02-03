@@ -4,6 +4,7 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 import requests
+from tqdm import tqdm
 from tudatpy.kernel.astro.element_conversion import mean_motion_to_semi_major_axis, \
     mean_to_true_anomaly
 from tudatpy.kernel.interface import spice
@@ -27,14 +28,13 @@ earth_mu = bodies.get_body("Earth").gravitational_parameter
 # Get Iridium TLEs
 iridium_url = "https://celestrak.org/NORAD/elements/gp.php?GROUP=iridium-NEXT&FORMAT=json"
 
-print("Getting Iridium NEXT TLEs...")
 iridium_data = pd.read_json(requests.get(iridium_url).text)
 
 iridium_data["MEAN_MOTION"] = iridium_data["MEAN_MOTION"] * 2 * np.pi / 86400
 iridium_data["MEAN_ANOMALY"] = np.deg2rad(iridium_data["MEAN_ANOMALY"])
 iridium_data['sma'] = pd.Series(dtype='float64')
 iridium_data['tan'] = pd.Series(dtype='float64')
-for i in range(len(iridium_data)):
+for i in tqdm(range(len(iridium_data)), desc='TLEs', ncols=80):
     iridium_data.iloc[i, iridium_data.columns.get_indexer(["sma"])] = mean_motion_to_semi_major_axis(
         iridium_data.iloc[i].loc["MEAN_MOTION"], earth_mu)
     iridium_data.iloc[i, iridium_data.columns.get_indexer(["tan"])] = mean_to_true_anomaly(
@@ -45,5 +45,3 @@ for i in range(len(iridium_data)):
 
 iridium_data.rename(columns={"OBJECT_NAME": "name", "EPOCH": "epoch", "ECCENTRICITY": "ecc", "INCLINATION": "inc",
                              "ARG_OF_PERICENTER": "aop", "RA_OF_ASC_NODE": "raan"}, inplace=True)
-
-print("Done with Iridium TLEs.")

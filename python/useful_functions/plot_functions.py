@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 from PIL import Image
+from matplotlib.ticker import MaxNLocator
 
 assets_path = str(Path(__file__).parents[2].joinpath('assets'))
 
@@ -52,8 +53,11 @@ def light_figure(subplots=(1, 1), figsize=(7, 5.2)):
     return fig, axes
 
 
-def finish_dark_figure(fig, path, show=True):
+def finish_dark_figure(fig, path, show=True, force_y_int=False):
     plt.tight_layout()
+    if force_y_int:
+        for ax in fig.axes:
+            ax.yaxis.set_major_locator(MaxNLocator(integer=True))
     fig.subplots_adjust(bottom=0.20)
     fig_axes1 = fig.add_axes([0.772, 0.01, 0.22, 0.3], anchor='SE', zorder=1)
     Badge_TOLOSAT_dark = Image.open(assets_path + '/TOLOSAT_dark.png')
