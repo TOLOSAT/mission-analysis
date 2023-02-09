@@ -1,5 +1,8 @@
+from os import makedirs
+
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 from tudatpy.kernel import numerical_simulation
 from tudatpy.kernel.astro import element_conversion
 from tudatpy.kernel.interface import spice
@@ -9,8 +12,6 @@ from tudatpy.util import result2array
 from iridium_synchronisation import iridium_data_synced, iridium_names
 from useful_functions import get_dates, get_spacecraft, get_orbit, datetime_to_epoch
 
-print("Starting propagation of Iridium satellites...")
-
 # Load spice kernels
 spice.load_standard_kernels([])
 
@@ -18,7 +19,7 @@ spice.load_standard_kernels([])
 iridium_all_states = iridium_data_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
 
 # Get input data
-dates_name = "1year_10sec"
+dates_name = "3years_10sec_iter"
 spacecraft_name = "Tolosat"
 orbit_name = "SSO6"
 
@@ -27,8 +28,9 @@ Tolosat_orbit = get_orbit(orbit_name)
 
 # Set simulation start and end epochs (in seconds since J2000 = January 1, 2000 at 00:00:00)
 dates = get_dates(dates_name)
-simulation_start_epoch = datetime_to_epoch(dates["start_date"])
-simulation_end_epoch = datetime_to_epoch(dates["end_date"])
+simulation_start_date = iridium_data_synced["epoch"].iloc[0]
+simulation_end_date = dates["end_date"] - dates["start_date"] + simulation_start_date
+propagation_duration = dates["propagation_days"]
 
 # Create default body settings and bodies system
 bodies_to_create = ["Earth", "Sun", "Moon", "Jupiter"]
@@ -114,43 +116,73 @@ initial_state = Tolosat_initial_state.tolist() + iridium_all_states.flatten().to
 sun_position_dep_var = propagation_setup.dependent_variable.relative_position("Sun", "Earth")
 dependent_variables_to_save = [sun_position_dep_var]
 
-# Create termination settings
-termination_condition = propagation_setup.propagator.time_termination(simulation_end_epoch)
-
-# Create propagation settings
-propagator_settings = propagation_setup.propagator.translational(
-    central_bodies,
-    acceleration_models,
-    bodies_to_propagate,
-    initial_state,
-    termination_condition,
-    output_variables=dependent_variables_to_save
-)
-
-# Create numerical integrator settings
+# Set fixed step size
 fixed_step_size = dates["step_size"].total_seconds()
-integrator_settings = propagation_setup.integrator.runge_kutta_4(
-    simulation_start_epoch, fixed_step_size
-)
 
-# Create simulation object and propagate the dynamics
-dynamics_simulator = numerical_simulation.SingleArcSimulator(
-    bodies, integrator_settings, propagator_settings
-)
+# First iteration
+propagation_start_date = simulation_start_date
+propagation_end_date = propagation_start_date + propagation_duration
 
-# Extract the resulting state history and convert it to a ndarray
-states = dynamics_simulator.state_history
-states_array = result2array(states)
-states_dataframe = pd.DataFrame(states_array)
+# Propagation loop
+for propagation_number in tqdm(range(int((simulation_end_date - simulation_start_date) / propagation_duration) + 1),
+                               desc='Propagation', ncols=80):
+    # Convert to epochs
+    propagation_start_epoch = datetime_to_epoch(propagation_start_date)
+    propagation_end_epoch = datetime_to_epoch(propagation_end_date)
 
-dependent_variables_history = dynamics_simulator.dependent_variable_history
-dependent_variables_history_array = result2array(dependent_variables_history)
-sun_position_dataframe = pd.DataFrame(dependent_variables_history_array)
+    # Create termination settings
+    termination_time = propagation_setup.propagator.time_termination(propagation_end_epoch)
+    termination_altitude = propagation_setup.propagator.dependent_variable_termination(
+        dependent_variable_settings=propagation_setup.dependent_variable.altitude("Tolosat", "Earth"),
+        limit_value=100.0E3,
+        use_as_lower_limit=True,
+        terminate_exactly_on_final_condition=False
+    )
+    termination_settings = propagation_setup.propagator.hybrid_termination([termination_time, termination_altitude],
+                                                                           fulfill_single_condition=True)
 
-# Export results to files
-sun_position_dataframe.iloc[:, 1:4].to_pickle("iridium_states/sun_position.pkl")
-states_dataframe.iloc[:, 0].to_pickle("iridium_states/epochs.pkl")
-for sat in enumerate(all_spacecraft_names):
-    states_dataframe.iloc[:, (sat[0] * 6 + 1):(sat[0] * 6 + 7)].to_pickle(f"iridium_states/{sat[1]}.pkl")
+    # Create propagation settings
+    propagator_settings = propagation_setup.propagator.translational(
+        central_bodies,
+        acceleration_models,
+        bodies_to_propagate,
+        initial_state,
+        termination_settings,
+        output_variables=dependent_variables_to_save
+    )
+
+    # Create numerical integrator settings
+    integrator_settings = propagation_setup.integrator.runge_kutta_4(
+        propagation_start_epoch, fixed_step_size
+    )
+
+    # Create simulation object and propagate the dynamics
+    dynamics_simulator = numerical_simulation.SingleArcSimulator(
+        bodies, integrator_settings, propagator_settings, print_state_data=False, print_dependent_variable_data=False
+    )
+
+    # Extract the resulting state history and convert it to a ndarray
+    states = dynamics_simulator.state_history
+    states_array = result2array(states)
+    states_dataframe = pd.DataFrame(states_array)
+
+    dependent_variables_history = dynamics_simulator.dependent_variable_history
+    dependent_variables_history_array = result2array(dependent_variables_history)
+    sun_position_dataframe = pd.DataFrame(dependent_variables_history_array)
+
+    # Export results to files
+    makedirs(f"iridium_states/{propagation_number}", exist_ok=True)
+    sun_position_dataframe.iloc[:, 1:4].to_pickle(f"iridium_states/{propagation_number}/sun_position.pkl")
+    states_dataframe.iloc[:, 0].to_pickle(f"iridium_states/{propagation_number}/epochs.pkl")
+    for sat in enumerate(all_spacecraft_names):
+        states_dataframe.iloc[:, (sat[0] * 6 + 1):(sat[0] * 6 + 7)].to_pickle(
+            f"iridium_states/{propagation_number}/{sat[1]}.pkl")
+
+    # Update initial state
+    initial_state = states_array[-1, 1:]
+
+    # Update propagation dates
+    propagation_start_date = propagation_end_date
+    propagation_end_date = propagation_start_date + propagation_duration
 
 print("Done with Iridium propagation.")

@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 
-def compute_shadow_vector(satellite_position, sun_position, earth_position, sun_radius, earth_radius):
+def compute_shadow_vector(satellite_position, sun_position, sun_radius, earth_radius):
     """
     Parameters
     ----------
@@ -11,8 +11,6 @@ def compute_shadow_vector(satellite_position, sun_position, earth_position, sun_
         Array of satellite positions in ECI frame
     sun_position : ndarray
         Array of sun positions in ECI frame
-    earth_position : ndarray
-        Array of earth positions in ECI frame
     sun_radius : float
         Sun radius in meters
     earth_radius : float
@@ -29,15 +27,15 @@ def compute_shadow_vector(satellite_position, sun_position, earth_position, sun_
     shadow_vector = np.empty(len(satellite_position))
     shadow_vector[:] = np.NaN
     for ii in range(len(satellite_position)):
-        shadow_vector[ii] = compute_shadow_function(sun_position[ii], sun_radius, earth_position[ii],
+        shadow_vector[ii] = compute_shadow_function(sun_position[ii], sun_radius, np.zeros(3),
                                                     earth_radius, satellite_position[ii])
     return shadow_vector
 
 
-def compute_eclipses(satellite_position, sun_position, sun_radius, earth_position, earth_radius, epochs,
+def compute_eclipses(satellite_position, sun_position, sun_radius, earth_radius, epochs,
                      eclipse_type="Umbra"):
     shadow_vector = compute_shadow_vector(satellite_position, sun_position,
-                                          earth_position, sun_radius, earth_radius)
+                                          sun_radius, earth_radius)
 
     shadow_df = pd.DataFrame({"epochs": epochs, "shadow": shadow_vector})
     if eclipse_type == "Umbra":
@@ -65,6 +63,8 @@ def compute_eclipses(satellite_position, sun_position, sun_radius, earth_positio
     shadow_df = shadow_df.reset_index(drop=True)
 
     shadow_df['partial'] = False
+    if shadow_df.shape[0] == 0:
+        return shadow_df
     if shadow_df.loc[0, "start"] == epochs[0]:
         shadow_df.loc[0, 'partial'] = True
     if shadow_df.loc[shadow_df.index[-1], "end"] == epochs[-1]:

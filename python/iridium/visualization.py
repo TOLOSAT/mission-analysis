@@ -1,18 +1,18 @@
-from results_processing import results
+from results_processing import results_dict
 from useful_functions import *
 import plotly.graph_objects as go
 
 data = []
-for sat in results:
+for sat in results_dict:
     if sat == "epochs":
         continue
     data.append(go.Scatter3d(
         name=sat,
-        x=results[sat]["x"][0:1000] / 1E3, y=results[sat]["y"][0:1000] / 1E3, z=results[sat]["z"][0:1000] / 1E3,
+        x=results_dict[sat]["x"][0:1000] / 1E3, y=results_dict[sat]["y"][0:1000] / 1E3, z=results_dict[sat]["z"][0:1000] / 1E3,
         mode='markers',
         marker=dict(
             size=2,
-            color=results["epochs"][0:1000]
+            color=results_dict["epochs"][0:1000]
         )))
 fig = go.Figure(data=data)
 [earth_x, earth_y, earth_z] = plotly_sphere([0, 0, 0], 6371008.366666666)
@@ -30,7 +30,7 @@ fig.update_layout(template='plotly_dark',
                       zaxis_title='z [km]'))
 finish_plotly_figure(fig, f'iridium_visualization.html')
 
-seconds_elapsed = results['epochs'] - results['epochs'][0]
+seconds_elapsed = results_dict['epochs'] - results_dict['epochs'][0]
 frames = []
 [earth_x, earth_y, earth_z] = plotly_sphere([0, 0, 0], 6371008.366666666)
 for time in range(180):
@@ -41,14 +41,14 @@ for time in range(180):
         opacity=0.5,
         hoverinfo='skip'
     )]
-    for sat in results:
+    for sat in results_dict:
         if sat == "epochs":
             continue
         data.append(go.Scatter3d(
             name=sat,
-            x=results[sat][seconds_elapsed == (time * 60)]["x"] / 1E3,
-            y=results[sat][seconds_elapsed == (time * 60)]["y"] / 1E3,
-            z=results[sat][seconds_elapsed == (time * 60)]["z"] / 1E3,
+            x=results_dict[sat][seconds_elapsed == (time * 60)]["x"] / 1E3,
+            y=results_dict[sat][seconds_elapsed == (time * 60)]["y"] / 1E3,
+            z=results_dict[sat][seconds_elapsed == (time * 60)]["z"] / 1E3,
             mode='markers',
             marker=dict(
                 size=2

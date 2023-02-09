@@ -5,6 +5,7 @@ from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.kernel.astro.element_conversion import keplerian_to_cartesian
 from tudatpy.util import result2array
+from tqdm import tqdm
 
 from iridium_TLEs import iridium_data
 from useful_functions import datetime_to_epoch, epoch_to_datetime
@@ -49,11 +50,8 @@ acceleration_models = propagation_setup.create_acceleration_models(
 # Create termination settings
 termination_condition = propagation_setup.propagator.time_termination(simulation_end_epoch)
 
-print("Starting sync of Iridium satellites...")
 # Synchronise all Iridium spacecraft to the maximum epoch
-for spacecraft in iridium_names:
-    print("--------------------------------")
-    print("Synchronising " + spacecraft + "...")
+for spacecraft in tqdm(iridium_names, desc='Synchronization', ncols=80):
     # Set simulation start epoch (in seconds since J2000 = January 1, 2000 at 00:00:00)
 
     simulation_start_epoch = iridium_data[iridium_data["name"] == spacecraft]["epoch"].item()
@@ -66,7 +64,6 @@ for spacecraft in iridium_names:
         step_size = Delta_t
     else:
         step_size = Delta_t / (10 ** np.floor(np.log10(Delta_t)))
-    print(f"Start: {str(start_date)}, End: {str(end_date)}, Delta_t: {Delta_t}, Step_size: {step_size}")
     integrator_settings = propagation_setup.integrator.runge_kutta_4(
         simulation_start_epoch, step_size
     )
@@ -100,7 +97,3 @@ for spacecraft in iridium_names:
     iridium_data_synced.loc[iridium_data_synced["name"] == spacecraft, ["x", "y", "z", "vx", "vy", "vz"]] = \
         states_array[-1, 1:7]
     iridium_data_synced.loc[iridium_data_synced["name"] == spacecraft, "epoch"] = end_epoch
-
-    print(f"Done synchronising {spacecraft} to {end_epoch}.")
-print("--------------------------------")
-print("Done syncing Iridium satellites.")
