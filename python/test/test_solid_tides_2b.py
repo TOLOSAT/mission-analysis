@@ -7,23 +7,13 @@ from tudatpy.util import result2array
 
 from useful_functions import *
 
-# Initial settings (independent of tudat)
-orbit_name = 'SSO6'
-dates_name = '5days'
-spacecraft_name = 'Tolosat'
-groundstation_name = 'toulouse'
+
 
 # Load spice kernels
 spice.load_standard_kernels([])
 
-# Set simulation start and end epochs (in seconds since J2000 = January 1, 2000 at 00:00:00)
-dates = get_input_data.get_dates(dates_name)
-simulation_start_epoch = time_conversion.julian_day_to_seconds_since_epoch(
-    time_conversion.calendar_date_to_julian_day(dates["start_date"]))
-simulation_end_epoch = time_conversion.julian_day_to_seconds_since_epoch(
-    time_conversion.calendar_date_to_julian_day(dates["end_date"]))
-
-
+simulation_start_epoch = 0
+simulation_end_epoch = 5*86400
 
 # Create default body settings and bodies system
 bodies_to_create = ["Earth", "Sun", "Moon", "Jupiter"]
@@ -31,6 +21,7 @@ global_frame_origin = "Earth"
 global_frame_orientation = "J2000"
 body_settings = environment_setup.get_default_body_settings(
     bodies_to_create, global_frame_origin, global_frame_orientation)
+bodies = environment_setup.create_system_of_bodies(body_settings)
 
 # Attempt to implement solid tides
 tide_raising_body = "Moon"
@@ -43,13 +34,9 @@ gravity_field_variation_list.append(
 
 body_settings.get("Earth").gravity_field_variation_settings = gravity_field_variation_list
 
-
-bodies = environment_setup.create_system_of_bodies(body_settings)
-
-
 # Add vehicle object to system of bodies
 bodies.create_empty_body("Spacecraft")
-bodies.get("Spacecraft").mass = get_input_data.get_spacecraft(spacecraft_name)["mass"]
+bodies.get("Spacecraft").mass = 2.66
 
 # Create aerodynamic coefficient interface settings, and add to vehicle
 reference_area = get_input_data.get_spacecraft(spacecraft_name)["drag_area"]
