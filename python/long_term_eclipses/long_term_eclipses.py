@@ -1,7 +1,9 @@
 # Import statements
 import numpy as np
+import pandas
 import pandas as pd
 from matplotlib import pyplot as plt
+from useful_functions import plot_functions as pf
 from tudatpy.kernel import numerical_simulation
 from tudatpy.kernel.astro import element_conversion
 from tudatpy.kernel.interface import spice
@@ -176,6 +178,17 @@ print("Done!")
 print(all_eclipses)
 
 all_eclipses = all_eclipses[~all_eclipses["partial"]]
+all_eclipses["timedelta"] = all_eclipses["start"]-simulation_start_date
+all_eclipses["seconds"] = all_eclipses["timedelta"].dt.total_seconds()
+
+fig, axes = pf.dark_figure()
+axes[0].vlines(all_eclipses['seconds'] / 86400, 0, all_eclipses['duration'] / 60)
+axes[0].set_title("Eclipse")
+axes[0].set_xlabel("Time since launch [days]")
+axes[0].set_ylabel("Window duration [mins]")
+axes[0].set_ylim(0, all_eclipses['duration'].max() / 60)
+axes[0].set_xlim(0, all_eclipses['seconds'].max() / 86400)
+pf.finish_dark_figure(fig, "all_eclipses.png", show=True)
 
 # groundstation = get_station(groundstation_name)
 # visibility, elevation = compute_visibility(ecef_position, groundstation)
