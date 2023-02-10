@@ -27,46 +27,55 @@ def compute_shadow_vector(satellite_position, sun_position, sun_radius, earth_ra
     shadow_vector = np.empty(len(satellite_position))
     shadow_vector[:] = np.NaN
     for ii in range(len(satellite_position)):
-        shadow_vector[ii] = compute_shadow_function(sun_position[ii], sun_radius, np.zeros(3),
-                                                    earth_radius, satellite_position[ii])
+        shadow_vector[ii] = compute_shadow_function(
+            sun_position[ii],
+            sun_radius,
+            np.zeros(3),
+            earth_radius,
+            satellite_position[ii],
+        )
     return shadow_vector
 
 
-def compute_eclipses(satellite_position, sun_position, sun_radius, earth_radius, epochs,
-                     eclipse_type="Umbra"):
-    shadow_vector = compute_shadow_vector(satellite_position, sun_position,
-                                          sun_radius, earth_radius)
+def compute_eclipses(
+    satellite_position,
+    sun_position,
+    sun_radius,
+    earth_radius,
+    epochs,
+    eclipse_type="Umbra",
+):
+    shadow_vector = compute_shadow_vector(
+        satellite_position, sun_position, sun_radius, earth_radius
+    )
 
     shadow_df = pd.DataFrame({"epochs": epochs, "shadow": shadow_vector})
     if eclipse_type == "Umbra":
-        shadow_df["bool"] = shadow_df['shadow'] == 0
+        shadow_df["bool"] = shadow_df["shadow"] == 0
     elif eclipse_type == "Penumbra":
-        shadow_df["bool"] = shadow_df['shadow'] < 1
+        shadow_df["bool"] = shadow_df["shadow"] < 1
     else:
         raise ValueError("Type must be Umbra or Penumbra")
 
     # Code steps from https://joshdevlin.com/blog/calculate-streaks-in-pandas/
-    shadow_df['start_bool'] = shadow_df["bool"].ne(shadow_df["bool"].shift(1))
-    shadow_df['end_bool'] = shadow_df["bool"].ne(shadow_df["bool"].shift(-1))
-    shadow_df['streak_id'] = shadow_df['start_bool'].cumsum()
+    shadow_df["start_bool"] = shadow_df["bool"].ne(shadow_df["bool"].shift(1))
+    shadow_df["end_bool"] = shadow_df["bool"].ne(shadow_df["bool"].shift(-1))
+    shadow_df["streak_id"] = shadow_df["start_bool"].cumsum()
 
-    shadow_df.loc[shadow_df['start_bool'], 'start'] = shadow_df['epochs']
-    shadow_df['start'] = shadow_df['start'].fillna(method="ffill")
-    shadow_df = shadow_df[shadow_df['end_bool']]
-    shadow_df = shadow_df.rename({
-        "epochs": "end",
-        "bool": "eclipse"
-    }, axis=1)
+    shadow_df.loc[shadow_df["start_bool"], "start"] = shadow_df["epochs"]
+    shadow_df["start"] = shadow_df["start"].fillna(method="ffill")
+    shadow_df = shadow_df[shadow_df["end_bool"]]
+    shadow_df = shadow_df.rename({"epochs": "end", "bool": "eclipse"}, axis=1)
     shadow_df = shadow_df[["eclipse", "start", "end"]]
-    shadow_df = shadow_df[shadow_df['eclipse']].drop("eclipse", axis=1)
-    shadow_df['duration'] = shadow_df['end'] - shadow_df['start']
+    shadow_df = shadow_df[shadow_df["eclipse"]].drop("eclipse", axis=1)
+    shadow_df["duration"] = shadow_df["end"] - shadow_df["start"]
     shadow_df = shadow_df.reset_index(drop=True)
 
-    shadow_df['partial'] = False
+    shadow_df["partial"] = False
     if shadow_df.shape[0] == 0:
         return shadow_df
     if shadow_df.loc[0, "start"] == epochs[0]:
-        shadow_df.loc[0, 'partial'] = True
+        shadow_df.loc[0, "partial"] = True
     if shadow_df.loc[shadow_df.index[-1], "end"] == epochs[-1]:
-        shadow_df.loc[shadow_df.index[-1], 'partial'] = True
+        shadow_df.loc[shadow_df.index[-1], "partial"] = True
     return shadow_df

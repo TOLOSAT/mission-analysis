@@ -30,11 +30,10 @@ bodies_to_create = ["Earth"]
 global_frame_origin = "Earth"
 global_frame_orientation = "J2000"
 body_settings = environment_setup.get_default_body_settings(
-    bodies_to_create, global_frame_origin, global_frame_orientation)
+    bodies_to_create, global_frame_origin, global_frame_orientation
+)
 acceleration_settings_iridium = dict(
-    Earth=[
-        propagation_setup.acceleration.spherical_harmonic_gravity(10, 10)
-    ]
+    Earth=[propagation_setup.acceleration.spherical_harmonic_gravity(10, 10)]
 )
 bodies_to_propagate = ["Iridium"]
 central_bodies = ["Earth"]
@@ -48,13 +47,17 @@ acceleration_models = propagation_setup.create_acceleration_models(
 )
 
 # Create termination settings
-termination_condition = propagation_setup.propagator.time_termination(simulation_end_epoch)
+termination_condition = propagation_setup.propagator.time_termination(
+    simulation_end_epoch
+)
 
 # Synchronise all Iridium spacecraft to the maximum epoch
-for spacecraft in tqdm(iridium_names, desc='Synchronization', ncols=80):
+for spacecraft in tqdm(iridium_names, desc="Synchronization", ncols=80):
     # Set simulation start epoch (in seconds since J2000 = January 1, 2000 at 00:00:00)
 
-    simulation_start_epoch = iridium_data[iridium_data["name"] == spacecraft]["epoch"].item()
+    simulation_start_epoch = iridium_data[iridium_data["name"] == spacecraft][
+        "epoch"
+    ].item()
     start_date = epoch_to_datetime(simulation_start_epoch)
 
     Delta_t = simulation_end_epoch - simulation_start_epoch
@@ -69,9 +72,14 @@ for spacecraft in tqdm(iridium_names, desc='Synchronization', ncols=80):
     )
 
     # Set initial conditions for the satellite
-    initial_state = keplerian_to_cartesian(iridium_data[iridium_data["name"] == spacecraft]
-                                           [["sma", "ecc", "inc", "aop", "raan", "tan"]].to_numpy().tolist()[0],
-                                           bodies.get("Earth").gravitational_parameter)
+    initial_state = keplerian_to_cartesian(
+        iridium_data[iridium_data["name"] == spacecraft][
+            ["sma", "ecc", "inc", "aop", "raan", "tan"]
+        ]
+        .to_numpy()
+        .tolist()[0],
+        bodies.get("Earth").gravitational_parameter,
+    )
 
     # Create propagation settings
     propagator_settings = propagation_setup.propagator.translational(
@@ -79,12 +87,16 @@ for spacecraft in tqdm(iridium_names, desc='Synchronization', ncols=80):
         acceleration_models,
         bodies_to_propagate,
         initial_state,
-        termination_condition
+        termination_condition,
     )
 
     # Create simulation object and propagate the dynamics
     dynamics_simulator = numerical_simulation.SingleArcSimulator(
-        bodies, integrator_settings, propagator_settings, print_state_data=False, print_dependent_variable_data=False
+        bodies,
+        integrator_settings,
+        propagator_settings,
+        print_state_data=False,
+        print_dependent_variable_data=False,
     )
 
     # Extract the resulting state history and convert it to a ndarray
@@ -92,8 +104,12 @@ for spacecraft in tqdm(iridium_names, desc='Synchronization', ncols=80):
     states_array = result2array(states)
     end_date_actual = states_array[-1, 0]
     end_epoch = time_conversion.julian_day_to_calendar_date(
-        time_conversion.seconds_since_epoch_to_julian_day(end_date_actual))
+        time_conversion.seconds_since_epoch_to_julian_day(end_date_actual)
+    )
 
-    iridium_data_synced.loc[iridium_data_synced["name"] == spacecraft, ["x", "y", "z", "vx", "vy", "vz"]] = \
-        states_array[-1, 1:7]
-    iridium_data_synced.loc[iridium_data_synced["name"] == spacecraft, "epoch"] = end_epoch
+    iridium_data_synced.loc[
+        iridium_data_synced["name"] == spacecraft, ["x", "y", "z", "vx", "vy", "vz"]
+    ] = states_array[-1, 1:7]
+    iridium_data_synced.loc[
+        iridium_data_synced["name"] == spacecraft, "epoch"
+    ] = end_epoch

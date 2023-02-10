@@ -6,7 +6,8 @@ import numpy as np
 
 def datetime_to_epoch_raw(datetime_object):
     return time_conversion.julian_day_to_seconds_since_epoch(
-        time_conversion.calendar_date_to_julian_day(datetime_object))
+        time_conversion.calendar_date_to_julian_day(datetime_object)
+    )
 
 
 def datetime_to_epoch(datetime_object):
@@ -16,13 +17,16 @@ def datetime_to_epoch(datetime_object):
         return [datetime_to_epoch_raw(dt) for dt in datetime_object]
     elif isinstance(datetime_object, dict):
         return {key: datetime_to_epoch_raw(dt) for key, dt in datetime_object.items()}
-    elif isinstance(datetime_object, pandas.Series) or isinstance(datetime_object, pandas.DataFrame):
+    elif isinstance(datetime_object, pandas.Series) or isinstance(
+        datetime_object, pandas.DataFrame
+    ):
         return datetime_object.apply(datetime_to_epoch_raw)
 
 
 def epoch_to_datetime_raw(epoch):
     return time_conversion.julian_day_to_calendar_date(
-        time_conversion.seconds_since_epoch_to_julian_day(epoch))
+        time_conversion.seconds_since_epoch_to_julian_day(epoch)
+    )
 
 
 def epoch_to_datetime(epoch):
