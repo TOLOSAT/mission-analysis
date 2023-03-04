@@ -212,6 +212,10 @@ all_eclipses["seconds"] = all_eclipses["timedelta"].dt.total_seconds()
 
 all_eclipses.to_csv("all_eclipses.csv", index=False)
 
+# To import results and plot again
+# all_eclipses = pd.read_csv("all_eclipses.csv", parse_dates=["start", "end"], infer_datetime_format=True)
+# all_eclipses['timedelta'] = pd.to_timedelta(all_eclipses['timedelta'])
+
 fig, axes = pf.dark_figure()
 axes[0].vlines(
     all_eclipses["seconds"] / 86400 / 365.25,
@@ -223,4 +227,17 @@ axes[0].set_xlabel("Time since launch [years]")
 axes[0].set_ylabel("Eclipse duration [mins]")
 axes[0].set_ylim(0, all_eclipses["duration"].max().total_seconds() / 60)
 axes[0].set_xlim(0, all_eclipses["seconds"].max() / 86400 / 365.25)
-pf.finish_dark_figure(fig, "all_eclipses.png", show=True, force_y_int=True)
+pf.finish_dark_figure(fig, "all_eclipses_dark.png", show=True, force_y_int=True)
+
+fig, axes = pf.light_figure()
+axes[0].vlines(
+    all_eclipses["seconds"] / 86400 / 365.25,
+    0,
+    all_eclipses["duration"].dt.total_seconds() / 60,
+)
+axes[0].set_title("Evolution of the eclipse duration over the entire mission")
+axes[0].set_xlabel("Time since launch [years]")
+axes[0].set_ylabel("Eclipse duration [mins]")
+axes[0].set_ylim(0, all_eclipses["duration"].max().total_seconds() / 60)
+axes[0].set_xlim(0, all_eclipses["seconds"].max() / 86400 / 365.25)
+pf.finish_light_figure(fig, "all_eclipses_light.png", show=True, force_y_int=True)

@@ -91,8 +91,14 @@ def finish_dark_figure(fig, path, show=True, force_x_int=False, force_y_int=Fals
     plt.close()
 
 
-def finish_light_figure(fig, path, show=True):
+def finish_light_figure(fig, path, show=True, force_x_int=False, force_y_int=False):
     plt.tight_layout()
+    if force_x_int:
+        for ax in fig.axes:
+            ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+    if force_y_int:
+        for ax in fig.axes:
+            ax.yaxis.set_major_locator(MaxNLocator(integer=True))
     fig.subplots_adjust(bottom=0.20)
     fig_axes1 = fig.add_axes([0.772, 0.01, 0.22, 0.3], anchor="SE", zorder=1)
     Badge_TOLOSAT_light = Image.open(assets_path + "/TOLOSAT_light.png")
@@ -140,7 +146,7 @@ def flatten(list_of_lists):
 
 
 def plot_sphere(ax, center, radius):
-    u, v = np.mgrid[0 : 2 * np.pi : 50j, 0 : np.pi : 50j]
+    u, v = np.mgrid[0: 2 * np.pi: 50j, 0: np.pi: 50j]
     x = radius * np.cos(u) * np.sin(v)
     y = radius * np.sin(u) * np.sin(v)
     z = radius * np.cos(v)
@@ -151,9 +157,9 @@ def plot_sphere(ax, center, radius):
 
 def plotly_sphere(center, radius):
     nb_points = 50
-    x = np.zeros(nb_points**2) * np.NaN
-    y = np.zeros(nb_points**2) * np.NaN
-    z = np.zeros(nb_points**2) * np.NaN
+    x = np.zeros(nb_points ** 2) * np.NaN
+    y = np.zeros(nb_points ** 2) * np.NaN
+    z = np.zeros(nb_points ** 2) * np.NaN
     ii = 0
     for theta in np.linspace(0, 2 * np.pi, nb_points):
         for phi in np.linspace(0, np.pi, nb_points):
@@ -217,11 +223,11 @@ def plotly_groundtrack(time, lon, lat):
                         lon=df[
                             (df["time"] <= time)
                             & (df["time"] >= time - pd.to_timedelta(90, unit="minutes"))
-                        ]["lon"],
+                            ]["lon"],
                         lat=df[
                             (df["time"] <= time)
                             & (df["time"] >= time - pd.to_timedelta(90, unit="minutes"))
-                        ]["lat"],
+                            ]["lat"],
                         mode="lines",
                         line=dict(width=2, color="blue"),
                     ),
