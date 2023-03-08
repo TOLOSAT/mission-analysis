@@ -31,7 +31,7 @@ fig.update_layout(
     template="plotly_dark",
     scene=dict(xaxis_title="x [km]", yaxis_title="y [km]", zaxis_title="z [km]"),
 )
-finish_plotly_figure(fig, f"iridium_visualization.html")
+finish_plotly_figure(fig, f"results/iridium_visualization.html")
 
 seconds_elapsed = results_dict["epochs"] - results_dict["epochs"][0]
 frames = []
@@ -157,4 +157,4 @@ fig = go.Figure(
 )
 fig.update_traces(hovertemplate=None, hoverinfo="skip")
 fig.update_layout(template="plotly_dark")
-finish_plotly_figure(fig, f"iridium_animation.html")
+finish_plotly_figure(fig, f"results/iridium_animation.html")

@@ -191,7 +191,7 @@ print(
     f"{IRIDIUM_windows['duration'].sum() / IRIDIUM_windows['seconds'].max() * 86400:.2f} seconds"
 )
 
-IRIDIUM_visibility.to_csv("iridium_visibility.csv")
-IRIDIUM_windows.to_csv("iridium_windows.csv")
+IRIDIUM_visibility.to_csv("results/iridium_visibility.csv")
+IRIDIUM_windows.to_csv("results/iridium_windows.csv")
 
 print("Done")
