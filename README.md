@@ -29,6 +29,11 @@ Progress on the main milestones is visible [here](https://github.com/TOLOSAT/mis
   * [Generate plots with python](celestlab/PythonPlots)
   * [SATNOGS studies](celestlab/SATNOGS)
 * [Python](python)
+  * [Input data](python/input_data)
+  * [Iridium studies](python/iridium)
+  * [Long-term eclipses study](python/long_term_eclipses)
+  * [Setup guide](python/setup_guide)
+  * [Useful functions](python/useful_functions)
 * [Orekit](orekit)
 <!-- End TOC (do not remove me) -->
 
