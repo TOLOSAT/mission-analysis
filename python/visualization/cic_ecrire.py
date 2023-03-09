@@ -83,22 +83,29 @@ def entete_AEM(prefixe, rep_frame_a, rep_frame_b):
     return entete
 
 
+'''
+ ATTENTION HERE: this assumes we have all the needed parameters for the function:
+ type_fic will be MEM; OEM or AEM
+ (!!!!!!) If the file is at C:\\Users\\andre\\Desktop\\TOLOSAT\\test.TXT, this needs to have:
+        rep =  "C:\\Users\\andre\\Desktop\\TOLOSAT"
+        prefixe = "test"
+ DON'T FORGET TO DECLARE THE PATHS WITH TWO BACKSLASHES (\\), AS PYTHON ONLY RECOGNIZES IT LIKE THIS!
+'''
 def write_fic(type_fic, rep, prefixe, format_date, jour_mjd, sec_mjd, nom_param, val_param, format_param, rep_frame_a,
               rep_frame_b):
-    PATH = str(rep) + "\\" + str(prefixe)
+    PATH = str(rep) + "\\" + str(prefixe) + ".TXT"
     fd = open(PATH, "w")
     if (type_fic == "MEM"):
-        fd.write(entete_MEM(nom_param, prefixe))
+        fd.write(str(entete_MEM(nom_param, prefixe)))
     elif (type_fic == "OEM"):
-        fd.write(entete_OEM(prefixe))
+        fd.write(str(entete_OEM(prefixe)))
     elif (type_fic == "AEM"):
-        fd.write(entete_AEM(prefixe, rep_frame_a, rep_frame_b))
+        fd.write(str(entete_AEM(prefixe, rep_frame_a, rep_frame_b)))
     else:
         print("Wrong type of type_fic")
 
     outputList = [jour_mjd, sec_mjd, val_param]
 
-    fd.write(format_date, format_param, "\n", outputList);
+    fd.write((str(format_date) + str(format_param) + "\n" + str(outputList))
     fd.close()
     return
-
