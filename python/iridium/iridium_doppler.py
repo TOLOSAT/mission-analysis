@@ -12,8 +12,13 @@ delta_f_dot_limit = 350  # 375 # Hz/s doppler rate max +/-
 semi_angle_limit_tolosat = 30  # deg semi-angle visibility
 semi_angle_limit_iridium = 30  # deg semi-angle visibility
 
+selected_iridium = "IRIDIUM 100"
+
+selected_iridium_nospace = selected_iridium.replace(" ", "_")
+
 
 # pointage zenith // pointage soleil ??
+
 
 def compute_doppler_visibility(results_dict):
     zenith = results_dict["Tolosat"][["x", "y", "z"]]
@@ -23,7 +28,10 @@ def compute_doppler_visibility(results_dict):
     tmp_vector = np.cross(sat_sun, zenith)
     top_pointing = np.cross(tmp_vector, sat_sun)
     visibility = [results_dict["epochs"].copy().rename("epochs")]
-    for sat in tqdm(results_dict, ncols=80, desc=f"Satellites", position=1, leave=False):
+    sat_results = [results_dict["epochs"].copy().rename("epochs")]
+    for sat in tqdm(
+        results_dict, ncols=80, desc=f"Satellites", position=1, leave=False
+    ):
         if "IRIDIUM" not in sat:
             continue
         else:
@@ -43,74 +51,107 @@ def compute_doppler_visibility(results_dict):
             results_dict[sat]["dv_y"] = dv_y
             results_dict[sat]["dv_z"] = dv_z
             relative_velocity = np.array([dv_x, dv_y, dv_z]).T
-            dv = np.sqrt(dv_x ** 2 + dv_y ** 2 + dv_z ** 2)
+            dv = np.sqrt(dv_x**2 + dv_y**2 + dv_z**2)
             results_dict[sat]["dv"] = dv
 
-            theta_r = np.arccos(np.sum(relative_position * relative_velocity, axis=1) / (
-                    np.linalg.norm(relative_position, axis=1) * np.linalg.norm(relative_velocity, axis=1)))
+            theta_r = np.arccos(
+                np.sum(relative_position * relative_velocity, axis=1)
+                / (
+                    np.linalg.norm(relative_position, axis=1)
+                    * np.linalg.norm(relative_velocity, axis=1)
+                )
+            )
             results_dict[sat]["theta_r_deg"] = np.deg2rad(theta_r)
             beta = dv / c
-            gamma = 1 / np.sqrt(1 - beta ** 2)
+            gamma = 1 / np.sqrt(1 - beta**2)
 
-            results_dict[sat]["doppler_shift"] = f0 * (1 / (gamma * (1 + beta * np.cos(theta_r))) - 1)
-            results_dict[sat]["doppler_rate"] = np.gradient(results_dict[sat]["doppler_shift"], results_dict["epochs"])
+            results_dict[sat]["doppler_shift"] = f0 * (
+                1 / (gamma * (1 + beta * np.cos(theta_r))) - 1
+            )
+            results_dict[sat]["doppler_rate"] = np.gradient(
+                results_dict[sat]["doppler_shift"], results_dict["epochs"]
+            )
 
-            tolosat_angle = np.arccos(np.sum(relative_position * top_pointing, axis=1) / (
-                    np.linalg.norm(relative_position, axis=1) * np.linalg.norm(top_pointing, axis=1)))
+            tolosat_angle = np.arccos(
+                np.sum(relative_position * top_pointing, axis=1)
+                / (
+                    np.linalg.norm(relative_position, axis=1)
+                    * np.linalg.norm(top_pointing, axis=1)
+                )
+            )
             results_dict[sat]["tolosat_angle"] = np.rad2deg(tolosat_angle)
 
-            iridium_angle = np.arccos(np.sum(relative_position * iridium_position, axis=1) / (
-                    np.linalg.norm(relative_position, axis=1) * np.linalg.norm(iridium_position, axis=1)))
+            iridium_angle = np.arccos(
+                np.sum(relative_position * iridium_position, axis=1)
+                / (
+                    np.linalg.norm(relative_position, axis=1)
+                    * np.linalg.norm(iridium_position, axis=1)
+                )
+            )
             results_dict[sat]["iridium_angle"] = np.rad2deg(iridium_angle)
 
-            results_dict[sat]["doppler_shift_OK"] = np.abs(results_dict[sat]["doppler_shift"]) <= delta_f_limit
-            results_dict[sat]["doppler_rate_OK"] = np.abs(results_dict[sat]["doppler_rate"]) <= delta_f_dot_limit
-            results_dict[sat]["tolosat_visibility_OK"] = results_dict[sat]["tolosat_angle"] <= semi_angle_limit_tolosat
-            results_dict[sat]["iridium_visibility_OK"] = results_dict[sat]["iridium_angle"] <= semi_angle_limit_iridium
+            results_dict[sat]["doppler_shift_OK"] = (
+                np.abs(results_dict[sat]["doppler_shift"]) <= delta_f_limit
+            )
+            results_dict[sat]["doppler_rate_OK"] = (
+                np.abs(results_dict[sat]["doppler_rate"]) <= delta_f_dot_limit
+            )
+            results_dict[sat]["tolosat_visibility_OK"] = (
+                results_dict[sat]["tolosat_angle"] <= semi_angle_limit_tolosat
+            )
+            results_dict[sat]["iridium_visibility_OK"] = (
+                results_dict[sat]["iridium_angle"] <= semi_angle_limit_iridium
+            )
 
-            results_dict[sat]["all_OK"] = \
-                results_dict[sat]["doppler_shift_OK"] & results_dict[sat]["doppler_rate_OK"] & results_dict[sat][
-                    "tolosat_visibility_OK"] & results_dict[sat]["iridium_visibility_OK"]
+            results_dict[sat]["all_OK"] = (
+                results_dict[sat]["doppler_shift_OK"]
+                & results_dict[sat]["doppler_rate_OK"]
+                & results_dict[sat]["tolosat_visibility_OK"]
+                & results_dict[sat]["iridium_visibility_OK"]
+            )
 
+            if sat == selected_iridium:
+                sat_results.append(results_dict[sat]["tolosat_angle"])
+                sat_results.append(results_dict[sat]["iridium_angle"])
+                sat_results.append(results_dict[sat]["doppler_shift"])
+                sat_results.append(results_dict[sat]["doppler_rate"])
             visibility.append(results_dict[sat]["all_OK"].rename(sat))
 
             # if results_dict[sat]["all_OK"].any():
             #     print(f"{sat} OK")
-
+    sat_results = pd.concat(sat_results, axis=1)
     visibility = pd.concat(visibility, axis=1)
-    visibility["sum_ok"] = visibility.select_dtypes(include=['bool']).sum(axis=1)
-    results_dict['datetime'] = dt.epoch_to_datetime(results_dict['epochs'])
+    visibility["sum_ok"] = visibility.select_dtypes(include=["bool"]).sum(axis=1)
+    results_dict["datetime"] = dt.epoch_to_datetime(results_dict["epochs"])
     results_dict["timedelta"] = results_dict["datetime"] - results_dict["datetime"][0]
     windows = visibility.copy()
     visibility = visibility[visibility["sum_ok"] > 0]
     windows["bool"] = windows["sum_ok"] > 0
 
     # Code steps from https://joshdevlin.com/blog/calculate-streaks-in-pandas/
-    windows['start_bool'] = windows["bool"].ne(windows["bool"].shift(1))
-    windows['end_bool'] = windows["bool"].ne(windows["bool"].shift(-1))
-    windows['streak_id'] = windows['start_bool'].cumsum()
+    windows["start_bool"] = windows["bool"].ne(windows["bool"].shift(1))
+    windows["end_bool"] = windows["bool"].ne(windows["bool"].shift(-1))
+    windows["streak_id"] = windows["start_bool"].cumsum()
 
-    windows.loc[windows['start_bool'], 'start'] = windows['epochs']
-    windows['start'] = windows['start'].fillna(method="ffill")
-    windows = windows[windows['end_bool']]
-    windows = windows.rename({
-        "epochs": "end",
-        "bool": "eclipse"
-    }, axis=1)
+    windows.loc[windows["start_bool"], "start"] = windows["epochs"]
+    windows["start"] = windows["start"].fillna(method="ffill")
+    windows = windows[windows["end_bool"]]
+    windows = windows.rename({"epochs": "end", "bool": "eclipse"}, axis=1)
     windows = windows[["eclipse", "start", "end"]]
-    windows = windows[windows['eclipse']].drop("eclipse", axis=1)
+    windows = windows[windows["eclipse"]].drop("eclipse", axis=1)
     windows.rename({"start": "start_epoch", "end": "end_epoch"}, axis=1, inplace=True)
     windows["start"] = dt.epoch_to_datetime(windows["start_epoch"])
     windows["end"] = dt.epoch_to_datetime(windows["end_epoch"])
-    windows['duration'] = windows['end_epoch'] - windows['start_epoch']
+    windows["duration"] = windows["end_epoch"] - windows["start_epoch"]
     windows.drop(["start_epoch", "end_epoch"], axis=1, inplace=True)
     windows = windows.reset_index(drop=True)
-    return visibility, windows
+    return visibility, windows, sat_results
 
 
 # Initialize DataFrames
 IRIDIUM_visibility = pd.DataFrame(columns=[])
 IRIDIUM_windows = pd.DataFrame(columns=[])
+IRIDIUM_sat_results = pd.DataFrame(columns=[])
 
 folders = get_list_of_contents("iridium_states")
 folders = [int(x) for x in folders]
@@ -119,14 +160,38 @@ folders.sort()
 print(f"Starting Doppler processing of {len(folders)} datasets...")
 for folder in tqdm(folders, ncols=80, desc="Datasets", position=0, leave=True):
     results = get_results_dict(f"iridium_states/{folder}")
-    tmp_visibility, tmp_windows = compute_doppler_visibility(results)
-    IRIDIUM_visibility = pd.concat([IRIDIUM_visibility, tmp_visibility], ignore_index=True)
+    tmp_visibility, tmp_windows, tmp_sat_results = compute_doppler_visibility(results)
+    IRIDIUM_visibility = pd.concat(
+        [IRIDIUM_visibility, tmp_visibility], ignore_index=True
+    )
     IRIDIUM_windows = pd.concat([IRIDIUM_windows, tmp_windows], ignore_index=True)
+    IRIDIUM_sat_results = pd.concat(
+        [IRIDIUM_sat_results, tmp_sat_results], ignore_index=True
+    )
+
+IRIDIUM_sat_results["seconds"] = (
+    IRIDIUM_sat_results["epochs"] - IRIDIUM_sat_results["epochs"][0]
+)
+
+IRIDIUM_windows = IRIDIUM_windows[IRIDIUM_windows["duration"] > 0]
 
 IRIDIUM_windows["timedelta"] = IRIDIUM_windows["start"] - IRIDIUM_windows["start"][0]
 IRIDIUM_windows["seconds"] = IRIDIUM_windows["timedelta"].dt.total_seconds()
-IRIDIUM_visibility["seconds"] = IRIDIUM_visibility["epochs"] - IRIDIUM_visibility["epochs"][0]
+IRIDIUM_visibility["seconds"] = (
+    IRIDIUM_visibility["epochs"] - IRIDIUM_visibility["epochs"][0]
+)
+print(f"Minimum IRIDIUM window duration: {IRIDIUM_windows['duration'].min()} seconds")
+print(f"Maximum IRIDIUM window duration: {IRIDIUM_windows['duration'].max()} seconds")
+print(f"Average IRIDIUM window duration: {IRIDIUM_windows['duration'].mean()} seconds")
+print(
+    f"Average IRIDIUM passes per day: {len(IRIDIUM_windows) / IRIDIUM_windows['seconds'].max() * 86400:.2f} passes"
+)
+print(
+    f"Average IRIDIUM visibility per day: "
+    f"{IRIDIUM_windows['duration'].sum() / IRIDIUM_windows['seconds'].max() * 86400:.2f} seconds"
+)
 
-IRIDIUM_visibility.to_csv("iridium_visibility.csv")
-IRIDIUM_windows.to_csv("iridium_windows.csv")
+IRIDIUM_visibility.to_csv("results/iridium_visibility.csv")
+IRIDIUM_windows.to_csv("results/iridium_windows.csv")
+
 print("Done")
