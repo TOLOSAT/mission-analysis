@@ -3,7 +3,7 @@ from datetime import datetime
 
 def get_OEM_header(start, end, spacecraft_name="TOLOSAT"):
     return [
-        "CIC_MEM_VERS = ???",
+        "CIC_OEM_VERS = 2.0",
         "CREATION_DATE  = " + datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3],
         "ORIGINATOR     = TOLOSAT",
         "",
@@ -29,7 +29,7 @@ def get_AEM_header(
         start, end, reference_frame_a, reference_frame_b, spacecraft_name="TOLOSAT"
 ):
     return [
-        "CIC_AEM_VERS = ???",
+        "CIC_AEM_VERS = 2.0",
         "CREATION_DATE  = " + datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3],
         "ORIGINATOR     = TOLOSAT",
         "",
