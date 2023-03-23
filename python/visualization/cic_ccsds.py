@@ -1,10 +1,26 @@
-from datetime import datetime
+from useful_functions.date_transformations import epoch_to_astrotime
+from astropy.time import Time
+
+cic_reference_jd = 2400000.5
+cic_reference_time = Time(cic_reference_jd, format="jd", scale="tai")
+
+
+def get_CIC_epochs(epochs):
+    astrotimes = epoch_to_astrotime(epochs)
+    timedeltas_since_cic = [astrotime - cic_reference_time for astrotime in astrotimes]
+    julian_days_since_cic = [timedelta.jd for timedelta in timedeltas_since_cic]
+    days = [int(julian_day) for julian_day in julian_days_since_cic]
+    seconds = [
+        round((julian_day.jd - int(julian_day.jd)) * 86400, 3)
+        for julian_day in timedeltas_since_cic
+    ]
+    return days, seconds
 
 
 def get_OEM_header(start, end, spacecraft_name="TOLOSAT"):
     return [
         "CIC_OEM_VERS = 2.0",
-        "CREATION_DATE  = " + datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3],
+        "CREATION_DATE  = " + Time.now().strftime("%Y-%m-%dT%H:%M:%S.%f"),
         "ORIGINATOR     = TOLOSAT",
         "",
         "META_START",
@@ -15,7 +31,7 @@ def get_OEM_header(start, end, spacecraft_name="TOLOSAT"):
         "OBJECT_ID = " + spacecraft_name,
         "",
         "CENTER_NAME = EARTH",
-        "REF_FRAME   = ICRF",
+        "REF_FRAME   = EME2000",
         "TIME_SYSTEM = UTC",
         "START_TIME = " + start.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3],
         "STOP_TIME = " + end.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3],
@@ -26,11 +42,11 @@ def get_OEM_header(start, end, spacecraft_name="TOLOSAT"):
 
 
 def get_AEM_header(
-        start, end, reference_frame_a, reference_frame_b, spacecraft_name="TOLOSAT"
+    start, end, reference_frame_a, reference_frame_b, spacecraft_name="TOLOSAT"
 ):
     return [
         "CIC_AEM_VERS = 2.0",
-        "CREATION_DATE  = " + datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3],
+        "CREATION_DATE  = " + Time.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3],
         "ORIGINATOR     = TOLOSAT",
         "",
         "META_START",
@@ -71,22 +87,22 @@ def export_OEM_file(oem_dataframe, start, end, path, spacecraft_name="TOLOSAT"):
     spacecraft_name : str, optional
         Name of the spacecraft, by default "TOLOSAT"
     """
-    with open(f"{path}/{spacecraft_name}_POSITION_VELOCITY.TXT", "w") as f:
+    with open(f"{path}{spacecraft_name}_POSITION_VELOCITY.TXT", "w") as f:
         f.write("\n".join(get_OEM_header(start, end, spacecraft_name)))
         f.write(
-            "\n".join(oem_dataframe.to_string(header=False, index=False, formatters=).split("\n"))
+            "\n".join(oem_dataframe.to_string(header=False, index=False).split("\n"))
         )
-    print(f"OEM file exported to {path}/{spacecraft_name}_POSITION_VELOCITY.TXT")
+    print(f"OEM file exported to {path}{spacecraft_name}_POSITION_VELOCITY.TXT")
 
 
 def export_AEM_file(
-        aem_dataframe,
-        start,
-        end,
-        reference_frame_a,
-        reference_frame_b,
-        path,
-        spacecraft_name="TOLOSAT",
+    aem_dataframe,
+    start,
+    end,
+    reference_frame_a,
+    reference_frame_b,
+    path,
+    spacecraft_name="TOLOSAT",
 ):
     """
     Export attitude quaternions of the satellite to an AEM file following the CIC/CCSDS format.
@@ -107,7 +123,7 @@ def export_AEM_file(
     spacecraft_name : str, optional
         Name of the spacecraft, by default "TOLOSAT"
     """
-    with open(f"{path}/{spacecraft_name}_QUATERNION.TXT", "w") as f:
+    with open(f"{path}{spacecraft_name}_QUATERNION.TXT", "w") as f:
         f.write(
             "\n".join(
                 get_AEM_header(
@@ -120,6 +136,6 @@ def export_AEM_file(
             )
         )
         f.write(
-            "\n".join(aem_dataframe.to_string(header=False, index=False, formatters=).split("\n"))
+            "\n".join(aem_dataframe.to_string(header=False, index=False).split("\n"))
         )
-    print(f"AEM file exported to {path}/{spacecraft_name}_QUATERNION.TXT")
+    print(f"AEM file exported to {path}{spacecraft_name}_QUATERNION.TXT")
