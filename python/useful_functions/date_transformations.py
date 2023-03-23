@@ -21,7 +21,7 @@ def datetime_to_epoch(datetime_object):
     elif isinstance(datetime_object, dict):
         return {key: datetime_to_epoch_raw(dt) for key, dt in datetime_object.items()}
     elif isinstance(datetime_object, pandas.Series) or isinstance(
-            datetime_object, pandas.DataFrame
+        datetime_object, pandas.DataFrame
     ):
         return datetime_object.apply(datetime_to_epoch_raw)
 

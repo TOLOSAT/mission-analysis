@@ -6,7 +6,8 @@ from tudatpy.kernel.numerical_simulation import environment_setup, propagation_s
 from tudatpy.util import result2array
 
 from useful_functions import *
-from visualization.cic_ccsds import get_CIC_epochs, export_OEM_file
+from visualization.cic_ccsds import get_CIC_epochs, export_OEM_file, export_AEM_file
+from attitude.sun_pointing_rotation import compute_attitude_quaternions
 
 # Initial settings (independent of tudat)
 orbit_name = "SSO6"
@@ -101,10 +102,10 @@ initial_state = element_conversion.keplerian_to_cartesian_elementwise(
 )
 
 # Setup dependent variables to be save
-sun_position_dep_var = propagation_setup.dependent_variable.relative_position(
-    "Sun", "Earth"
+sun_direction_dep_var = propagation_setup.dependent_variable.relative_position(
+    "Sun", "Spacecraft"
 )
-dependent_variables_to_save = [sun_position_dep_var]
+dependent_variables_to_save = [sun_direction_dep_var]
 
 # Create termination settings
 termination_condition = propagation_setup.propagator.time_termination(
@@ -142,7 +143,7 @@ sun_radius = bodies.get("Sun").shape_model.average_radius
 earth_radius = bodies.get("Earth").shape_model.average_radius
 epochs = states_array[:, 0]
 satellite_position = states_array[:, 1:4]
-sun_position = dependent_variables_history_array[:, 1:4]
+sun_direction = dependent_variables_history_array[:, 1:4]
 
 oem_dataframe = pd.DataFrame(
     columns=["days", "seconds", "x", "y", "z", "vx", "vy", "vz"]
@@ -152,4 +153,13 @@ oem_dataframe["days"] = days
 oem_dataframe["seconds"] = seconds
 oem_dataframe[["x", "y", "z", "vx", "vy", "vz"]] = states_array[:, 1:7] / 1e3
 
-export_OEM_file(oem_dataframe, dates["start_date"], dates["end_date"], "")
+export_OEM_file(oem_dataframe, simulation_start_epoch, simulation_end_epoch, "")
+
+quaternions = compute_attitude_quaternions(epochs, sun_direction)
+
+aem_dataframe = pd.DataFrame(columns=["days", "seconds", "q0", "q1", "q2", "q3"])
+aem_dataframe["days"] = days
+aem_dataframe["seconds"] = seconds
+aem_dataframe[["q0", "q1", "q2", "q3"]] = quaternions
+
+export_AEM_file(aem_dataframe, simulation_start_epoch, simulation_end_epoch, "")

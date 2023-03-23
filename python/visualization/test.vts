@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project Revision="9032">
- <General Name="" StartDateTime="60311 43232.000000" EndDateTime="60312 43232.000000"/>
+ <General Name="" StartDateTime="60311 43195.000000" EndDateTime="60312 43195.000000"/>
  <MetaData>
   <Description></Description>
  </MetaData>
  <MonitorConfiguration>
-  <Monitor X="0" Y="0" Height="1032" Width="1920"/>
+  <Monitor X="0" Y="0" Height="2088" Width="3840"/>
+  <Monitor X="-2160" Y="-768" Height="3768" Width="2160"/>
+  <Monitor X="3840" Y="0" Height="2088" Width="3840"/>
  </MonitorConfiguration>
  <StartOptions TimeRatio="1" UseStateTimeRatio="0" SysTimeSynced="0" Paused="0" Looped="0" Minimized="0" Hidden="0" AutoClosed="0"/>
  <Timeshifting Enabled="0"/>
@@ -92,7 +94,7 @@
      <Orientation>
       <Quaternion>
        <Value>
-        <Fixed Data="1 0 0 0"/>
+        <File Name="TOLOSAT_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -104,8 +106,14 @@
  <Events/>
  <States>
   <Instant Time="33282 0" TimeRatio="1" Label="Initial state">
-   <AppState Id="0"/>
-   <AppState Id="1"/>
+   <AppState Id="0">
+    <Command Str="CMD PROP WindowGeometry 0 0 1280 971"/>
+   </AppState>
+   <AppState Id="1">
+    <Command Str="CMD PROP WindowGeometry 0 0 1280 971"/>
+    <Command Str="CMD STRUCT Eme2000AxesVisible &quot;Sol/Earth/TOLOSAT&quot; true"/>
+    <Command Str="CMD STRUCT SunDirectionVisible &quot;Sol/Earth/TOLOSAT&quot; true"/>
+   </AppState>
   </Instant>
  </States>
 </Project>
