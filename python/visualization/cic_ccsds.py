@@ -5,7 +5,7 @@ cic_reference_jd = 2400000.5
 cic_reference_time = Time(cic_reference_jd, format="jd", scale="tai")
 
 
-def get_CIC_epochs(epochs):
+def epochs_to_CIC_days_secs(epochs):
     astrotimes = epoch_to_astrotime(epochs)
     timedeltas_since_cic = [astrotime - cic_reference_time for astrotime in astrotimes]
     julian_days_since_cic = [timedelta.jd for timedelta in timedeltas_since_cic]

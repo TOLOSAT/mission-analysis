@@ -46,8 +46,7 @@ def epoch_to_datetime(epoch):
 
 
 def epoch_to_astrotime_raw(epoch):
-    timedelta = TimeDelta(epoch, format="sec")
-    return J2000 + timedelta
+    return J2000 + TimeDelta(epoch, format="sec")
 
 
 def epoch_to_astrotime(epoch):
@@ -61,3 +60,22 @@ def epoch_to_astrotime(epoch):
         return {key: epoch_to_astrotime_raw(ep) for key, ep in epoch.items()}
     elif isinstance(epoch, pandas.Series) or isinstance(epoch, pandas.DataFrame):
         return epoch.apply(epoch_to_astrotime_raw)
+
+
+def astrotime_to_epoch_raw(astrotime):
+    return (astrotime - J2000).sec
+
+
+def astrotime_to_epoch(astrotime):
+    if isinstance(astrotime, Time):
+        return astrotime_to_epoch_raw(astrotime)
+    elif isinstance(astrotime, list):
+        return [astrotime_to_epoch_raw(at) for at in astrotime]
+    elif isinstance(astrotime, np.ndarray):
+        return np.array(astrotime_to_epoch(astrotime.tolist()))
+    elif isinstance(astrotime, dict):
+        return {key: astrotime_to_epoch_raw(at) for key, at in astrotime.items()}
+    elif isinstance(astrotime, pandas.Series) or isinstance(
+        astrotime, pandas.DataFrame
+    ):
+        return astrotime.apply(astrotime_to_epoch_raw)

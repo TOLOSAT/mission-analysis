@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project Revision="9032">
- <General Name="" StartDateTime="60311 43195.000000" EndDateTime="60312 43195.000000"/>
+ <General Name="" StartDateTime="58850 43195.000000" EndDateTime="58851 43195.000000"/>
  <MetaData>
   <Description></Description>
  </MetaData>
@@ -78,7 +78,7 @@
    </EclipseCircle>
    <Component Name="TOLOSAT">
     <Graphics3d>
-     <File3ds Name=""/>
+     <File3ds Name="MA.obj"/>
      <Radius Value="1"/>
      <LightSensitive Value="1"/>
      <Use3dsCoords Value="0" MeshScale="1"/>
@@ -111,7 +111,8 @@
    </AppState>
    <AppState Id="1">
     <Command Str="CMD PROP WindowGeometry 0 0 1280 971"/>
-    <Command Str="CMD STRUCT Eme2000AxesVisible &quot;Sol/Earth/TOLOSAT&quot; true"/>
+    <Command Str="CMD STRUCT LabelVisible &quot;Sol/Earth/TOLOSAT&quot; false"/>
+    <Command Str="CMD STRUCT FrameAxesVisible &quot;Sol/Earth/TOLOSAT&quot; false"/>
     <Command Str="CMD STRUCT SunDirectionVisible &quot;Sol/Earth/TOLOSAT&quot; true"/>
    </AppState>
   </Instant>

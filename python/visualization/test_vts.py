@@ -6,7 +6,11 @@ from tudatpy.kernel.numerical_simulation import environment_setup, propagation_s
 from tudatpy.util import result2array
 
 from useful_functions import *
-from visualization.cic_ccsds import get_CIC_epochs, export_OEM_file, export_AEM_file
+from visualization.cic_ccsds import (
+    epochs_to_CIC_days_secs,
+    export_OEM_file,
+    export_AEM_file,
+)
 from attitude.sun_pointing_rotation import compute_attitude_quaternions
 
 # Initial settings (independent of tudat)
@@ -144,11 +148,12 @@ earth_radius = bodies.get("Earth").shape_model.average_radius
 epochs = states_array[:, 0]
 satellite_position = states_array[:, 1:4]
 sun_direction = dependent_variables_history_array[:, 1:4]
+sun_direction = sun_direction / np.linalg.norm(sun_direction, axis=1, keepdims=True)
 
 oem_dataframe = pd.DataFrame(
     columns=["days", "seconds", "x", "y", "z", "vx", "vy", "vz"]
 )
-days, seconds = get_CIC_epochs(epochs)
+days, seconds = epochs_to_CIC_days_secs(epochs)
 oem_dataframe["days"] = days
 oem_dataframe["seconds"] = seconds
 oem_dataframe[["x", "y", "z", "vx", "vy", "vz"]] = states_array[:, 1:7] / 1e3
