@@ -200,8 +200,12 @@ def add_satellite(xml, entities, name, oem_file, aem_file, model_name=None):
     Icon.setAttribute("Opacity", "100")
     Prop2d.appendChild(Icon)
     Font = xml.createElement("Font")
-    Font.setAttribute("Size", "8")
-    Font.setAttribute("Color", "1 1 1")
+    if name == "TOLOSAT":
+        Font.setAttribute("Size", "10")
+        Font.setAttribute("Color", "1 1 0")
+    else:
+        Font.setAttribute("Size", "6")
+        Font.setAttribute("Color", "1 1 1")
     Icon.appendChild(Font)
     ImageLayer = xml.createElement("ImageLayer")
     ImageLayer.setAttribute("Type", "Default")
@@ -283,7 +287,7 @@ def generate_events(xml, project):
     return Events
 
 
-def generate_states(xml, project):
+def generate_states(xml, project, spacecraft_names):
     States = xml.createElement("States")
     project.appendChild(States)
     Instant = xml.createElement("Instant")
@@ -297,6 +301,14 @@ def generate_states(xml, project):
     Command = xml.createElement("Command")
     Command.setAttribute("Str", "CMD PROP WindowGeometry 0 0 1280 971")
     AppState.appendChild(Command)
+    for spacecraft_name in spacecraft_names:
+        if spacecraft_name == "TOLOSAT":
+            continue
+        Command = xml.createElement("Command")
+        Command.setAttribute(
+            "Str", f'CMD STRUCT TrackVisible "Sol/Earth/{spacecraft_name}" false'
+        )
+        AppState.appendChild(Command)
     AppState = xml.createElement("AppState")
     AppState.setAttribute("Id", "1")
     Instant.appendChild(AppState)

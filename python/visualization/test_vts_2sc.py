@@ -58,7 +58,10 @@ for spacecraft_name in spacecraft_names:
     ]
     occulting_bodies = ["Earth"]
     radiation_pressure_settings = environment_setup.radiation_pressure.cannonball(
-        "Sun", reference_area_radiation, radiation_pressure_coefficient, occulting_bodies
+        "Sun",
+        reference_area_radiation,
+        radiation_pressure_coefficient,
+        occulting_bodies,
     )
     environment_setup.add_radiation_pressure_interface(
         bodies, spacecraft_name, radiation_pressure_settings
@@ -97,14 +100,17 @@ orbit = get_input_data.get_orbit(orbit_name)
 
 initial_states = np.empty(6 * len(spacecraft_names))
 for i, spacecraft_name in enumerate(spacecraft_names):
-    initial_states[i * 6:(i + 1) * 6] = element_conversion.keplerian_to_cartesian_elementwise(
+    initial_states[
+        i * 6 : (i + 1) * 6
+    ] = element_conversion.keplerian_to_cartesian_elementwise(
         gravitational_parameter=earth_gravitational_parameter,
         semi_major_axis=orbit["semi_major_axis"],
         eccentricity=orbit["eccentricity"],
         inclination=np.deg2rad(orbit["inclination"]),
         argument_of_periapsis=np.deg2rad(orbit["argument_of_periapsis"]),
         longitude_of_ascending_node=np.deg2rad(orbit["longitude_of_ascending_node"]),
-        true_anomaly=np.deg2rad(orbit["true_anomaly"]) + i * 2 * np.pi / len(spacecraft_names),
+        true_anomaly=np.deg2rad(orbit["true_anomaly"])
+        + i * 2 * np.pi / len(spacecraft_names),
     )
 
 # Setup dependent variables to be save
@@ -152,9 +158,27 @@ sun_directions = sun_directions / np.linalg.norm(sun_directions, axis=1, keepdim
 
 # Generate CIC files
 print("Generating CIC files...")
-for i, spacecraft_name in tqdm(enumerate(spacecraft_names), ncols=80, desc=f"Satellites", total=len(spacecraft_names)):
-    satellite_states = satellites_states[:, i * 6:(i + 1) * 6]
-    generate_cic_files(epochs, satellite_states, sun_directions, spacecraft_name=spacecraft_name, mute=True)
+for i, spacecraft_name in tqdm(
+    enumerate(spacecraft_names),
+    ncols=80,
+    desc=f"Satellites",
+    total=len(spacecraft_names),
+):
+    satellite_states = satellites_states[:, i * 6 : (i + 1) * 6]
+    generate_cic_files(
+        epochs,
+        satellite_states,
+        sun_directions,
+        spacecraft_name=spacecraft_name,
+        path="cic_files\\",
+        mute=True,
+    )
 
 # Generate VTS file and start VTS
-generate_vts_file(epochs, "test_multi_spacecraft.vts", spacecraft_names=spacecraft_names, auto_start=False)
+generate_vts_file(
+    epochs,
+    "test_multi_spacecraft.vts",
+    spacecraft_names=spacecraft_names,
+    cic_files_path="cic_files\\",
+    auto_start=False,
+)

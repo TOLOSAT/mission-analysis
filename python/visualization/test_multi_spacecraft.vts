@@ -10,7 +10,7 @@
 #
 # Project Name: Test Multi Spacecraft 
 #
-# File generated on 26/03/2023 at 21:03:38 UTC 
+# File generated on 26/03/2023 at 21:34:54 UTC 
 #
 #
 </Description>
@@ -70,7 +70,7 @@
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
-     <Font Size="8" Color="1 1 1"/>
+     <Font Size="10" Color="1 1 0"/>
      <ImageLayer Type="Default"/>
     </Icon>
    </Prop2d>
@@ -84,7 +84,7 @@
    </EclipseCircle>
    <Component Name="TOLOSAT">
     <Graphics3d>
-     <File3ds Name="MA.obj"/>
+     <File3ds Name="C:\Users\arnau\Documents\GitHub\mission-analysis\python\visualization\TOLOSAT_model.obj"/>
      <Radius Value="1"/>
      <LightSensitive Value="1"/>
      <Use3dsCoords Value="0" MeshScale="1"/>
@@ -94,13 +94,13 @@
     <Geometry>
      <Position>
       <Value>
-       <File Name="TOLOSAT_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files\TOLOSAT_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="TOLOSAT_QUATERNION.TXT"/>
+        <File Name="cic_files\TOLOSAT_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -114,7 +114,7 @@
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
-     <Font Size="8" Color="1 1 1"/>
+     <Font Size="6" Color="1 1 1"/>
      <ImageLayer Type="Default"/>
     </Icon>
    </Prop2d>
@@ -130,13 +130,13 @@
     <Geometry>
      <Position>
       <Value>
-       <File Name="SAT1_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files\SAT1_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="SAT1_QUATERNION.TXT"/>
+        <File Name="cic_files\SAT1_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -150,7 +150,7 @@
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
-     <Font Size="8" Color="1 1 1"/>
+     <Font Size="6" Color="1 1 1"/>
      <ImageLayer Type="Default"/>
     </Icon>
    </Prop2d>
@@ -166,13 +166,13 @@
     <Geometry>
      <Position>
       <Value>
-       <File Name="SAT2_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files\SAT2_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="SAT2_QUATERNION.TXT"/>
+        <File Name="cic_files\SAT2_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -186,7 +186,7 @@
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
-     <Font Size="8" Color="1 1 1"/>
+     <Font Size="6" Color="1 1 1"/>
      <ImageLayer Type="Default"/>
     </Icon>
    </Prop2d>
@@ -202,13 +202,13 @@
     <Geometry>
      <Position>
       <Value>
-       <File Name="SAT3_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files\SAT3_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="SAT3_QUATERNION.TXT"/>
+        <File Name="cic_files\SAT3_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -222,6 +222,9 @@
   <Instant Time="33282 0" TimeRatio="1" Label="Initial state">
    <AppState Id="0">
     <Command Str="CMD PROP WindowGeometry 0 0 1280 971"/>
+    <Command Str="CMD STRUCT TrackVisible &quot;Sol/Earth/SAT1&quot; false"/>
+    <Command Str="CMD STRUCT TrackVisible &quot;Sol/Earth/SAT2&quot; false"/>
+    <Command Str="CMD STRUCT TrackVisible &quot;Sol/Earth/SAT3&quot; false"/>
    </AppState>
    <AppState Id="1">
     <Command Str="CMD PROP WindowGeometry 0 0 1280 971"/>

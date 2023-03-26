@@ -47,20 +47,39 @@ def CIC_days_secs_to_epochs(days, seconds):
 
 
 def generate_cic_files(
-    epochs, satellite_states, sun_directions, spacecraft_name="TOLOSAT", path="", mute=False
+    epochs,
+    satellite_states,
+    sun_directions,
+    spacecraft_name="TOLOSAT",
+    path="",
+    mute=False,
 ):
     days, seconds = epochs_to_CIC_days_secs(epochs)
     oem_dataframe = generate_oem_dataframe(days, seconds, satellite_states)
     export_OEM_file(
-        oem_dataframe, epochs[0], epochs[-1], path, spacecraft_name=spacecraft_name, mute=mute
+        oem_dataframe,
+        epochs[0],
+        epochs[-1],
+        path,
+        spacecraft_name=spacecraft_name,
+        mute=mute,
     )
     if spacecraft_name == "TOLOSAT":
-        quaternions = sun_pointing_rotation.compute_attitude_quaternions(epochs, sun_directions)
+        quaternions = sun_pointing_rotation.compute_attitude_quaternions(
+            epochs, sun_directions
+        )
     else:
-        quaternions = nadir_pointing.compute_attitude_quaternions(satellite_states[:, :3])
+        quaternions = nadir_pointing.compute_attitude_quaternions(
+            satellite_states[:, :3]
+        )
     aem_dataframe = generate_aem_dataframe(days, seconds, quaternions)
     export_AEM_file(
-        aem_dataframe, epochs[0], epochs[-1], path, spacecraft_name=spacecraft_name, mute=mute
+        aem_dataframe,
+        epochs[0],
+        epochs[-1],
+        path,
+        spacecraft_name=spacecraft_name,
+        mute=mute,
     )
     if not mute:
         print("Successfully generated CIC files")

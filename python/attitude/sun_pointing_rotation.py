@@ -4,6 +4,7 @@ import numpy as np
 
 ANGULAR_VELOCITY = 2  # deg/s
 
+
 # Longitudinal axis of cubesat is Z axis
 
 
