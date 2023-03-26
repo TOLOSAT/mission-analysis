@@ -1,8 +1,28 @@
-from useful_functions.date_transformations import epoch_to_astrotime
+from useful_functions.date_transformations import epoch_to_astrotime, astrotime_to_epoch
 from astropy.time import Time
+import pandas as pd
+from attitude import nadir_pointing, sun_pointing_rotation
 
 cic_reference_jd = 2400000.5
 cic_reference_time = Time(cic_reference_jd, format="jd", scale="tai")
+
+
+def generate_oem_dataframe(days, seconds, states):
+    oem_dataframe = pd.DataFrame(
+        columns=["days", "seconds", "x", "y", "z", "vx", "vy", "vz"]
+    )
+    oem_dataframe["days"] = days
+    oem_dataframe["seconds"] = seconds
+    oem_dataframe[["x", "y", "z", "vx", "vy", "vz"]] = states / 1e3
+    return oem_dataframe
+
+
+def generate_aem_dataframe(days, seconds, quaternions):
+    aem_dataframe = pd.DataFrame(columns=["days", "seconds", "q0", "q1", "q2", "q3"])
+    aem_dataframe["days"] = days
+    aem_dataframe["seconds"] = seconds
+    aem_dataframe[["q0", "q1", "q2", "q3"]] = quaternions
+    return aem_dataframe
 
 
 def epochs_to_CIC_days_secs(epochs):
@@ -15,6 +35,35 @@ def epochs_to_CIC_days_secs(epochs):
         for julian_day in timedeltas_since_cic
     ]
     return days, seconds
+
+
+def CIC_days_secs_to_epochs(days, seconds):
+    julian_days = [day + second / 86400 for day, second in zip(days, seconds)]
+    astrotimes = [
+        Time(julian_day, format="jd", scale="tai") for julian_day in julian_days
+    ]
+    epochs = [astrotime_to_epoch(astrotime) for astrotime in astrotimes]
+    return epochs
+
+
+def generate_cic_files(
+    epochs, satellite_states, sun_directions, spacecraft_name="TOLOSAT", path="", mute=False
+):
+    days, seconds = epochs_to_CIC_days_secs(epochs)
+    oem_dataframe = generate_oem_dataframe(days, seconds, satellite_states)
+    export_OEM_file(
+        oem_dataframe, epochs[0], epochs[-1], path, spacecraft_name=spacecraft_name, mute=mute
+    )
+    if spacecraft_name == "TOLOSAT":
+        quaternions = sun_pointing_rotation.compute_attitude_quaternions(epochs, sun_directions)
+    else:
+        quaternions = nadir_pointing.compute_attitude_quaternions(satellite_states[:, :3])
+    aem_dataframe = generate_aem_dataframe(days, seconds, quaternions)
+    export_AEM_file(
+        aem_dataframe, epochs[0], epochs[-1], path, spacecraft_name=spacecraft_name, mute=mute
+    )
+    if not mute:
+        print("Successfully generated CIC files")
 
 
 def get_OEM_header(start, end, spacecraft_name="TOLOSAT"):
@@ -69,7 +118,7 @@ def get_AEM_header(start, end, spacecraft_name="TOLOSAT"):
 
 
 def export_OEM_file(
-    oem_dataframe, start_epoch, end_epoch, path, spacecraft_name="TOLOSAT"
+    oem_dataframe, start_epoch, end_epoch, path, spacecraft_name="TOLOSAT", mute=False
 ):
     """
     Export cartesian states of the satellite to an OEM file following the CIC/CCSDS format.
@@ -86,6 +135,8 @@ def export_OEM_file(
         Path to the folder where the file will be exported
     spacecraft_name : str, optional
         Name of the spacecraft, by default "TOLOSAT"
+    mute : bool, optional
+        If True, no print is made, by default False
     """
     start = epoch_to_astrotime(start_epoch)
     end = epoch_to_astrotime(end_epoch)
@@ -94,7 +145,8 @@ def export_OEM_file(
         f.write(
             "\n".join(oem_dataframe.to_string(header=False, index=False).split("\n"))
         )
-    print(f"OEM file exported to {path}{spacecraft_name}_POSITION_VELOCITY.TXT")
+    if not mute:
+        print(f"OEM file exported to {path}{spacecraft_name}_POSITION_VELOCITY.TXT")
 
 
 def export_AEM_file(
@@ -103,6 +155,7 @@ def export_AEM_file(
     end_epoch,
     path,
     spacecraft_name="TOLOSAT",
+    mute=False,
 ):
     """
     Export attitude quaternions of the satellite to an AEM file following the CIC/CCSDS format.
@@ -118,6 +171,8 @@ def export_AEM_file(
     path : str
     spacecraft_name : str, optional
         Name of the spacecraft, by default "TOLOSAT"
+    mute : bool, optional
+        If True, no print is made, by default False
     """
     start = epoch_to_astrotime(start_epoch)
     end = epoch_to_astrotime(end_epoch)
@@ -145,4 +200,5 @@ def export_AEM_file(
                 ).split("\n")
             )
         )
-    print(f"AEM file exported to {path}{spacecraft_name}_QUATERNION.TXT")
+    if not mute:
+        print(f"AEM file exported to {path}{spacecraft_name}_QUATERNION.TXT")
