@@ -10,7 +10,7 @@
 #
 # Project Name: Test2 
 #
-# File generated on 26/03/2023 at 20:02:09 UTC 
+# File generated on 26/03/2023 at 22:42:30 UTC 
 #
 #
 </Description>
@@ -70,7 +70,7 @@
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
-     <Font Size="8" Color="1 1 1"/>
+     <Font Size="10" Color="1 1 0"/>
      <ImageLayer Type="Default"/>
     </Icon>
    </Prop2d>
@@ -84,7 +84,7 @@
    </EclipseCircle>
    <Component Name="TOLOSAT">
     <Graphics3d>
-     <File3ds Name="MA.obj"/>
+     <File3ds Name="C:\Users\arnau\Documents\GitHub\mission-analysis\python\visualization\TOLOSAT_model.obj"/>
      <Radius Value="1"/>
      <LightSensitive Value="1"/>
      <Use3dsCoords Value="0" MeshScale="1"/>

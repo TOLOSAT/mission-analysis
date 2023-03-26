@@ -22,12 +22,10 @@ def compute_attitude_quaternions(epochs, sun_directions):
 
     elapsed_seconds = epochs - epochs[0]
     satellite_axis_rotation_angle = np.deg2rad(ANGULAR_VELOCITY * elapsed_seconds)
-    satellite_axis_rotation_vector = (
-        sun_directions * satellite_axis_rotation_angle[:, None]
-    )
-    satellite_axis_rotation = R.from_rotvec(satellite_axis_rotation_vector)
+    satellite_axis_rotation_Z_vector = np.array([0, 0, 1]) * satellite_axis_rotation_angle[:, None]
+    satellite_axis_rotation_Z = R.from_rotvec(satellite_axis_rotation_Z_vector)
 
-    full_rotation = R.concatenate([sun_pointing_rotation, satellite_axis_rotation])
+    full_rotation = sun_pointing_rotation * satellite_axis_rotation_Z
 
     quaternions = full_rotation.as_quat()
     quaternions_df = pd.DataFrame(quaternions, columns=["QX", "QY", "QZ", "QW"])

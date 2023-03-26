@@ -1,5 +1,5 @@
 from visualization.cic_ccsds import epochs_to_CIC_days_secs
-from vts_modules import *
+from visualization.vts_modules import *
 from os import path, getcwd
 from subprocess import call
 from datetime import datetime, timezone
