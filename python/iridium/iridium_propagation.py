@@ -9,14 +9,14 @@ from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
 
-from iridium_synchronisation import iridium_data_synced, iridium_names
+from iridium_TLE_sync import iridium_states_synced, iridium_names
 from useful_functions import get_dates, get_spacecraft, get_orbit, datetime_to_epoch
 
 # Load spice kernels
 spice.load_standard_kernels([])
 
 # Isolate states
-iridium_all_states = iridium_data_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
+iridium_all_states = iridium_states_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
 
 # Get input data
 dates_name = "3years_10sec_iter"
@@ -28,8 +28,8 @@ Tolosat_orbit = get_orbit(orbit_name)
 
 # Set simulation start and end epochs (in seconds since J2000 = January 1, 2000 at 00:00:00)
 dates = get_dates(dates_name)
-simulation_start_date = iridium_data_synced["epoch"].iloc[0]
-simulation_end_date = dates["end_date"] - dates["start_date"] + simulation_start_date
+simulation_start_date = dates["start_date"]
+simulation_end_date = dates["end_date"]
 propagation_duration = dates["propagation_days"]
 
 # Create default body settings and bodies system

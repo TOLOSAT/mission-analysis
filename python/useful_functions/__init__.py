@@ -5,4 +5,5 @@ from .get_input_data import *
 from .plot_functions import *
 from .read_write import *
 from .date_transformations import *
+from .sun_synchronous import *
 from tqdm import tqdm

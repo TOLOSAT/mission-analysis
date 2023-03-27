@@ -1,5 +1,4 @@
 # Import statements
-from tqdm import tqdm
 from tudatpy.kernel import numerical_simulation
 from tudatpy.kernel.astro import element_conversion
 from tudatpy.kernel.interface import spice
@@ -98,7 +97,7 @@ initial_state = element_conversion.keplerian_to_cartesian_elementwise(
     eccentricity=orbit["eccentricity"],
     inclination=np.deg2rad(orbit["inclination"]),
     argument_of_periapsis=np.deg2rad(orbit["argument_of_periapsis"]),
-    longitude_of_ascending_node=np.deg2rad(orbit["longitude_of_ascending_node"]),
+    longitude_of_ascending_node=get_sso_raan(orbit["mean_local_time"], datetime_to_epoch(simulation_start_date)),
     true_anomaly=np.deg2rad(orbit["true_anomaly"]),
 )
 
@@ -118,11 +117,11 @@ propagation_end_date = propagation_start_date + propagation_duration
 all_eclipses = pd.DataFrame(columns=["start", "end", "duration", "partial"])
 
 for propagation_number in tqdm(
-    range(
-        int((simulation_end_date - simulation_start_date) / propagation_duration) + 1
-    ),
-    desc="Propagation",
-    ncols=80,
+        range(
+            int((simulation_end_date - simulation_start_date) / propagation_duration) + 1
+        ),
+        desc="Propagation",
+        ncols=80,
 ):
     # Convert to epochs
     propagation_start_epoch = datetime_to_epoch(propagation_start_date)
@@ -206,7 +205,7 @@ all_eclipses["partial"] = all_eclipses["partial"].astype("boolean")
 print("Done!")
 
 all_eclipses = all_eclipses[~all_eclipses["partial"]]
-all_eclipses["start"] = pd.to_datetime(all_eclipses["start"])
+all_eclipses["start"] = pd.to_datetime(all_eclipses["start"], utc=True)
 all_eclipses["timedelta"] = all_eclipses["start"] - simulation_start_date
 all_eclipses["seconds"] = all_eclipses["timedelta"].dt.total_seconds()
 

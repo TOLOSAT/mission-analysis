@@ -1,5 +1,4 @@
 import pandas
-from tudatpy.kernel.astro import time_conversion
 import datetime
 import numpy as np
 from astropy.time import Time, TimeDelta
@@ -8,16 +7,18 @@ J2000 = Time("J2000.0", format="jyear_str", scale="utc")
 
 
 def datetime_to_epoch_raw(datetime_object):
-    return time_conversion.julian_day_to_seconds_since_epoch(
-        time_conversion.calendar_date_to_julian_day(datetime_object)
-    )
+    astrotime = Time(datetime_object, scale="utc")
+    return astrotime_to_epoch_raw(astrotime)
 
 
 def datetime_to_epoch(datetime_object):
+    astrotime = Time(datetime_object, scale="utc")
     if isinstance(datetime_object, datetime.datetime):
-        return datetime_to_epoch_raw(datetime_object)
+        return astrotime_to_epoch_raw(astrotime)
     elif isinstance(datetime_object, list):
-        return [datetime_to_epoch_raw(dt) for dt in datetime_object]
+        return astrotime_to_epoch_raw(astrotime)
+    elif isinstance(datetime_object, np.ndarray):
+        return astrotime_to_epoch_raw(astrotime)
     elif isinstance(datetime_object, dict):
         return {key: datetime_to_epoch_raw(dt) for key, dt in datetime_object.items()}
     elif isinstance(datetime_object, pandas.Series) or isinstance(
@@ -27,9 +28,9 @@ def datetime_to_epoch(datetime_object):
 
 
 def epoch_to_datetime_raw(epoch):
-    return time_conversion.julian_day_to_calendar_date(
-        time_conversion.seconds_since_epoch_to_julian_day(epoch)
-    ).replace(tzinfo=datetime.timezone.utc)
+    astrotime = epoch_to_astrotime_raw(epoch)
+    dt = astrotime.datetime.replace(tzinfo=datetime.timezone.utc)
+    return dt
 
 
 def epoch_to_datetime(epoch):

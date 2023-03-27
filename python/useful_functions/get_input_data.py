@@ -1,5 +1,5 @@
 import csv
-from datetime import datetime
+from datetime import datetime, timezone
 from datetime import timedelta
 from pathlib import Path
 
@@ -62,5 +62,6 @@ def get_dates(filename):
                 info = timedelta(days=int(row[1]))
             else:
                 info = datetime.strptime(row[1], "%Y-%m-%d-%H:%M:%S")
+                info = info.replace(tzinfo=timezone.utc)
             dates[row[0]] = info
     return dates
