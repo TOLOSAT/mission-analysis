@@ -15,6 +15,11 @@
 #
 </Description>
  </MetaData>
+ <MonitorConfiguration>
+  <Monitor X="0" Y="0" Height="2088" Width="3840"/>
+  <Monitor X="3840" Y="0" Height="2088" Width="3840"/>
+  <Monitor X="-2160" Y="-768" Height="3768" Width="2160"/>
+ </MonitorConfiguration>
  <StartOptions TimeRatio="1" UseStateTimeRatio="0" SysTimeSynced="0" Paused="0" Looped="0" Minimized="0" Hidden="0" AutoClosed="0"/>
  <Timeshifting Enabled="0"/>
  <TimelineOptions ProjectLocked="1" CursorLocked="0" CursorRatio="0" ViewStart="33282 0.000000" ViewSpan="0" DateFormat="ISODate" NoBadgeFiltered="0" BadgeFiltered=""/>
@@ -84,7 +89,7 @@
    </EclipseCircle>
    <Component Name="TOLOSAT">
     <Graphics3d>
-     <File3ds Name="C:\Users\arnau\Documents\GitHub\mission-analysis\python\visualization\TOLOSAT_model.obj"/>
+     <File3ds Name="../visualization/TOLOSAT_model.obj"/>
      <Radius Value="1"/>
      <LightSensitive Value="1"/>
      <Use3dsCoords Value="0" MeshScale="1"/>
@@ -94,13 +99,13 @@
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\TOLOSAT_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/TOLOSAT_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\TOLOSAT_QUATERNION.TXT"/>
+        <File Name="cic_files/TOLOSAT_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -127,16 +132,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 106">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 106_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 106_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 106_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 106_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -163,16 +176,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 103">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 103_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 103_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 103_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 103_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -199,16 +220,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 109">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 109_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 109_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 109_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 109_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -235,16 +264,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 102">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 102_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 102_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 102_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 102_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -271,16 +308,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 105">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 105_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 105_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 105_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 105_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -307,16 +352,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 104">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 104_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 104_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 104_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 104_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -343,16 +396,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 114">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 114_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 114_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 114_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 114_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -379,16 +440,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 108">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 108_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 108_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 108_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 108_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -415,16 +484,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 112">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 112_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 112_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 112_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 112_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -451,16 +528,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 111">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 111_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 111_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 111_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 111_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -487,16 +572,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 113">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 113_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 113_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 113_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 113_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -523,16 +616,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 123">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 123_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 123_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 123_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 123_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -559,16 +660,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 120">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 120_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 120_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 120_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 120_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -595,16 +704,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 115">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 115_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 115_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 115_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 115_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -631,16 +748,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 118">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 118_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 118_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 118_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 118_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -667,16 +792,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 117">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 117_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 117_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 117_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 117_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -703,16 +836,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 126">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 126_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 126_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 126_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 126_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -739,16 +880,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 124">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 124_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 124_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 124_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 124_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -775,16 +924,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 128">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 128_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 128_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 128_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 128_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -811,16 +968,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 121">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 121_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 121_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 121_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 121_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -847,16 +1012,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 133">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 133_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 133_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 133_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 133_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -883,16 +1056,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 100">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 100_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 100_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 100_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 100_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -919,16 +1100,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 122">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 122_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 122_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 122_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 122_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -955,16 +1144,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 129">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 129_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 129_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 129_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 129_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -991,16 +1188,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 119">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 119_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 119_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 119_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 119_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1027,16 +1232,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 107">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 107_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 107_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 107_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 107_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1063,16 +1276,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 132">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 132_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 132_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 132_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 132_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1099,16 +1320,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 136">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 136_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 136_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 136_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 136_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1135,16 +1364,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 139">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 139_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 139_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 139_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 139_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1171,16 +1408,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 125">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 125_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 125_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 125_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 125_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1207,16 +1452,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 135">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 135_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 135_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 135_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 135_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1243,16 +1496,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 138">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 138_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 138_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 138_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 138_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1279,16 +1540,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 116">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 116_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 116_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 116_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 116_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1315,16 +1584,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 130">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 130_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 130_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 130_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 130_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1351,16 +1628,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 151">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 151_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 151_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 151_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 151_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1387,16 +1672,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 134">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 134_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 134_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 134_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 134_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1423,16 +1716,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 137">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 137_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 137_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 137_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 137_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1459,16 +1760,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 141">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 141_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 141_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 141_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 141_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1495,16 +1804,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 153">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 153_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 153_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 153_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 153_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1531,16 +1848,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 131">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 131_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 131_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 131_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 131_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1567,16 +1892,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 144">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 144_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 144_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 144_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 144_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1603,16 +1936,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 149">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 149_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 149_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 149_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 149_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1639,16 +1980,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 157">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 157_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 157_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 157_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 157_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1675,16 +2024,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 140">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 140_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 140_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 140_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 140_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1711,16 +2068,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 145">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 145_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 145_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 145_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 145_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1747,16 +2112,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 146">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 146_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 146_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 146_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 146_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1783,16 +2156,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 148">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 148_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 148_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 148_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 148_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1819,16 +2200,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 142">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 142_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 142_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 142_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 142_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1855,16 +2244,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 150">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 150_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 150_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 150_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 150_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1891,16 +2288,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 143">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 143_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 143_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 143_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 143_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1927,16 +2332,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 161">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 161_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 161_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 161_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 161_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1963,16 +2376,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 152">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 152_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 152_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 152_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 152_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -1999,16 +2420,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 147">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 147_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 147_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 147_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 147_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2035,16 +2464,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 110">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 110_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 110_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 110_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 110_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2071,16 +2508,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 162">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 162_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 162_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 162_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 162_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2107,16 +2552,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 160">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 160_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 160_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 160_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 160_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2143,16 +2596,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 166">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 166_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 166_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 166_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 166_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2179,16 +2640,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 158">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 158_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 158_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 158_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 158_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2215,16 +2684,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 165">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 165_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 165_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 165_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 165_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2251,16 +2728,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 155">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 155_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 155_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 155_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 155_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2287,16 +2772,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 154">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 154_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 154_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 154_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 154_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2323,16 +2816,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 163">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 163_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 163_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 163_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 163_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2359,16 +2860,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 156">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 156_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 156_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 156_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 156_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2395,16 +2904,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 164">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 164_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 164_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 164_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 164_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2431,16 +2948,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 159">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 159_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 159_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 159_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 159_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2467,16 +2992,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 180">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 180_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 180_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 180_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 180_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2503,16 +3036,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 176">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 176_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 176_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 176_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 176_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2539,16 +3080,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 168">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 168_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 168_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 168_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 168_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2575,16 +3124,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 173">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 173_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 173_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 173_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 173_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2611,16 +3168,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 169">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 169_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 169_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 169_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 169_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2647,16 +3212,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 172">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 172_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 172_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 172_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 172_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2683,16 +3256,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 175">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 175_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 175_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 175_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 175_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2719,16 +3300,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 171">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 171_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 171_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 171_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 171_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2755,16 +3344,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 170">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 170_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 170_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 170_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 170_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -2791,16 +3388,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="IRIDIUM 167">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\IRIDIUM 167_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/IRIDIUM 167_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\IRIDIUM 167_QUATERNION.TXT"/>
+        <File Name="cic_files/IRIDIUM 167_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>

@@ -8,13 +8,14 @@ from tudatpy.util import result2array
 from tqdm import tqdm
 
 from iridium_TLEs import iridium_data
-from useful_functions import datetime_to_epoch, epoch_to_datetime
+from useful_functions import datetime_to_epoch, epoch_to_datetime, teme_to_j2000
 
 # Create new synced Iridium DataFrame
 iridium_data_synced = iridium_data.copy()
 
 # Load spice kernels
 spice.load_standard_kernels([])
+
 
 # Define list of Iridium satellites and the acceleration model to be used
 iridium_names = iridium_data["name"].to_list()
@@ -33,7 +34,7 @@ body_settings = environment_setup.get_default_body_settings(
     bodies_to_create, global_frame_origin, global_frame_orientation
 )
 acceleration_settings_iridium = dict(
-    Earth=[propagation_setup.acceleration.spherical_harmonic_gravity(10, 10)]
+    Earth=[propagation_setup.acceleration.spherical_harmonic_gravity(2, 0)]
 )
 bodies_to_propagate = ["Iridium"]
 central_bodies = ["Earth"]
@@ -72,7 +73,7 @@ for spacecraft in tqdm(iridium_names, desc="Synchronization", ncols=80):
     )
 
     # Set initial conditions for the satellite
-    initial_state = keplerian_to_cartesian(
+    initial_state_teme = keplerian_to_cartesian(
         iridium_data[iridium_data["name"] == spacecraft][
             ["sma", "ecc", "inc", "aop", "raan", "tan"]
         ]
@@ -80,6 +81,7 @@ for spacecraft in tqdm(iridium_names, desc="Synchronization", ncols=80):
         .tolist()[0],
         bodies.get("Earth").gravitational_parameter,
     )
+    initial_state = teme_to_j2000(initial_state_teme, simulation_start_epoch)
 
     # Create propagation settings
     propagator_settings = propagation_setup.propagator.translational(

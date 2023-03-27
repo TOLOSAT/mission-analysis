@@ -1,10 +1,10 @@
 from tudatpy.kernel import numerical_simulation
-from tudatpy.kernel.astro import element_conversion, time_conversion
+from tudatpy.kernel.astro import element_conversion
 from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
 
-from iridium_synchronisation import iridium_data_synced, iridium_names
+from iridium_TLE_sync import iridium_states_synced, iridium_names
 from useful_functions import *
 from visualization.cic_ccsds import generate_cic_files
 from visualization.vts_generate import generate_vts_file
@@ -13,7 +13,7 @@ from visualization.vts_generate import generate_vts_file
 spice.load_standard_kernels([])
 
 # Isolate states
-iridium_all_states = iridium_data_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
+iridium_all_states = iridium_states_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
 
 # Get input data
 dates_name = "1day"
