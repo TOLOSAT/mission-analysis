@@ -10,7 +10,7 @@
 #
 # Project Name: Iridium Visualization 
 #
-# File generated on 27/03/2023 at 13:21:51 UTC 
+# File generated on 27/03/2023 at 13:35:32 UTC 
 #
 #
 </Description>
@@ -110,7 +110,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 106" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -146,7 +146,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 103" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -182,7 +182,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 109" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -218,7 +218,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 102" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -254,7 +254,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 105" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -290,7 +290,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 104" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -326,7 +326,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 114" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -362,7 +362,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 108" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -398,7 +398,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 112" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -434,7 +434,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 111" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -470,7 +470,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 113" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -506,7 +506,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 123" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -542,7 +542,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 120" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -578,7 +578,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 115" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -614,7 +614,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 118" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -650,7 +650,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 117" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -686,7 +686,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 126" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -722,7 +722,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 124" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -758,7 +758,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 128" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -794,7 +794,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 121" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -830,7 +830,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 133" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -866,7 +866,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 100" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -902,7 +902,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 122" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -938,7 +938,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 129" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -974,7 +974,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 119" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1010,7 +1010,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 107" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1046,7 +1046,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 132" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1082,7 +1082,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 136" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1118,7 +1118,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 139" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1154,7 +1154,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 125" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1190,7 +1190,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 135" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1226,7 +1226,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 138" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1262,7 +1262,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 116" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1298,7 +1298,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 130" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1334,7 +1334,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 151" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1370,7 +1370,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 134" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1406,7 +1406,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 137" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1442,7 +1442,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 141" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1478,7 +1478,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 153" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1514,7 +1514,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 131" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1550,7 +1550,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 144" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1586,7 +1586,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 149" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1622,7 +1622,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 157" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1658,7 +1658,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 140" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1694,7 +1694,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 145" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1730,7 +1730,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 146" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1766,7 +1766,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 148" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1802,7 +1802,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 142" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1838,7 +1838,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 150" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1874,7 +1874,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 143" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1910,7 +1910,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 161" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1946,7 +1946,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 152" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -1982,7 +1982,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 147" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2018,7 +2018,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 110" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2054,7 +2054,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 162" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2090,7 +2090,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 160" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2126,7 +2126,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 166" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2162,7 +2162,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 158" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2198,7 +2198,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 165" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2234,7 +2234,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 155" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2270,7 +2270,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 154" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2306,7 +2306,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 163" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2342,7 +2342,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 156" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2378,7 +2378,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 164" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2414,7 +2414,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 159" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2450,7 +2450,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 180" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2486,7 +2486,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 176" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2522,7 +2522,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 168" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2558,7 +2558,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 173" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2594,7 +2594,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 169" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2630,7 +2630,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 172" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2666,7 +2666,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 175" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2702,7 +2702,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 171" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2738,7 +2738,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 170" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
@@ -2774,7 +2774,7 @@
   </Satellite>
   <Satellite Name="IRIDIUM 167" ParentPath="Sol/Earth">
    <Track>
-    <LineStyle Color="0.459159 1 0" Style="SolidLine" Width="1"/>
+    <LineStyle Color="1 1 0" Style="DotLine" Width="1"/>
    </Track>
    <Prop2d>
     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">

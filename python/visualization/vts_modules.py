@@ -188,8 +188,12 @@ def add_satellite(xml, entities, name, oem_file, aem_file, model_name=None):
     Track = xml.createElement("Track")
     Satellite.appendChild(Track)
     LineStyle = xml.createElement("LineStyle")
-    LineStyle.setAttribute("Color", "0.459159 1 0")
-    LineStyle.setAttribute("Style", "SolidLine")
+    if name == "TOLOSAT":
+        LineStyle.setAttribute("Color", "0.459159 1 0")
+        LineStyle.setAttribute("Style", "SolidLine")
+    else:
+        LineStyle.setAttribute("Color", "1 1 0")
+        LineStyle.setAttribute("Style", "DotLine")
     LineStyle.setAttribute("Width", "1")
     Track.appendChild(LineStyle)
     Prop2d = xml.createElement("Prop2d")
