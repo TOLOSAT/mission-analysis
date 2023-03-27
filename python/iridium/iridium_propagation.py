@@ -1,8 +1,3 @@
-from os import makedirs
-
-import numpy as np
-import pandas as pd
-from tqdm import tqdm
 from tudatpy.kernel import numerical_simulation
 from tudatpy.kernel.astro import element_conversion
 from tudatpy.kernel.interface import spice
@@ -10,7 +5,7 @@ from tudatpy.kernel.numerical_simulation import environment_setup, propagation_s
 from tudatpy.util import result2array
 
 from iridium_TLE_sync import iridium_states_synced, iridium_names
-from useful_functions import get_dates, get_spacecraft, get_orbit, datetime_to_epoch
+from useful_functions import *
 
 # Load spice kernels
 spice.load_standard_kernels([])
@@ -103,9 +98,8 @@ Tolosat_initial_state = element_conversion.keplerian_to_cartesian_elementwise(
     eccentricity=Tolosat_orbit["eccentricity"],
     inclination=np.deg2rad(Tolosat_orbit["inclination"]),
     argument_of_periapsis=np.deg2rad(Tolosat_orbit["argument_of_periapsis"]),
-    longitude_of_ascending_node=np.deg2rad(
-        Tolosat_orbit["longitude_of_ascending_node"]
-    ),
+    longitude_of_ascending_node=get_sso_raan(Tolosat_orbit["mean_local_time"],
+                                             datetime_to_epoch(simulation_start_date)),
     true_anomaly=np.deg2rad(Tolosat_orbit["true_anomaly"]),
 )
 
@@ -126,11 +120,11 @@ propagation_end_date = propagation_start_date + propagation_duration
 
 # Propagation loop
 for propagation_number in tqdm(
-    range(
-        int((simulation_end_date - simulation_start_date) / propagation_duration) + 1
-    ),
-    desc="Propagation",
-    ncols=80,
+        range(
+            int((simulation_end_date - simulation_start_date) / propagation_duration) + 1
+        ),
+        desc="Propagation",
+        ncols=80,
 ):
     # Convert to epochs
     propagation_start_epoch = datetime_to_epoch(propagation_start_date)
@@ -194,7 +188,7 @@ for propagation_number in tqdm(
         f"iridium_states/{propagation_number}/epochs.pkl"
     )
     for sat in enumerate(all_spacecraft_names):
-        states_dataframe.iloc[:, (sat[0] * 6 + 1) : (sat[0] * 6 + 7)].to_pickle(
+        states_dataframe.iloc[:, (sat[0] * 6 + 1): (sat[0] * 6 + 7)].to_pickle(
             f"iridium_states/{propagation_number}/{sat[1]}.pkl"
         )
 
