@@ -8,7 +8,7 @@ ANGULAR_VELOCITY = 2  # deg/s
 # Longitudinal axis of cubesat is Z axis
 
 
-def compute_attitude_quaternions(epochs, sun_directions):
+def compute_attitude_rotation(epochs, sun_directions):
     sun_pointing_rotation_axis = np.cross(np.array([0, 0, 1]), sun_directions)
     sun_pointing_rotation_axis = sun_pointing_rotation_axis / np.linalg.norm(
         sun_pointing_rotation_axis, axis=1, keepdims=True
@@ -22,11 +22,25 @@ def compute_attitude_quaternions(epochs, sun_directions):
 
     elapsed_seconds = epochs - epochs[0]
     satellite_axis_rotation_angle = np.deg2rad(ANGULAR_VELOCITY * elapsed_seconds)
-    satellite_axis_rotation_Z_vector = np.array([0, 0, 1]) * satellite_axis_rotation_angle[:, None]
+    satellite_axis_rotation_Z_vector = (
+        np.array([0, 0, 1]) * satellite_axis_rotation_angle[:, None]
+    )
     satellite_axis_rotation_Z = R.from_rotvec(satellite_axis_rotation_Z_vector)
 
     full_rotation = sun_pointing_rotation * satellite_axis_rotation_Z
+    return full_rotation
 
+
+def compute_attitude_quaternions(epochs, sun_directions):
+    full_rotation = compute_attitude_rotation(epochs, sun_directions)
     quaternions = full_rotation.as_quat()
     quaternions_df = pd.DataFrame(quaternions, columns=["QX", "QY", "QZ", "QW"])
     return quaternions_df
+
+
+def compute_body_vectors(epochs, sun_directions):
+    full_rotation = compute_attitude_rotation(epochs, sun_directions)
+    pX_vector = full_rotation.apply(np.array([1, 0, 0]))
+    pY_vector = full_rotation.apply(np.array([0, 1, 0]))
+    pZ_vector = full_rotation.apply(np.array([0, 0, 1]))
+    return pX_vector, pY_vector, pZ_vector

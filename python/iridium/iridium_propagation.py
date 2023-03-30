@@ -14,7 +14,7 @@ spice.load_standard_kernels([])
 iridium_all_states = iridium_states_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
 
 # Get input data
-dates_name = "3years_10sec_iter"
+dates_name = "1year_1sec_iter"
 spacecraft_name = "Tolosat"
 orbit_name = "SSO6"
 
@@ -98,18 +98,19 @@ Tolosat_initial_state = element_conversion.keplerian_to_cartesian_elementwise(
     eccentricity=Tolosat_orbit["eccentricity"],
     inclination=np.deg2rad(Tolosat_orbit["inclination"]),
     argument_of_periapsis=np.deg2rad(Tolosat_orbit["argument_of_periapsis"]),
-    longitude_of_ascending_node=get_sso_raan(Tolosat_orbit["mean_local_time"],
-                                             datetime_to_epoch(simulation_start_date)),
+    longitude_of_ascending_node=get_sso_raan(
+        Tolosat_orbit["mean_local_time"], datetime_to_epoch(simulation_start_date)
+    ),
     true_anomaly=np.deg2rad(Tolosat_orbit["true_anomaly"]),
 )
 
 initial_state = Tolosat_initial_state.tolist() + iridium_all_states.flatten().tolist()
 
 # Setup dependent variables
-sun_position_dep_var = propagation_setup.dependent_variable.relative_position(
-    "Sun", "Earth"
+sun_direction_dep_var = propagation_setup.dependent_variable.relative_position(
+    "Sun", "Tolosat"
 )
-dependent_variables_to_save = [sun_position_dep_var]
+dependent_variables_to_save = [sun_direction_dep_var]
 
 # Set fixed step size
 fixed_step_size = dates["step_size"].total_seconds()
@@ -120,11 +121,11 @@ propagation_end_date = propagation_start_date + propagation_duration
 
 # Propagation loop
 for propagation_number in tqdm(
-        range(
-            int((simulation_end_date - simulation_start_date) / propagation_duration) + 1
-        ),
-        desc="Propagation",
-        ncols=80,
+    range(
+        int((simulation_end_date - simulation_start_date) / propagation_duration) + 1
+    ),
+    desc="Propagation",
+    ncols=80,
 ):
     # Convert to epochs
     propagation_start_epoch = datetime_to_epoch(propagation_start_date)
@@ -176,19 +177,20 @@ for propagation_number in tqdm(
     states_dataframe = pd.DataFrame(states_array)
 
     dependent_variables_history = dynamics_simulator.dependent_variable_history
-    dependent_variables_history_array = result2array(dependent_variables_history)
-    sun_position_dataframe = pd.DataFrame(dependent_variables_history_array)
+    sun_direction = result2array(dependent_variables_history)
+    sun_direction = sun_direction / np.linalg.norm(sun_direction, axis=1, keepdims=True)
+    sun_direction_dataframe = pd.DataFrame(sun_direction)
 
     # Export results to files
     makedirs(f"iridium_states/{propagation_number}", exist_ok=True)
-    sun_position_dataframe.iloc[:, 1:4].to_pickle(
-        f"iridium_states/{propagation_number}/sun_position.pkl"
+    sun_direction_dataframe.iloc[:, 1:4].to_pickle(
+        f"iridium_states/{propagation_number}/sun_direction.pkl"
     )
     states_dataframe.iloc[:, 0].to_pickle(
         f"iridium_states/{propagation_number}/epochs.pkl"
     )
     for sat in enumerate(all_spacecraft_names):
-        states_dataframe.iloc[:, (sat[0] * 6 + 1): (sat[0] * 6 + 7)].to_pickle(
+        states_dataframe.iloc[:, (sat[0] * 6 + 1) : (sat[0] * 6 + 7)].to_pickle(
             f"iridium_states/{propagation_number}/{sat[1]}.pkl"
         )
 
