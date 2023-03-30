@@ -92,7 +92,7 @@ def generate_vts_file(
     if auto_start:
         print("Starting VTS...")
         if VTS_path is None:
-            VTS_path = "C:\Program Files (x86)\Vts-WindowsNT-32bits-3.6.1"
+            VTS_path = "C:\Program Files (x86)\Vts-WindowsNT-32bits-3.7.0"
         command = f'"{VTS_path}\startVTS.exe" --batch --project "{vts_file_path}"'
         print(command)
         call(command)
