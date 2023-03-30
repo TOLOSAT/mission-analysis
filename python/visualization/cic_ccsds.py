@@ -8,6 +8,23 @@ cic_reference_time = Time(cic_reference_jd, format="jd", scale="tai")
 
 
 def generate_oem_dataframe(days, seconds, states):
+    """
+    Generate a dataframe with the OEM format
+
+    Parameters
+    ----------
+    days : list of int or np.ndarray of shape (n,)
+        Days since CIC reference time
+    seconds : list of float or np.ndarray of shape (n,)
+        Seconds in the day
+    states : np.ndarray of shape (n, 6)
+        States in the EME2000/J2000 frame in meters and meters per second
+
+    Returns
+    -------
+    oem_dataframe : pd.DataFrame
+        Dataframe with the OEM format
+    """
     oem_dataframe = pd.DataFrame(
         columns=["days", "seconds", "x", "y", "z", "vx", "vy", "vz"]
     )
@@ -18,6 +35,23 @@ def generate_oem_dataframe(days, seconds, states):
 
 
 def generate_aem_dataframe(days, seconds, quaternions):
+    """
+    Generate a dataframe with the AEM format
+
+    Parameters
+    ----------
+    days : list of int or np.ndarray of shape (n,)
+        Days since CIC reference time
+    seconds : list of float or np.ndarray of shape (n,)
+        Seconds in the day
+    quaternions : np.ndarray of shape (n, 4)
+        Quaternions representing the attitude of the spacecraft with respect to the EME2000/J2000 frame
+
+    Returns
+    -------
+    aem_dataframe : pd.DataFrame
+        Dataframe with the AEM format
+    """
     aem_dataframe = pd.DataFrame(columns=["days", "seconds", "q0", "q1", "q2", "q3"])
     aem_dataframe["days"] = days
     aem_dataframe["seconds"] = seconds
@@ -26,6 +60,22 @@ def generate_aem_dataframe(days, seconds, quaternions):
 
 
 def epochs_to_CIC_days_secs(epochs):
+    """
+    Convert epochs in seconds since J2000 to days and seconds since CIC reference time
+
+    Parameters
+    ----------
+    epochs : list of float or np.ndarray of shape (n,)
+        Epochs in seconds since J2000
+
+    Returns
+    -------
+    days : list of int of length n
+        Days since CIC reference time
+    seconds : list of float of length n
+        Seconds in the day
+
+    """
     astrotimes = epoch_to_astrotime(epochs)
     timedeltas_since_cic = [astrotime - cic_reference_time for astrotime in astrotimes]
     julian_days_since_cic = [timedelta.jd for timedelta in timedeltas_since_cic]
@@ -38,6 +88,21 @@ def epochs_to_CIC_days_secs(epochs):
 
 
 def CIC_days_secs_to_epochs(days, seconds):
+    """
+    Convert days and seconds since CIC reference time to epochs in seconds since J2000
+
+    Parameters
+    ----------
+    days : list of int or np.ndarray of shape (n,)
+        Days since CIC reference time
+    seconds : list of float or np.ndarray of shape (n,)
+        Seconds in the day
+
+    Returns
+    -------
+    epochs : list of float of length n
+        Epochs in seconds since J2000
+    """
     julian_days = [day + second / 86400 for day, second in zip(days, seconds)]
     astrotimes = [
         Time(julian_day, format="jd", scale="tai") for julian_day in julian_days
@@ -54,6 +119,24 @@ def generate_cic_files(
     path="",
     mute=False,
 ):
+    """
+    Generate CIC files (OEM and AEM) from epochs, satellite states and sun directions
+
+    Parameters
+    ----------
+    epochs : list of float or np.ndarray of shape (n,)
+        Epochs in seconds since J2000
+    satellite_states : np.ndarray of shape (n, 6)
+        States in the EME2000/J2000 frame in meters and meters per second
+    sun_directions : np.ndarray of shape (n, 3)
+        Sun directions in the EME2000/J2000 frame from the satellite
+    spacecraft_name : str, optional
+        Name of the spacecraft, by default "TOLOSAT"
+    path : str, optional
+        Path to the folder where the files will be saved, by default ""
+    mute : bool, optional
+        If True, the function will not print anything, by default False
+    """
     days, seconds = epochs_to_CIC_days_secs(epochs)
     oem_dataframe = generate_oem_dataframe(days, seconds, satellite_states)
     export_OEM_file(
@@ -86,6 +169,23 @@ def generate_cic_files(
 
 
 def get_OEM_header(start, end, spacecraft_name="TOLOSAT"):
+    """
+    Generate the header of an OEM file
+
+    Parameters
+    ----------
+    start : astropy.time.Time
+        Start time of the data
+    end : astropy.time.Time
+        End time of the data
+    spacecraft_name : str, optional
+        Name of the spacecraft, by default "TOLOSAT"
+
+    Returns
+    -------
+    header : list of str
+        Header of the OEM file
+    """
     return [
         "CIC_OEM_VERS = 2.0",
         "CREATION_DATE  = " + Time.now().strftime("%Y-%m-%dT%H:%M:%S.%f"),
@@ -110,6 +210,23 @@ def get_OEM_header(start, end, spacecraft_name="TOLOSAT"):
 
 
 def get_AEM_header(start, end, spacecraft_name="TOLOSAT"):
+    """
+    Generate the header of an AEM file
+
+    Parameters
+    ----------
+    start : astropy.time.Time
+        Start time of the data
+    end : astropy.time.Time
+        End time of the data
+    spacecraft_name : str, optional
+        Name of the spacecraft, by default "TOLOSAT"
+
+    Returns
+    -------
+    header : list of str
+        Header of the AEM file
+    """
     return [
         "CIC_AEM_VERS = 2.0",
         "CREATION_DATE  = " + Time.now().strftime("%Y-%m-%dT%H:%M:%S.%f"),

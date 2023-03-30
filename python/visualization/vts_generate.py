@@ -29,6 +29,27 @@ def generate_vts_file(
     auto_start=False,
     VTS_path=None,
 ):
+    """
+    Generate a VTS project file. The VTS project file is a XML file that contains all the information needed to
+    visualize the simulation. VTS can be automatically started after the file is generated.
+    Download VTS from https://timeloop.fr/vts/
+
+    Parameters
+    ----------
+    epochs : np.ndarray
+        Array of epochs in seconds since J2000
+    vts_file_name : str
+        Name of the VTS file to generate
+    spacecraft_names : list of str, optional
+        List of spacecraft names to generate. The default is None.
+    cic_files_path : str, optional
+        Path to the CIC files. The default is "".
+    auto_start : bool, optional
+        If True, VTS is automatically started after the file is generated. The default is False.
+        The path to VTS must be specified in VTS_path.
+    VTS_path : str, optional
+        Path to the VTS executable. The default is None.
+    """
     if spacecraft_names is None:
         spacecraft_names = ["TOLOSAT"]
     absolute_path = path.abspath(getcwd())
