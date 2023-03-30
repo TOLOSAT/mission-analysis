@@ -9,6 +9,21 @@ ANGULAR_VELOCITY = 2  # deg/s
 
 
 def compute_attitude_rotation(epochs, sun_directions):
+    """
+    Compute the rotation from the EME2000 frame to the TOLOSAT frame at each epoch.
+
+    Parameters
+    ----------
+    epochs : np.ndarray
+        Array of epochs in seconds since J2000
+    sun_directions : np.ndarray
+        Array of sun directions in EME2000 frame from TOLOSAT
+
+    Returns
+    -------
+    full_rotation : scipy.spatial.transform.rotation.Rotation
+        Rotations from EME2000 to TOLOSAT frame
+    """
     sun_pointing_rotation_axis = np.cross(np.array([0, 0, 1]), sun_directions)
     sun_pointing_rotation_axis = sun_pointing_rotation_axis / np.linalg.norm(
         sun_pointing_rotation_axis, axis=1, keepdims=True
@@ -32,6 +47,21 @@ def compute_attitude_rotation(epochs, sun_directions):
 
 
 def compute_attitude_quaternions(epochs, sun_directions):
+    """
+    Compute the quaternions from the EME2000 frame to the TOLOSAT frame at each epoch.
+
+    Parameters
+    ----------
+    epochs : np.ndarray
+        Array of epochs in seconds since J2000
+    sun_directions : np.ndarray
+        Array of sun directions in EME2000 frame from TOLOSAT
+
+    Returns
+    -------
+    quaternions_df : pd.DataFrame
+        Quaternions from EME2000 to TOLOSAT frame
+    """
     full_rotation = compute_attitude_rotation(epochs, sun_directions)
     quaternions = full_rotation.as_quat()
     quaternions_df = pd.DataFrame(quaternions, columns=["QX", "QY", "QZ", "QW"])
@@ -39,6 +69,25 @@ def compute_attitude_quaternions(epochs, sun_directions):
 
 
 def compute_body_vectors(epochs, sun_directions):
+    """
+    Compute the body vectors of TOLOSAT in the EME2000 frame at each epoch.
+
+    Parameters
+    ----------
+    epochs : np.ndarray
+        Array of epochs in seconds since J2000
+    sun_directions : np.ndarray
+        Array of sun directions in EME2000 frame from TOLOSAT
+
+    Returns
+    -------
+    pX_vector : np.ndarray
+        Vector of the X axis of TOLOSAT in EME2000 frame
+    pY_vector : np.ndarray
+        Vector of the Y axis of TOLOSAT in EME2000 frame
+    pZ_vector : np.ndarray
+        Vector of the Z axis of TOLOSAT in EME2000 frame
+    """
     full_rotation = compute_attitude_rotation(epochs, sun_directions)
     pX_vector = full_rotation.apply(np.array([1, 0, 0]))
     pY_vector = full_rotation.apply(np.array([0, 1, 0]))

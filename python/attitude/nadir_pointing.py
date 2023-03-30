@@ -4,6 +4,19 @@ import numpy as np
 
 
 def compute_attitude_quaternions(satellite_positions):
+    """
+    Compute attitude quaternions for a satellite in a nadir pointing attitude.
+
+    Parameters
+    ----------
+    satellite_positions : np.ndarray
+        Satellite positions in EME2000 frame. Shape (N, 3)
+
+    Returns
+    -------
+    quaternions_df : pd.DataFrame
+        Attitude quaternions. Shape (N, 4)
+    """
     satellite_positions = satellite_positions / np.linalg.norm(
         satellite_positions, axis=1, keepdims=True
     )
@@ -16,7 +29,7 @@ def compute_attitude_quaternions(satellite_positions):
 
     nadir_pointing_rotation_angle = np.arccos(nadir_directions[:, 2])
     nadir_pointing_rotation_vector = (
-            nadir_pointing_rotation_axis * nadir_pointing_rotation_angle[:, None]
+        nadir_pointing_rotation_axis * nadir_pointing_rotation_angle[:, None]
     )
     nadir_pointing_rotation = R.from_rotvec(nadir_pointing_rotation_vector)
 
