@@ -2,3 +2,5 @@ __pycache__
 .idea
 .vscode
 *.pkl
+python/iridium/results/iridium_visibility.csv
+python/iridium/results/iridium_visibility.csv
