@@ -5,9 +5,7 @@
 
 ## Generate Iridium states files
 
-- [`iridium_TLEs`](iridium_TLEs.py) Get the latest TLEs of the Iridium NEXT constellation from CelesTrak
-- [`iridium_synchronisation.py`](iridium_synchronisation.py) Propagate all Iridium satellites to the latest epoch of the
-  TLEs to sync the constellation
+- [`iridium_TLE_sync`](iridium_TLE_sync.py) Get the latest TLEs of the Iridium NEXT constellation from CelesTrak and sync them to the same epoch with SGP4.
 - [`iridium_propagation.py`](iridium_propagation.py) Perform the propagation of the entire constellation alongside
   TOLOSAT chunk by chunk and export the states to pickle
   files.
@@ -18,6 +16,9 @@
   and rate and check when they are below the threshold while geometrical visibilty conditions are satisfied.
 - [`iridium_analysis`](iridium_analysis.py) Use the results of the previous script to create plots.
 
+## Visualize results
+
+- [`iridium_visualization`](iridium_visualization.py) A propagation of TOLOSAT and the Iridium constellation with an automatic generation of the VTS file.
 
 ## Final results
 
