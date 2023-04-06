@@ -25,12 +25,8 @@ Tolosat_orbit = get_orbit(orbit_name)
 
 # Set simulation start and end epochs (in seconds since J2000 = January 1, 2000 at 00:00:00)
 dates = get_dates(dates_name)
-simulation_start_epoch = time_conversion.julian_day_to_seconds_since_epoch(
-    time_conversion.calendar_date_to_julian_day(dates["start_date"])
-)
-simulation_end_epoch = time_conversion.julian_day_to_seconds_since_epoch(
-    time_conversion.calendar_date_to_julian_day(dates["end_date"])
-)
+simulation_start_epoch = datetime_to_epoch(dates["start_date"])
+simulation_end_epoch = datetime_to_epoch(dates["end_date"])
 
 # Create default body settings and bodies system
 bodies_to_create = ["Earth", "Sun", "Moon", "Jupiter"]

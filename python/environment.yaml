@@ -10,3 +10,4 @@ dependencies:
   - plotly
   - pyproj
   - tqdm
+  - sgp4
