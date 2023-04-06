@@ -92,7 +92,7 @@ initial_state = element_conversion.keplerian_to_cartesian_elementwise(
     eccentricity=orbit["eccentricity"],
     inclination=np.deg2rad(orbit["inclination"]),
     argument_of_periapsis=np.deg2rad(orbit["argument_of_periapsis"]),
-    longitude_of_ascending_node=np.deg2rad(orbit["longitude_of_ascending_node"]),
+    longitude_of_ascending_node=get_sso_raan(orbit["mean_local_time"], simulation_start_epoch),
     true_anomaly=np.deg2rad(orbit["true_anomaly"]),
 )
 
@@ -142,7 +142,7 @@ earth_position = dependent_variables_history_array[:, 4:7]
 keplerian_states = dependent_variables_history_array[:, 7:13]
 ecef_position = dependent_variables_history_array[:, 13:16]
 
-satellite_shadow_function = eclipses.compute_shadow_vector(satellite_position, sun_position, earth_position,
+satellite_shadow_function = eclipses.compute_shadow_vector(satellite_position, sun_position,
                                                            sun_radius, earth_radius)
 
 groundstation = get_input_data.get_station(groundstation_name)
