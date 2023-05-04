@@ -173,14 +173,6 @@ visibility, elevation = communication_windows.compute_visibility(
     ecef_position, groundstation
 )
 
-# Export results to a CSV file
-read_write.write_results(
-    spacecraft_name,
-    orbit_name,
-    dates_name,
-    np.concatenate((states_array, keplerian_states, ecef_position), axis=1),
-)
-
 # Create a static 3D figure of the trajectory
 fig = plt.figure(figsize=(7, 5.2), dpi=500)
 ax = fig.add_subplot(111, projection="3d")
@@ -199,7 +191,6 @@ ax.legend()
 ax.set_xlabel("x [km]")
 ax.set_ylabel("y [km]")
 ax.set_zlabel("z [km]")
-plt.savefig(f"results/{spacecraft_name}_{orbit_name}_{dates_name}.png")
 plt.show()
 
 # Plot the shadow function
@@ -213,7 +204,6 @@ ax.plot(
     linestyle="-",
 )
 ax.set(xlabel="Time [h]", ylabel="Shadow function")
-plt.savefig(f"results/{spacecraft_name}_{orbit_name}_{dates_name}_shadow_function.png")
 plt.show()
 
 # Plot the visibility function
@@ -224,13 +214,4 @@ ax.plot(
     states_array[:, 0] / 3600, visibility, label=bodies_to_propagate[0], linestyle="-"
 )
 ax.set(xlabel="Time [h]", ylabel="Visibility function")
-plt.savefig(
-    f"results/{spacecraft_name}_{orbit_name}_{dates_name}_visibility_function.png"
-)
 plt.show()
-
-# Write an interactive HTML visualization of the trajectory
-fig = plot_functions.plotly_trajectory(
-    states_array[:, 0], states_array[:, 1], states_array[:, 2], states_array[:, 3]
-)
-fig.write_html(f"results/{spacecraft_name}_{orbit_name}_{dates_name}.html")
