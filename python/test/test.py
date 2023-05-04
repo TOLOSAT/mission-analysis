@@ -105,9 +105,6 @@ initial_state = element_conversion.keplerian_to_cartesian_elementwise(
 sun_position_dep_var = propagation_setup.dependent_variable.relative_position(
     "Sun", "Earth"
 )
-earth_position_dep_var = propagation_setup.dependent_variable.relative_position(
-    "Earth", "Earth"
-)
 keplerian_states_dep_var = propagation_setup.dependent_variable.keplerian_state(
     "Spacecraft", "Earth"
 )
@@ -118,7 +115,6 @@ ecef_pos_dep_var = (
 )
 dependent_variables_to_save = [
     sun_position_dep_var,
-    earth_position_dep_var,
     keplerian_states_dep_var,
     ecef_pos_dep_var,
 ]
@@ -160,9 +156,8 @@ earth_radius = bodies.get("Earth").shape_model.average_radius
 states_array[:, 0] = states_array[:, 0] - states_array[0, 0]
 satellite_position = states_array[:, 1:4]
 sun_position = dependent_variables_history_array[:, 1:4]
-earth_position = dependent_variables_history_array[:, 4:7]
-keplerian_states = dependent_variables_history_array[:, 7:13]
-ecef_position = dependent_variables_history_array[:, 13:16]
+keplerian_states = dependent_variables_history_array[:, 4:7]
+ecef_position = dependent_variables_history_array[:, 7:10]
 
 satellite_shadow_function = eclipses.compute_shadow_vector(
     satellite_position, sun_position, sun_radius, earth_radius
