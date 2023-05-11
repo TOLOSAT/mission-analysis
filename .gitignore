@@ -3,4 +3,4 @@ __pycache__
 .vscode
 *.pkl
 python/iridium/results/iridium_visibility.csv
-python/iridium/results/iridium_visibility.csv
+python/gravimetry/results/gps_visibility.csv

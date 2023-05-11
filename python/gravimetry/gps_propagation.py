@@ -4,17 +4,17 @@ from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
 
-from iridium_TLE_sync import iridium_states_synced, iridium_names
+from gps_TLE_sync import gps_states_synced, gps_names
 from useful_functions import *
 
 # Load spice kernels
 spice.load_standard_kernels([])
 
 # Isolate states
-iridium_all_states = iridium_states_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
+gps_all_states = gps_states_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
 
 # Get input data
-dates_name = "1year_1sec_iter"
+dates_name = "5days_1sec_iter"
 spacecraft_name = "Tolosat"
 orbit_name = "SSO6"
 
@@ -36,10 +36,10 @@ body_settings = environment_setup.get_default_body_settings(
 )
 bodies = environment_setup.create_system_of_bodies(body_settings)
 
-# Define list of Iridium satellites and the acceleration model to be used
-all_spacecraft_names = ["Tolosat"] + iridium_names
+# Define list of gps satellites and the acceleration model to be used
+all_spacecraft_names = ["Tolosat"] + gps_names
 
-acceleration_settings_iridium = dict(
+acceleration_settings_gps = dict(
     Earth=[propagation_setup.acceleration.spherical_harmonic_gravity(2, 0)]
 )
 acceleration_settings_tolosat = dict(
@@ -61,9 +61,9 @@ bodies.create_empty_body("Tolosat")
 bodies.get("Tolosat").mass = Tolosat["mass"]
 
 # Create bodies to propagate and define their acceleration settings
-for spacecraft in iridium_names:
+for spacecraft in gps_names:
     bodies.create_empty_body(spacecraft)
-    acceleration_settings[spacecraft] = acceleration_settings_iridium
+    acceleration_settings[spacecraft] = acceleration_settings_gps
 
 # Create aerodynamic coefficient interface settings, and add to vehicle
 Tolosat_aero_settings = environment_setup.aerodynamic_coefficients.constant(
@@ -104,7 +104,7 @@ Tolosat_initial_state = element_conversion.keplerian_to_cartesian_elementwise(
     true_anomaly=np.deg2rad(Tolosat_orbit["true_anomaly"]),
 )
 
-initial_state = Tolosat_initial_state.tolist() + iridium_all_states.flatten().tolist()
+initial_state = Tolosat_initial_state.tolist() + gps_all_states.flatten().tolist()
 
 # Setup dependent variables
 sun_direction_dep_var = propagation_setup.dependent_variable.relative_position(
@@ -182,16 +182,14 @@ for propagation_number in tqdm(
     sun_direction_dataframe = pd.DataFrame(sun_direction)
 
     # Export results to files
-    makedirs(f"iridium_states/{propagation_number}", exist_ok=True)
+    makedirs(f"gps_states/{propagation_number}", exist_ok=True)
     sun_direction_dataframe.iloc[:, 1:4].to_pickle(
-        f"iridium_states/{propagation_number}/sun_direction.pkl"
+        f"gps_states/{propagation_number}/sun_direction.pkl"
     )
-    states_dataframe.iloc[:, 0].to_pickle(
-        f"iridium_states/{propagation_number}/epochs.pkl"
-    )
+    states_dataframe.iloc[:, 0].to_pickle(f"gps_states/{propagation_number}/epochs.pkl")
     for sat in enumerate(all_spacecraft_names):
         states_dataframe.iloc[:, (sat[0] * 6 + 1) : (sat[0] * 6 + 7)].to_pickle(
-            f"iridium_states/{propagation_number}/{sat[1]}.pkl"
+            f"gps_states/{propagation_number}/{sat[1]}.pkl"
         )
 
     # Update initial state
@@ -201,4 +199,4 @@ for propagation_number in tqdm(
     propagation_start_date = propagation_end_date
     propagation_end_date = propagation_start_date + propagation_duration
 
-print("Done with Iridium propagation.")
+print("Done with gps propagation.")

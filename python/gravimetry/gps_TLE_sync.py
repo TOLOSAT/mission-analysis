@@ -4,11 +4,9 @@ from sgp4.api import Satrec, jday
 
 from useful_functions import *
 
-# Get Iridium TLEs and save to file
-iridium_url = (
-    "https://celestrak.org/NORAD/elements/gp.php?GROUP=iridium-NEXT&FORMAT=tle"
-)
-TLEs_text = get(iridium_url).text
+# Get GPS TLEs and save to file
+gps_url = "https://celestrak.org/NORAD/elements/gp.php?GROUP=gps-ops&FORMAT=tle"
+TLEs_text = get(gps_url).text
 with open("TLEs.txt", "w", newline="") as f:
     f.write(TLEs_text)
 TLEs_lines = TLEs_text.splitlines()
@@ -36,8 +34,8 @@ target_jd, target_fr = jday(
 )
 target_epoch = datetime_to_epoch(target_datetime)
 
-# Sync Iridium satellites
-iridium_states_synced = []
+# Sync GPS satellites
+gps_states_synced = []
 for i in tqdm(range(len(TLEs)), desc="Syncing TLEs", ncols=80, total=len(TLEs)):
     tle_l1 = TLEs_lines[i * 3 + 1]
     tle_l2 = TLEs_lines[i * 3 + 2]
@@ -45,7 +43,7 @@ for i in tqdm(range(len(TLEs)), desc="Syncing TLEs", ncols=80, total=len(TLEs)):
     _, teme_r, teme_v = sat.sgp4(target_jd, target_fr)
     teme_state = np.concatenate((teme_r, teme_v)) * 1e3
     final_state = teme_to_j2000(teme_state, target_epoch)
-    iridium_states_synced.append(
+    gps_states_synced.append(
         dict(
             name=TLEs.iloc[i].loc["name"],
             x=final_state[0],
@@ -57,5 +55,5 @@ for i in tqdm(range(len(TLEs)), desc="Syncing TLEs", ncols=80, total=len(TLEs)):
             epoch=target_epoch,
         )
     )
-iridium_states_synced = pd.DataFrame(iridium_states_synced)
-iridium_names = iridium_states_synced["name"].to_list()
+gps_states_synced = pd.DataFrame(gps_states_synced)
+gps_names = gps_states_synced["name"].to_list()
