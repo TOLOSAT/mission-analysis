@@ -99,8 +99,8 @@ Tolosat_initial_state = element_conversion.keplerian_to_cartesian_elementwise(
     eccentricity=Tolosat_orbit["eccentricity"],
     inclination=np.deg2rad(Tolosat_orbit["inclination"]),
     argument_of_periapsis=np.deg2rad(Tolosat_orbit["argument_of_periapsis"]),
-    longitude_of_ascending_node=np.deg2rad(
-        Tolosat_orbit["longitude_of_ascending_node"]
+    longitude_of_ascending_node=get_sso_raan(
+        Tolosat_orbit["mean_local_time"], simulation_start_epoch
     ),
     true_anomaly=np.deg2rad(Tolosat_orbit["true_anomaly"]),
 )
