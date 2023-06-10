@@ -38,13 +38,13 @@ def compute_shadow_vector(satellite_position, sun_position, sun_radius, earth_ra
 
 
 def compute_eclipses(
-    satellite_position,
-    sun_position,
-    sun_radius,
-    earth_radius,
-    epochs,
+    satellite_position: np.ndarray,
+    sun_position: np.ndarray,
+    sun_radius: float,
+    earth_radius: float,
+    epochs: np.ndarray,
     eclipse_type="Umbra",
-):
+) -> pd.DataFrame:
     shadow_vector = compute_shadow_vector(
         satellite_position, sun_position, sun_radius, earth_radius
     )

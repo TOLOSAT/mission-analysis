@@ -1,6 +1,6 @@
 # Import statements
 from tudatpy.kernel import numerical_simulation
-from tudatpy.kernel.astro import element_conversion, time_conversion
+from tudatpy.kernel.astro import element_conversion
 from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
@@ -153,20 +153,26 @@ dependent_variables_history_array = result2array(dependent_variables_history)
 
 sun_radius = bodies.get("Sun").shape_model.average_radius
 earth_radius = bodies.get("Earth").shape_model.average_radius
-states_array[:, 0] = states_array[:, 0] - states_array[0, 0]
+epochs = states_array[:, 0]
 satellite_position = states_array[:, 1:4]
 sun_position = dependent_variables_history_array[:, 1:4]
-keplerian_states = dependent_variables_history_array[:, 4:7]
-ecef_position = dependent_variables_history_array[:, 7:10]
+keplerian_states = dependent_variables_history_array[:, 4:10]
+ecef_position = dependent_variables_history_array[:, 10:13]
 
-satellite_shadow_function = eclipses.compute_shadow_vector(
-    satellite_position, sun_position, sun_radius, earth_radius
+eclipses = eclipses.compute_eclipses(
+    satellite_position, sun_position, sun_radius, earth_radius, epochs
 )
+print("☀️️ Eclipses")
+print(eclipses)
 
-groundstation = get_input_data.get_station(groundstation_name)
-visibility, elevation = communication_windows.compute_visibility(
-    ecef_position, groundstation
+print("=================================================================")
+print("📡 Communication windows")
+
+communication_windows = communication_windows.compute_visibility(
+    ecef_position, groundstation_name, dates_name
 )
+print(communication_windows)
+
 
 # Create a static 3D figure of the trajectory
 fig = plt.figure(figsize=(7, 5.2), dpi=500)
@@ -186,27 +192,4 @@ ax.legend()
 ax.set_xlabel("x [km]")
 ax.set_ylabel("y [km]")
 ax.set_zlabel("z [km]")
-plt.show()
-
-# Plot the shadow function
-fig = plt.figure(figsize=(7, 5.2), dpi=500)
-ax = fig.add_subplot(111)
-ax.set_title(f"Spacecraft shadow function")
-ax.plot(
-    (states_array[:, 0] - states_array[0, 0]) / 3600,
-    satellite_shadow_function,
-    label=bodies_to_propagate[0],
-    linestyle="-",
-)
-ax.set(xlabel="Time [h]", ylabel="Shadow function")
-plt.show()
-
-# Plot the visibility function
-fig = plt.figure(figsize=(7, 5.2), dpi=500)
-ax = fig.add_subplot(111)
-ax.set_title(f"Spacecraft ground station visibility function")
-ax.plot(
-    states_array[:, 0] / 3600, visibility, label=bodies_to_propagate[0], linestyle="-"
-)
-ax.set(xlabel="Time [h]", ylabel="Visibility function")
 plt.show()
