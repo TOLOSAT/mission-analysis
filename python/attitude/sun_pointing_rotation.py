@@ -2,7 +2,9 @@ from scipy.spatial.transform.rotation import Rotation as R
 import pandas as pd
 import numpy as np
 
-ANGULAR_VELOCITY = 2  # deg/s
+from useful_functions.get_input_data import get_spacecraft
+
+angular_velocity = get_spacecraft("Tolosat")["angular_velocity"]
 
 
 # Longitudinal axis of cubesat is Z axis
@@ -36,7 +38,7 @@ def compute_attitude_rotation(epochs, sun_directions):
     sun_pointing_rotation = R.from_rotvec(sun_pointing_rotation_vector)
 
     elapsed_seconds = epochs - epochs[0]
-    satellite_axis_rotation_angle = np.deg2rad(ANGULAR_VELOCITY * elapsed_seconds)
+    satellite_axis_rotation_angle = np.deg2rad(angular_velocity * elapsed_seconds)
     satellite_axis_rotation_Z_vector = (
         np.array([0, 0, 1]) * satellite_axis_rotation_angle[:, None]
     )

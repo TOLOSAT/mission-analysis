@@ -35,13 +35,14 @@ The dates CSV files contain the following data (without table headers):
 
 ## Spacecraft
 
-| Field name                      | Value example and unit |
-|---------------------------------|:----------------------:|
-| `mass`                          |      `4` (in kg)       | 
-| `drag_coefficient`              |    `2.2` (unitless)    |
-| `reflectivity_coefficient`      |  `1.5`    (unitless)   |
-| `drag_area`                     |   `0.033`    (in m²)   |
-| `srp_area`                      |   `0.033`    (in m²)   |
-| `iridium_antenna_half_angle`    |   `60` (in degrees)    |
-| `gnss_antenna_half_angle`       |   `60` (in degrees)    |
+| Field name                   | Value example and unit |
+|------------------------------|:----------------------:|
+| `mass`                       |      `4` (in kg)       | 
+| `drag_coefficient`           |    `2.2` (unitless)    |
+| `reflectivity_coefficient`   |  `1.5`    (unitless)   |
+| `drag_area`                  |   `0.033`    (in m²)   |
+| `srp_area`                   |   `0.033`    (in m²)   |
+| `iridium_antenna_half_angle` |   `60` (in degrees)    |
+| `gnss_antenna_half_angle`    |   `60` (in degrees)    |
+| `angular_velocity`           |   `4` (in degrees/s)   |
 
