@@ -10,8 +10,8 @@ c = 299792458  # m/s
 f0 = 1621.25e6  # H
 delta_f_limit = 37500  # Hz doppler shift max +/-
 delta_f_dot_limit = 350  # 375 # Hz/s doppler rate max +/-
-semi_angle_limit_tolosat = 60  # deg semi-angle visibility
-semi_angle_limit_gps = 30  # deg semi-angle visibility
+semi_angle_limit_tolosat = 30  # deg semi-angle visibility
+semi_angle_limit_gps = 15  # deg semi-angle visibility
 gps_antennas_location = "pmY"  # "pmX" or "pmY"
 
 selected_gps = "GPS BIIR-13 (PRN 02)"
