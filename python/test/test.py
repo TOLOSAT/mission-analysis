@@ -18,12 +18,8 @@ spice.load_standard_kernels([])
 
 # Set simulation start and end epochs (in seconds since J2000 = January 1, 2000 at 00:00:00)
 dates = get_input_data.get_dates(dates_name)
-simulation_start_epoch = time_conversion.julian_day_to_seconds_since_epoch(
-    time_conversion.calendar_date_to_julian_day(dates["start_date"])
-)
-simulation_end_epoch = time_conversion.julian_day_to_seconds_since_epoch(
-    time_conversion.calendar_date_to_julian_day(dates["end_date"])
-)
+simulation_start_epoch = datetime_to_epoch(dates["start_date"])
+simulation_end_epoch = datetime_to_epoch(dates["end_date"])
 
 # Create default body settings and bodies system
 bodies_to_create = ["Earth", "Sun", "Moon", "Jupiter"]
@@ -162,16 +158,16 @@ ecef_position = dependent_variables_history_array[:, 10:13]
 eclipses = eclipses.compute_eclipses(
     satellite_position, sun_position, sun_radius, earth_radius, epochs
 )
-print("☀️️ Eclipses")
-print(eclipses)
+print("☀️️ Eclipses (first 5 rows):")
+print(eclipses.head(5))
 
-print("=================================================================")
-print("📡 Communication windows")
+print("=================================================================\n")
+print("📡 Communication windows (first 5 rows):")
 
-communication_windows = communication_windows.compute_visibility(
-    ecef_position, groundstation_name, dates_name
+communication_windows = communication_windows.compute_communication_windows(
+    ecef_position, groundstation_name, epochs
 )
-print(communication_windows)
+print(communication_windows.head(5))
 
 
 # Create a static 3D figure of the trajectory
