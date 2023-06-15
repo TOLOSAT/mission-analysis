@@ -7,6 +7,7 @@ from useful_functions.date_transformations import epoch_to_datetime
 
 def compute_shadow_vector(satellite_position, sun_position, sun_radius, earth_radius):
     """
+    Compute the shadow vector of the spacecraft at each epoch.
     Parameters
     ----------
     satellite_position : ndarray
@@ -47,6 +48,36 @@ def compute_eclipses(
     epochs: np.ndarray,
     eclipse_type="Umbra",
 ) -> pd.DataFrame:
+    """
+    Compute the communications of the spacecraft for a given ground station.
+
+    Parameters
+    ----------
+    satellite_position : ndarray
+        Array of satellite positions in ECI frame
+    sun_position : ndarray
+        Array of sun positions in ECI frame
+    sun_radius : float
+        Sun radius in meters
+    earth_radius : float
+        Earth radius in meters
+    epochs : np.ndarray
+        Array of epochs in seconds since J2000
+    eclipse_type : string
+        Type of eclipse to compute. Can be Umbra or Penumbra. Optional, default is Umbra.
+
+    Returns
+    -------
+    shadow_df: pd.DataFrame
+        Returns a data frame containing the following information about the eclipses
+         - 'start' : start date of the communication window
+         - 'end' : end date of the communication window
+         - 'start_epoch' : start epoch of the communication window
+         - 'end_epoch' : end epoch of the communication window
+         - 'duration' : duration of the communication window
+         - 'partial' : True if it is a partial communication window, False if not
+    """
+
     shadow_vector = compute_shadow_vector(
         satellite_position, sun_position, sun_radius, earth_radius
     )

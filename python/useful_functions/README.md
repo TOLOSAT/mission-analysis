@@ -32,10 +32,10 @@
   - **epochs** : _np.ndarray_  
         Array of epochs in seconds since J2000  
   - **eclipse_type** : _string_  
-        Type of eclipse to compute. Can be 'umbra', 'penumbra', or 'all'. optional, default is 'umbra'.
+        Type of eclipse to compute. Can be 'Umbra' or 'Penumbra'. optional, default is 'Umbra'.
  
   **Returns**:
-  - **shadow_df**: _dataframe_  
+  - **shadow_df**: _pd.DataFrame_  
     Returns a data frame containing the following information about the eclipses
     - 'start' : start date of the eclipse
     - 'end' : end date of the eclipse
@@ -68,7 +68,7 @@
     Array of epochs in seconds since J2000  
  
   **Returns**:
-  - **communication_windows**: _dataframe_  
+  - **visibility_df**: _pd.DataFrame_  
     Returns a data frame containing the following information about the communication windows:
     - 'start' : start date of the communication window
     - 'end' : end date of the communication window

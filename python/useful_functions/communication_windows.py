@@ -60,7 +60,7 @@ def compute_communication_windows(
 
     Returns
     -------
-    communication_windows: pd.DataFrame
+    visibility_df: pd.DataFrame
         Returns a data frame containing the following information about the communication windows
          - 'start' : start date of the communication window
          - 'end' : end date of the communication window
