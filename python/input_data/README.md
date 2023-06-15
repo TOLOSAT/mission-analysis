@@ -30,18 +30,19 @@ The dates CSV files contain the following data (without table headers):
 | `eccentricity`                |   `1e-3` (unitless)    |
 | `inclination`                 | `97.8`    (in degrees) |
 | `argument_of_periapsis`       |  `15`    (in degrees)  |
-| `mean_local_time`             | `6`    (in hours)      |
+| `mean_local_time`             |   `6`    (in hours)    |
 | `true_anomaly`                | `0.1`    (in degrees)  |
 
 ## Spacecraft
 
-| Field name                      | Value example and unit |
-|---------------------------------|:----------------------:|
-| `mass`                          |      `4` (in kg)       | 
-| `drag_coefficient`              |    `2.2` (unitless)    |
-| `reflectivity_coefficient`      |  `1.5`    (unitless)   |
-| `drag_area`                     |   `0.033`    (in m²)   |
-| `srp_area`                      |   `0.033`    (in m²)   |
-| `iridium_antenna_half_angle`    |   `60` (in degrees)    |
-| `gnss_antenna_half_angle`       |   `60` (in degrees)    |
+| Field name                   | Value example and unit |
+|------------------------------|:----------------------:|
+| `mass`                       |      `4` (in kg)       | 
+| `drag_coefficient`           |    `2.2` (unitless)    |
+| `reflectivity_coefficient`   |  `1.5`    (unitless)   |
+| `drag_area`                  |   `0.033`    (in m²)   |
+| `srp_area`                   |   `0.033`    (in m²)   |
+| `iridium_antenna_half_angle` |   `60` (in degrees)    |
+| `gnss_antenna_half_angle`    |   `60` (in degrees)    |
+| `angular_velocity`           |   `4` (in degrees/s)   |
 
