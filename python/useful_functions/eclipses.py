@@ -2,6 +2,8 @@ from tudatpy.kernel.astro.fundamentals import compute_shadow_function
 import numpy as np
 import pandas as pd
 
+from useful_functions.date_transformations import epoch_to_datetime
+
 
 def compute_shadow_vector(satellite_position, sun_position, sun_radius, earth_radius):
     """
@@ -78,4 +80,12 @@ def compute_eclipses(
         shadow_df.loc[0, "partial"] = True
     if shadow_df.loc[shadow_df.index[-1], "end"] == epochs[-1]:
         shadow_df.loc[shadow_df.index[-1], "partial"] = True
+
+    shadow_df.rename({"start": "start_epoch", "end": "end_epoch"}, axis=1, inplace=True)
+    shadow_df["start"] = epoch_to_datetime(shadow_df["start_epoch"])
+    shadow_df["end"] = epoch_to_datetime(shadow_df["end_epoch"])
+
+    shadow_df = shadow_df[
+        ["start", "end", "start_epoch", "end_epoch", "duration", "partial"]
+    ]
     return shadow_df
