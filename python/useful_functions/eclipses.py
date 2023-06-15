@@ -4,6 +4,7 @@ import pandas as pd
 
 from useful_functions.date_transformations import epoch_to_datetime
 
+
 def compute_shadow_vector(satellite_position, sun_position, sun_radius, earth_radius):
     """
     Parameters
