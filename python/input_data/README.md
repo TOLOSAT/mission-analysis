@@ -30,7 +30,7 @@ The dates CSV files contain the following data (without table headers):
 | `eccentricity`                |   `1e-3` (unitless)    |
 | `inclination`                 | `97.8`    (in degrees) |
 | `argument_of_periapsis`       |  `15`    (in degrees)  |
-| `mean_local_time`             | `6`    (in hours)      |
+| `mean_local_time`             |   `6`    (in hours)    |
 | `true_anomaly`                | `0.1`    (in degrees)  |
 
 ## Spacecraft
