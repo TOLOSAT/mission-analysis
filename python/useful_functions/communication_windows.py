@@ -7,7 +7,7 @@ from useful_functions.date_transformations import epoch_to_datetime
 
 def compute_visibility_vector(
     pos_ecf: np.ndarray, groundstation_name: str
-) -> pd.DataFrame:
+) -> np.ndarray:
     """
     Compute the visibility vector of the spacecraft from a given ground station.
 
@@ -20,12 +20,8 @@ def compute_visibility_vector(
 
     Returns
     -------
-    communication_windows: dataframe
-        Returns a data frame containing the following information about the communication windows
-         - 'start' : start date of the communication window
-         - 'end' : end date of the communication window
-         - 'duration' : duration of the communication window
-         - 'partial' : True if it is a partial communication window, False if not
+    visibility_vector: np.ndarray
+        Returns an array of boolean indicating whether the spacecraft is visible or not at each epoch.
     """
     transformer = Transformer.from_crs(
         {"proj": "latlong", "ellps": "WGS84", "datum": "WGS84"},
