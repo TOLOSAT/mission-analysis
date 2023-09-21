@@ -1,4 +1,11 @@
 from xml.dom import minidom
+from useful_functions.get_input_data import get_spacecraft
+
+tolosat_specs = get_spacecraft("Tolosat")
+iridium_specs = get_spacecraft("Iridium")
+gps_specs = get_spacecraft("GPS")
+
+iridium_antenna = iridium_specs["antenna_half_angle"]
 
 
 def create_document():
@@ -263,17 +270,22 @@ def add_satellite(xml, entities, name, oem_file, aem_file, model_name=None):
         RotationCenter.setAttribute("Y", "0")
         RotationCenter.setAttribute("Z", "0")
         Graphics3d.appendChild(RotationCenter)
+
     Geometry = xml.createElement("Geometry")
     Component.appendChild(Geometry)
+
     Position = xml.createElement("Position")
     Geometry.appendChild(Position)
+
     Value = xml.createElement("Value")
     Position.appendChild(Value)
+
     File = xml.createElement("File")
     File.setAttribute("Name", oem_file)
     Value.appendChild(File)
     Orientation = xml.createElement("Orientation")
     Geometry.appendChild(Orientation)
+
     Quaternion = xml.createElement("Quaternion")
     Orientation.appendChild(Quaternion)
     Value = xml.createElement("Value")
@@ -281,6 +293,63 @@ def add_satellite(xml, entities, name, oem_file, aem_file, model_name=None):
     File = xml.createElement("File")
     File.setAttribute("Name", aem_file)
     Value.appendChild(File)
+
+    #     < SensorSatellite >
+    #     < Sensor
+    #     Name = "newSensor" >
+    #     < SensorProp >
+    #     < SensorElliptical
+    #     HalfAngleX = "0.174532925199433"
+    #     HalfAngleY = "0.174532925199433" / >
+    #     < SensorGraphics
+    #     Range = "10000"
+    #     VolumeColor = "0.499992 1 0.651911"
+    #     VolumeOpacity = "60" >
+    #     < SensorContour >
+    #     < LineStyle
+    #     Color = "0 1 0.303838"
+    #     Style = "SolidLine"
+    #     Width = "1" / >
+    #
+    # < / SensorContour >
+    # < SensorTrace
+    # Duration = "0"
+    # Opacity = "60" / >
+    # < / SensorGraphics >
+    # < / SensorProp >
+    # < Geometry >
+    # < Position >
+    # < Value >
+    # < Fixed
+    # Data = "0 0 0" / >
+    # < / Value >
+    # < / Position >
+    # < Orientation >
+    # < Quaternion >
+    # < Value >
+    # < Fixed
+    # Data = "1 0 0 0" / >
+    # < / Value >
+    # < / Quaternion >
+    # < / Orientation >
+    # < / Geometry >
+    # < / Sensor >
+    # < / SensorSatellite >
+
+    # automate this
+    SensorSatellite = xml.createElement("SensorSatellite")
+    Component.appendChild(SensorSatellite)
+    Sensor = xml.createElement("Sensor")
+    Sensor.setAttribute("Name", "newSensor")
+    SensorSatellite.appendChild(Sensor)
+
+    SensorProp = xml.createElement("SensorProp")
+    Sensor.appendChild(SensorProp)
+
+    SensorElliptical = xml.createElement("SensorElliptical")
+    SensorElliptical.setAttribute("HalfAngleX", "0.174532925199433")
+    SensorElliptical.setAttribute("HalfAngleY", "0.174532925199433")
+
     Events = xml.createElement("Events")
     Satellite.appendChild(Events)
 

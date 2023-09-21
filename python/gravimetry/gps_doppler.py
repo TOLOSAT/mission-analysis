@@ -2,16 +2,22 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
+from attitude.sun_pointing_rotation import compute_body_vectors
 from results_processing import get_list_of_contents, get_results_dict
 from useful_functions import date_transformations as dt
-from attitude.sun_pointing_rotation import compute_body_vectors
+from useful_functions import get_spacecraft
+from useful_functions.constants import SPEED_OF_LIGHT
 
-c = 299792458  # m/s
-f0 = 1621.25e6  # H
+Tolosat = get_spacecraft("Tolosat")
+GPS = get_spacecraft("GPS")
+
+f0 = 1621.25e6  # Hz
 delta_f_limit = 37500  # Hz doppler shift max +/-
 delta_f_dot_limit = 350  # 375 # Hz/s doppler rate max +/-
-semi_angle_limit_tolosat = 30  # deg semi-angle visibility
-semi_angle_limit_gps = 15  # deg semi-angle visibility
+semi_angle_limit_tolosat = Tolosat[
+    "gps_antenna_half_angle"
+]  # deg semi-angle visibility
+semi_angle_limit_gps = GPS["antenna_half_angle"]  # deg semi-angle visibility
 gps_antennas_location = "pmY"  # "pmX" or "pmY"
 
 selected_gps = "GPS BIIR-13 (PRN 02)"
@@ -69,7 +75,7 @@ def compute_doppler_visibility(results_dict):
                 )
             )
             results_dict[sat]["theta_r_deg"] = np.deg2rad(theta_r)
-            beta = dv / c
+            beta = dv / SPEED_OF_LIGHT
             gamma = 1 / np.sqrt(1 - beta**2)
 
             results_dict[sat]["doppler_shift"] = f0 * (
@@ -114,6 +120,7 @@ def compute_doppler_visibility(results_dict):
             results_dict[sat]["tolosat_visibility_OK"] = (
                 results_dict[sat]["tolosat_angle_1"] <= semi_angle_limit_tolosat
             ) | (results_dict[sat]["tolosat_angle_2"] <= semi_angle_limit_tolosat)
+
             results_dict[sat]["gps_visibility_OK"] = (
                 results_dict[sat]["gps_angle"] <= semi_angle_limit_gps
             )

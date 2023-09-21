@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Project Revision="9032">
+<Project Revision="9169">
  <General Name="" StartDateTime="60311 43195.000000" EndDateTime="60312 43195.000000"/>
  <MetaData>
   <Description>###################################### 
@@ -15,9 +15,23 @@
 #
 </Description>
  </MetaData>
+ <MonitorConfiguration>
+  <Monitor X="0" Y="0" Height="1032" Width="1920"/>
+ </MonitorConfiguration>
  <StartOptions TimeRatio="1" UseStateTimeRatio="0" SysTimeSynced="0" Paused="0" Looped="0" Minimized="0" Hidden="0" AutoClosed="0"/>
  <Timeshifting Enabled="0"/>
- <TimelineOptions ProjectLocked="1" CursorLocked="0" CursorRatio="0" ViewStart="33282 0.000000" ViewSpan="0" DateFormat="ISODate" NoBadgeFiltered="0" BadgeFiltered=""/>
+ <TimelineOptions ProjectLocked="1" CursorLocked="0" CursorRatio="0" ViewStart="33282 0.000000" ViewSpan="0" DateFormat="ISODate" NoBadgeFiltered="0" BadgeFiltered="">
+  <TimelineScenario Name="Scenario" Pos="0" Size="23"/>
+  <TimelineEvents Name="Events for TOLOSAT" Pos="1" Size="23"/>
+  <TimelineFile Name="TOLOSAT_POSITION_VELOCITY.TXT" Pos="2" Size="23" Mode="DEFAULT" Overlay="false"/>
+  <TimelineFile Name="TOLOSAT_QUATERNION.TXT" Pos="3" Size="23" Mode="DEFAULT" Overlay="false"/>
+  <TimelineFile Name="SAT1_POSITION_VELOCITY.TXT" Pos="4" Size="23" Mode="DEFAULT" Overlay="false"/>
+  <TimelineFile Name="SAT1_QUATERNION.TXT" Pos="5" Size="23" Mode="DEFAULT" Overlay="false"/>
+  <TimelineFile Name="SAT2_POSITION_VELOCITY.TXT" Pos="6" Size="23" Mode="DEFAULT" Overlay="false"/>
+  <TimelineFile Name="SAT2_QUATERNION.TXT" Pos="7" Size="23" Mode="DEFAULT" Overlay="false"/>
+  <TimelineFile Name="SAT3_POSITION_VELOCITY.TXT" Pos="8" Size="23" Mode="DEFAULT" Overlay="false"/>
+  <TimelineFile Name="SAT3_QUATERNION.TXT" Pos="9" Size="23" Mode="DEFAULT" Overlay="false"/>
+ </TimelineOptions>
  <Sky>
   <Sun>
    <Prop2d>
@@ -43,6 +57,7 @@
  <ToBeUsedApps>
   <Application Name="SurfaceView" Id="0" Label="" AutoStarted="1"/>
   <Application Name="Celestia" Id="1" Label="" AutoStarted="1"/>
+  <Application Name="Celestia" Id="2" Label="" AutoStarted="1"/>
  </ToBeUsedApps>
  <Entities>
   <Body Name="Earth" ParentPath="Sol">
@@ -63,6 +78,15 @@
    <Layers>
     <BuiltinLayer Name="defaultLayer"/>
    </Layers>
+   <GroupPointsOfInterest>
+    <PointOfInterest Name="newPOI">
+     <CoordinatesFile Name="test2.txt"/>
+     <Icon Anchor="CENTER" Size="MEDIUM" Opacity="100">
+      <Font Size="8" Color="1 1 1"/>
+      <ShapeLayer Shape="V_CROSS" Color="0.184497 0 1" Fill="0"/>
+     </Icon>
+    </PointOfInterest>
+   </GroupPointsOfInterest>
   </Body>
   <Satellite Name="TOLOSAT" ParentPath="Sol/Earth">
    <Track>
@@ -84,7 +108,7 @@
    </EclipseCircle>
    <Component Name="TOLOSAT">
     <Graphics3d>
-     <File3ds Name="C:\Users\arnau\Documents\GitHub\mission-analysis\python\visualization\TOLOSAT_model.obj"/>
+     <File3ds Name="TOLOSAT_model.obj"/>
      <Radius Value="1"/>
      <LightSensitive Value="1"/>
      <Use3dsCoords Value="0" MeshScale="1"/>
@@ -94,19 +118,21 @@
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\TOLOSAT_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/TOLOSAT_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\TOLOSAT_QUATERNION.TXT"/>
+        <File Name="cic_files/TOLOSAT_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
     </Geometry>
    </Component>
-   <Events/>
+   <Events>
+    <File Name="test.txt"/>
+   </Events>
   </Satellite>
   <Satellite Name="SAT1" ParentPath="Sol/Earth">
    <Track>
@@ -127,20 +153,55 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="SAT1">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\SAT1_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/SAT1_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\SAT1_QUATERNION.TXT"/>
+        <File Name="cic_files/SAT1_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
     </Geometry>
+    <SensorSatellite>
+     <Sensor Name="newSensor">
+      <SensorProp>
+       <SensorElliptical HalfAngleX="0.174532925199433" HalfAngleY="0.174532925199433"/>
+       <SensorGraphics Range="10000" VolumeColor="0.499992 1 0.651911" VolumeOpacity="60">
+        <SensorContour>
+         <LineStyle Color="0 1 0.303838" Style="SolidLine" Width="1"/>
+        </SensorContour>
+        <SensorTrace Duration="0" Opacity="60"/>
+       </SensorGraphics>
+      </SensorProp>
+      <Geometry>
+       <Position>
+        <Value>
+         <Fixed Data="0 0 0"/>
+        </Value>
+       </Position>
+       <Orientation>
+        <Direction>
+         <Value>
+          <Fixed Data="1 0 0"/>
+         </Value>
+        </Direction>
+       </Orientation>
+      </Geometry>
+     </Sensor>
+    </SensorSatellite>
    </Component>
    <Events/>
   </Satellite>
@@ -163,16 +224,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="SAT2">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\SAT2_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/SAT2_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\SAT2_QUATERNION.TXT"/>
+        <File Name="cic_files/SAT2_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -199,16 +268,24 @@
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
    <Component Name="SAT3">
+    <Graphics3d>
+     <File3ds Name=""/>
+     <Radius Value="1"/>
+     <LightSensitive Value="1"/>
+     <Use3dsCoords Value="0" MeshScale="1"/>
+     <AxesPosition Value="1"/>
+     <RotationCenter X="0" Y="0" Z="0"/>
+    </Graphics3d>
     <Geometry>
      <Position>
       <Value>
-       <File Name="cic_files\SAT3_POSITION_VELOCITY.TXT"/>
+       <File Name="cic_files/SAT3_POSITION_VELOCITY.TXT"/>
       </Value>
      </Position>
      <Orientation>
       <Quaternion>
        <Value>
-        <File Name="cic_files\SAT3_QUATERNION.TXT"/>
+        <File Name="cic_files/SAT3_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
@@ -217,7 +294,29 @@
    <Events/>
   </Satellite>
  </Entities>
- <Events/>
+ <Visualizers>
+  <Visualizer Name="newLink">
+   <Link>
+    <EntityRef FullName="Sol/Earth/SAT2"/>
+    <EntityRef FullName="Sol/Earth/SAT1"/>
+    <LineStyle Color="0 1 0.534005" Style="DashLine" Width="1"/>
+   </Link>
+  </Visualizer>
+ </Visualizers>
+ <Events>
+  <Decoration Type="EVENTS/1">
+   <Icon Anchor="CENTER" Size="SMALL" Opacity="100">
+    <Font Size="8" Color="1 1 1"/>
+    <ShapeLayer Shape="DIAMOND" Color="0 1 0.857496" Fill="1"/>
+   </Icon>
+  </Decoration>
+  <Decoration Type="EVENTS/0">
+   <Icon Anchor="CENTER" Size="SMALL" Opacity="100">
+    <Font Size="8" Color="1 1 1"/>
+    <ShapeLayer Shape="DIAMOND" Color="0.398001 1 0" Fill="1"/>
+   </Icon>
+  </Decoration>
+ </Events>
  <States>
   <Instant Time="33282 0" TimeRatio="1" Label="Initial state">
    <AppState Id="0">
@@ -232,6 +331,7 @@
     <Command Str="CMD STRUCT FrameAxesVisible &quot;Sol/Earth/TOLOSAT&quot; false"/>
     <Command Str="CMD STRUCT SunDirectionVisible &quot;Sol/Earth/TOLOSAT&quot; true"/>
    </AppState>
+   <AppState Id="2"/>
   </Instant>
  </States>
 </Project>
