@@ -108,7 +108,10 @@ for i, spacecraft_name in enumerate(spacecraft_names):
         eccentricity=orbit["eccentricity"],
         inclination=np.deg2rad(orbit["inclination"]),
         argument_of_periapsis=np.deg2rad(orbit["argument_of_periapsis"]),
-        longitude_of_ascending_node=np.deg2rad(orbit["longitude_of_ascending_node"]),
+        longitude_of_ascending_node=get_sso_raan(
+            orbit["mean_local_time"], simulation_start_epoch
+        ),
+
         true_anomaly=np.deg2rad(orbit["true_anomaly"])
         + i * 2 * np.pi / len(spacecraft_names),
     )
@@ -177,7 +180,7 @@ for i, spacecraft_name in tqdm(
 # Generate VTS file and start VTS
 generate_vts_file(
     epochs,
-    "test_multi_spacecraft.vts",
+    "test_multi_spacecraft_new.vts",
     spacecraft_names=spacecraft_names,
     cic_files_path="cic_files\\",
     auto_start=False,
