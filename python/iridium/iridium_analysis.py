@@ -1,4 +1,4 @@
-from iridium_doppler import (
+from iridium_doppler_GPSlocation import (
     IRIDIUM_visibility,
     IRIDIUM_windows,
     IRIDIUM_sat_results,

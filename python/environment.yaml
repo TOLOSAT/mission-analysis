@@ -12,4 +12,3 @@ dependencies:
   - tqdm
   - sgp4
   - astropy
-  - tletools

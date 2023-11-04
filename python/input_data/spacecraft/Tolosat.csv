@@ -3,6 +3,6 @@ drag_coefficient, 2.2
 reflectivity_coefficient, 1.8
 drag_area, 0.025
 srp_area, 0.025
-iridium_antenna_half_angle, 60
+iridium_antenna_half_angle, 50
 gps_antenna_half_angle, 30
 angular_velocity, 3
