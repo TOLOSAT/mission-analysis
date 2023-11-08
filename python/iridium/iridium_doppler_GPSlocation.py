@@ -126,26 +126,31 @@ def compute_doppler_visibility(results_dict):
 
             # Calculate the line of sight from the satellite to the ground station (Tolosat)
             line_of_sight = iridium_position - results_dict["Tolosat"][["x", "y", "z"]].to_numpy()
-            line_of_sight_norm = np.linalg.norm(line_of_sight, axis=1)
+            line_of_sight_norm = np.linalg.norm(line_of_sight,axis = 1)
 
             # Calculate the line of sight from the satellite to the Earth
             earth_vector = - iridium_position # Earth centered frame
-            earth_vector_norm = np.linalg.norm(earth_vector, axis=1)
+            earth_vector_norm = np.linalg.norm(earth_vector,axis = 1)
 
             # Calculate the angle between the two vectors (in radians)
-            angle = np.arccos(np.sum(line_of_sight * earth_vector, axis=1) / (line_of_sight_norm * earth_vector_norm))
+            angle = np.arccos(np.sum(line_of_sight*earth_vector,axis = 1) / (line_of_sight_norm * earth_vector_norm))
 
-            # Check for Earth occultation (angle less than 90 degrees)
-            in_occultation = angle <= np.pi / 2
-            results_dict[sat]["earth_occultation"] = in_occultation
+            results_dict[sat]["earth_occultation_OK"] = (
+                    angle >= np.pi / 2
+            )
 
+            dist = np.sqrt(dx**2 + dy**2 + dz**2)
+            results_dict[sat]["distance_OK"] = (
+                    dist <= 6878000/2
+            )
 
             results_dict[sat]["all_OK"] = (
                 results_dict[sat]["doppler_shift_OK"]
                 & results_dict[sat]["doppler_rate_OK"]
                 & results_dict[sat]["tolosat_visibility_OK"]
                 & results_dict[sat]["iridium_visibility_OK"]
-                & ~results_dict[sat]["earth_occultation"]
+                & results_dict[sat]["earth_occultation_OK"]
+                & results_dict[sat]["distance_OK"]
             )
 
             if sat == selected_iridium:
