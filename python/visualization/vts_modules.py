@@ -336,22 +336,18 @@ def add_satellite(xml, entities, name, oem_file, aem_file, model_name=None):
     # < / Sensor >
     # < / SensorSatellite >
 
-    # automate this
+    # Automate this
     SensorSatellite = xml.createElement("SensorSatellite")
-    Component.appendChild(SensorSatellite)
+    Satellite.appendChild(SensorSatellite)
     Sensor = xml.createElement("Sensor")
     Sensor.setAttribute("Name", "newSensor")
     SensorSatellite.appendChild(Sensor)
-
     SensorProp = xml.createElement("SensorProp")
     Sensor.appendChild(SensorProp)
-
     SensorElliptical = xml.createElement("SensorElliptical")
     SensorElliptical.setAttribute("HalfAngleX", "0.174532925199433")
-    SensorElliptical.setAttribute("HalfAngleY", "0.174532925199433")
 
-    Events = xml.createElement("Events")
-    Satellite.appendChild(Events)
+
 
 
 def generate_events(xml, project):

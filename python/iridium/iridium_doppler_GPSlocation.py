@@ -18,7 +18,7 @@ semi_angle_limit_tolosat = Tolosat[
     "iridium_antenna_half_angle"
 ]  # deg semi-angle visibility
 semi_angle_limit_iridium = Iridium["antenna_half_angle"]  # deg semi-angle visibility
-iridium_antennas_location = "pmY"  # "pmX" or "pmY" || "pmY" used here for 2 antenna case
+iridium_antennas_location = "pmX"  # "pmX" or "pmY" || "pmY" used here for 2 antenna case
 
 selected_iridium = "IRIDIUM 100"
 
@@ -124,32 +124,36 @@ def compute_doppler_visibility(results_dict):
                 results_dict[sat]["iridium_angle"] <= semi_angle_limit_iridium
             )
 
-            # Calculate the line of sight from the satellite to the ground station (Tolosat)
-            line_of_sight = iridium_position - results_dict["Tolosat"][["x", "y", "z"]].to_numpy()
-            line_of_sight_norm = np.linalg.norm(line_of_sight,axis = 1)
+            # # Calculate the line of sight from the satellite to the ground station (Tolosat)
+            # line_of_sight = iridium_position - results_dict["Tolosat"][["x", "y", "z"]].to_numpy()
+            # line_of_sight_norm = np.linalg.norm(line_of_sight,axis = 1)
+            #
+            # # Calculate the line of sight from the satellite to the Earth
+            # earth_vector = - iridium_position # Earth centered frame
+            # earth_vector_norm = np.linalg.norm(earth_vector,axis = 1)
+            #
+            # # Calculate the angle between the two vectors (in radians)
+            # angle = np.arccos(np.sum(line_of_sight*earth_vector,axis = 1) / (line_of_sight_norm * earth_vector_norm))
 
-            # Calculate the line of sight from the satellite to the Earth
-            earth_vector = - iridium_position # Earth centered frame
-            earth_vector_norm = np.linalg.norm(earth_vector,axis = 1)
-
-            # Calculate the angle between the two vectors (in radians)
-            angle = np.arccos(np.sum(line_of_sight*earth_vector,axis = 1) / (line_of_sight_norm * earth_vector_norm))
-
-            results_dict[sat]["earth_occultation_OK"] = (
-                    angle >= np.pi / 2
-            )
+            # results_dict[sat]["earth_occultation_OK"] = (
+            #         angle >= np.pi / 2
+            # )
 
             dist = np.sqrt(dx**2 + dy**2 + dz**2)
             results_dict[sat]["distance_OK"] = (
-                    dist <= 6878000/2
+                    dist <= 800e3
             )
+
+            if results_dict[sat]["distance_OK"].any():
+                print(f"{sat} distance OK")
+
 
             results_dict[sat]["all_OK"] = (
                 results_dict[sat]["doppler_shift_OK"]
                 & results_dict[sat]["doppler_rate_OK"]
                 & results_dict[sat]["tolosat_visibility_OK"]
                 & results_dict[sat]["iridium_visibility_OK"]
-                & results_dict[sat]["earth_occultation_OK"]
+                # & results_dict[sat]["earth_occultation_OK"]
                 & results_dict[sat]["distance_OK"]
             )
 
