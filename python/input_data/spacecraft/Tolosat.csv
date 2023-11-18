@@ -5,4 +5,4 @@ drag_area, 0.025
 srp_area, 0.025
 iridium_antenna_half_angle, 45
 gps_antenna_half_angle, 45
-angular_velocity, 5
+angular_velocity, 3
