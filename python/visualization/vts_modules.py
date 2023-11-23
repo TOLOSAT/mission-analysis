@@ -186,7 +186,6 @@ def add_earth(xml, entities):
     BuiltinLayer.setAttribute("Name", "defaultLayer")
     Layers.appendChild(BuiltinLayer)
 
-
 def add_satellite(xml, entities, name, oem_file, aem_file, model_name=None):
     Satellite = xml.createElement("Satellite")
     Satellite.setAttribute("Name", name)
@@ -245,7 +244,6 @@ def add_satellite(xml, entities, name, oem_file, aem_file, model_name=None):
     EclipseCircle.appendChild(FillStyle)
     Component = xml.createElement("Component")
     Component.setAttribute("Name", name)
-    Satellite.appendChild(Component)
     if model_name is not None:
         Graphics3d = xml.createElement("Graphics3d")
         Component.appendChild(Graphics3d)
@@ -294,64 +292,168 @@ def add_satellite(xml, entities, name, oem_file, aem_file, model_name=None):
     File.setAttribute("Name", aem_file)
     Value.appendChild(File)
 
-    #     < SensorSatellite >
-    #     < Sensor
-    #     Name = "newSensor" >
-    #     < SensorProp >
-    #     < SensorElliptical
-    #     HalfAngleX = "0.174532925199433"
-    #     HalfAngleY = "0.174532925199433" / >
-    #     < SensorGraphics
-    #     Range = "10000"
-    #     VolumeColor = "0.499992 1 0.651911"
-    #     VolumeOpacity = "60" >
-    #     < SensorContour >
-    #     < LineStyle
-    #     Color = "0 1 0.303838"
-    #     Style = "SolidLine"
-    #     Width = "1" / >
-    #
-    # < / SensorContour >
-    # < SensorTrace
-    # Duration = "0"
-    # Opacity = "60" / >
-    # < / SensorGraphics >
-    # < / SensorProp >
-    # < Geometry >
-    # < Position >
-    # < Value >
-    # < Fixed
-    # Data = "0 0 0" / >
-    # < / Value >
-    # < / Position >
-    # < Orientation >
-    # < Quaternion >
-    # < Value >
-    # < Fixed
-    # Data = "1 0 0 0" / >
-    # < / Value >
-    # < / Quaternion >
-    # < / Orientation >
-    # < / Geometry >
-    # < / Sensor >
-    # < / SensorSatellite >
+    # ========== Sensor 1 ==========
 
-    # automate this
+    # create sensor satellite
     SensorSatellite = xml.createElement("SensorSatellite")
-    Component.appendChild(SensorSatellite)
+
+    # create sensor
     Sensor = xml.createElement("Sensor")
-    Sensor.setAttribute("Name", "newSensor")
-    SensorSatellite.appendChild(Sensor)
+    Sensor.setAttribute("Name", "sensor1")
 
+    # create sensor properties
     SensorProp = xml.createElement("SensorProp")
-    Sensor.appendChild(SensorProp)
 
+    # create sensor propereties - elliptical
     SensorElliptical = xml.createElement("SensorElliptical")
     SensorElliptical.setAttribute("HalfAngleX", "0.174532925199433")
     SensorElliptical.setAttribute("HalfAngleY", "0.174532925199433")
 
+    # create sensor properties - graphics
+    SensorGraphics = xml.createElement("SensorGraphics")
+    SensorGraphics.setAttribute("Range", "10000")
+    SensorGraphics.setAttribute("VolumeColor", "1 0.499992 0.611658")
+    SensorGraphics.setAttribute("VolumeOpacity", "60")
+
+    # create sensor properties - graphics - contour
+    SensorContour = xml.createElement("SensorContour")
+
+    # create sensor properties - graphics - contour - linestyle
+    LineStyle = xml.createElement("LineStyle")
+    LineStyle.setAttribute("Color", "1 0 0.223331")
+    LineStyle.setAttribute("Style", "SolidLine")
+    LineStyle.setAttribute("Width", "1")
+
+    # create sensor properties - graphics - trace
+    SensorTrace = xml.createElement("SensorTrace")
+    SensorTrace.setAttribute("Duration", "0")
+    SensorTrace.setAttribute("Opacity", "60")
+
+    # create geometry
+    Geometry = xml.createElement("Geometry")
+
+    # create geometry - position
+    Position = xml.createElement("Position")
+    Value_Position = xml.createElement("Value")
+    Fixed_Position = xml.createElement("Fixed")
+    Fixed_Position.setAttribute("Data", "0 0 0")
+
+    # create geometry - orientation
+    Orientation = xml.createElement("Orientation")
+    Quaternion = xml.createElement("Quaternion")
+    Value_Quaternion = xml.createElement("Value")
+    Fixed_Quaternion = xml.createElement("Fixed")
+    Fixed_Quaternion.setAttribute("Data", "1 0 0 0")
+
+    # append everything
+    SensorSatellite.appendChild(Sensor)
+
+    SensorProp.appendChild(SensorElliptical)
+    SensorContour.appendChild(LineStyle)
+    SensorGraphics.appendChild(SensorContour)
+    SensorGraphics.appendChild(SensorTrace)
+    SensorProp.appendChild(SensorGraphics)
+    Sensor.appendChild(SensorProp)
+
+    Value_Position.appendChild(Fixed_Position)
+    Position.appendChild(Value_Position)
+    Geometry.appendChild(Position)
+
+    Value_Quaternion.appendChild(Fixed_Quaternion)
+    Quaternion.appendChild(Value_Quaternion)
+    Orientation.appendChild(Quaternion)
+    Geometry.appendChild(Orientation)
+
+    Sensor.appendChild(Geometry)
+
+    Component.appendChild(SensorSatellite)
+
+    # add default events
     Events = xml.createElement("Events")
     Satellite.appendChild(Events)
+
+    # ========== Sensor 2 ==========
+
+    # create sensor satellite
+    SensorSatellite2 = xml.createElement("SensorSatellite")
+
+    # create sensor
+    Sensor2 = xml.createElement("Sensor")
+    Sensor2.setAttribute("Name", "sensor2")
+
+    # create sensor properties
+    SensorProp2 = xml.createElement("SensorProp")
+
+    # create sensor propereties - elliptical
+    SensorElliptical2 = xml.createElement("SensorElliptical")
+    SensorElliptical2.setAttribute("HalfAngleX", "0.174532925199433")
+    SensorElliptical2.setAttribute("HalfAngleY", "0.174532925199433")
+
+    # create sensor properties - graphics
+    SensorGraphics2 = xml.createElement("SensorGraphics")
+    SensorGraphics2.setAttribute("Range", "10000")
+    SensorGraphics2.setAttribute("VolumeColor", "1 0.499992 0.611658")
+    SensorGraphics2.setAttribute("VolumeOpacity", "60")
+
+    # create sensor properties - graphics - contour
+    SensorContour2 = xml.createElement("SensorContour")
+
+    # create sensor properties - graphics - contour - linestyle
+    LineStyle2 = xml.createElement("LineStyle")
+    LineStyle2.setAttribute("Color", "1 0 0.223331")
+    LineStyle2.setAttribute("Style", "SolidLine")
+    LineStyle2.setAttribute("Width", "1")
+
+    # create sensor properties - graphics - trace
+    SensorTrace2 = xml.createElement("SensorTrace")
+    SensorTrace2.setAttribute("Duration", "0")
+    SensorTrace2.setAttribute("Opacity", "60")
+
+    # create geometry
+    Geometry2 = xml.createElement("Geometry")
+
+    # create geometry - position
+    Position2 = xml.createElement("Position")
+    Value_Position2 = xml.createElement("Value")
+    Fixed_Position2 = xml.createElement("Fixed")
+    Fixed_Position2.setAttribute("Data", "0 0 0")
+
+    # create geometry - orientation
+    Orientation2 = xml.createElement("Orientation")
+    Quaternion2 = xml.createElement("Quaternion")
+    Value_Quaternion2 = xml.createElement("Value")
+    Fixed_Quaternion2 = xml.createElement("Fixed")
+    Fixed_Quaternion2.setAttribute("Data", "1 1 0 0")
+
+    # append everything
+    SensorSatellite2.appendChild(Sensor2)
+
+    SensorProp2.appendChild(SensorElliptical2)
+    SensorContour2.appendChild(LineStyle2)
+    SensorGraphics2.appendChild(SensorContour2)
+    SensorGraphics2.appendChild(SensorTrace2)
+    SensorProp2.appendChild(SensorGraphics2)
+    Sensor2.appendChild(SensorProp2)
+
+    Value_Position2.appendChild(Fixed_Position2)
+    Position2.appendChild(Value_Position2)
+    Geometry2.appendChild(Position2)
+
+    Value_Quaternion2.appendChild(Fixed_Quaternion2)
+    Quaternion2.appendChild(Value_Quaternion2)
+    Orientation2.appendChild(Quaternion2)
+    Geometry2.appendChild(Orientation2)
+
+    Sensor2.appendChild(Geometry2)
+
+    Component.appendChild(SensorSatellite2)
+
+    # add default events
+    Events = xml.createElement("Events")
+    Satellite.appendChild(Events)
+
+    # Final step : add component with all sensors to the satellite
+    Satellite.appendChild(Component)
 
 
 def generate_events(xml, project):
