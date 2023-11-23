@@ -14,6 +14,7 @@ galileo = get_spacecraft("Galileo")
 f0 = 1621.25e6  # Hz
 delta_f_limit = 37500  # Hz doppler shift max +/-
 delta_f_dot_limit = 350  # 375 # Hz/s doppler rate max +/-
+max_distance = 20000e3  # [m] max distance to establish communication between Tolosat and Galileo
 semi_angle_limit_tolosat = Tolosat[
     "galileo_antenna_half_angle"
 ]  # deg semi-angle visibility
@@ -125,11 +126,17 @@ def compute_doppler_visibility(results_dict):
                 results_dict[sat]["galileo_angle"] <= semi_angle_limit_galileo
             )
 
+            dist = np.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
+            results_dict[sat]["distance_OK"] = (
+                    dist <= max_distance  # Maximum distance to establish communication
+            )
+
             results_dict[sat]["all_OK"] = (
                 results_dict[sat]["doppler_shift_OK"]
                 & results_dict[sat]["doppler_rate_OK"]
                 & results_dict[sat]["tolosat_visibility_OK"]
                 & results_dict[sat]["galileo_visibility_OK"]
+                & results_dict[sat]["distance_OK"]
             )
 
             if sat == selected_galileo:
