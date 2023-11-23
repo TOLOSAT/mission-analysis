@@ -6,4 +6,5 @@ srp_area, 0.025
 iridium_antenna_half_angle, 60
 gps_antenna_half_angle, 30
 galileo_antenna_half_angle, 30
+glonass_antenna_half_angle, 30
 angular_velocity, 3

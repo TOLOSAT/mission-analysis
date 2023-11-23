@@ -9,21 +9,21 @@ from useful_functions import get_spacecraft
 from useful_functions.constants import SPEED_OF_LIGHT
 
 Tolosat = get_spacecraft("Tolosat")
-galileo = get_spacecraft("Galileo")
+glonass = get_spacecraft("Galileo")
 
 f0 = 1621.25e6  # Hz
 delta_f_limit = 37500  # Hz doppler shift max +/-
 delta_f_dot_limit = 350  # 375 # Hz/s doppler rate max +/-
 max_distance = 20000e3  # [m] max distance to establish communication between Tolosat and Galileo
 semi_angle_limit_tolosat = Tolosat[
-    "galileo_antenna_half_angle"
+    "glonass_antenna_half_angle"
 ]  # deg semi-angle visibility
-semi_angle_limit_galileo = galileo["antenna_half_angle"]  # deg semi-angle visibility
-galileo_antennas_location = "pmX"  # "pmX" or "pmY"
+semi_angle_limit_glonass = glonass["antenna_half_angle"]  # deg semi-angle visibility
+glonass_antennas_location = "pmY"  # "pmX" or "pmY"
 
-selected_galileo = "GSAT0101 (PRN E11)"
+selected_glonass = "COSMOS 2433 (720)"
 
-selected_galileo_nospace = selected_galileo.replace(" ", "_")
+selected_glonass_nospace = selected_glonass.replace(" ", "_")
 
 
 # pointage zenith // pointage soleil ??
@@ -33,23 +33,23 @@ def compute_doppler_visibility(results_dict):
     sun_directions = results_dict["sun_direction"].to_numpy()
     epochs = results_dict["epochs"].to_numpy()
     pX_vector, pY_vector, _ = compute_body_vectors(epochs, sun_directions)
-    if galileo_antennas_location == "pmX":
-        galileo_antenna_1_vector = pX_vector
-        galileo_antenna_2_vector = -pX_vector
-    elif galileo_antennas_location == "pmY":
-        galileo_antenna_1_vector = pY_vector
-        galileo_antenna_2_vector = -pY_vector
+    if glonass_antennas_location == "pmX":
+        glonass_antenna_1_vector = pX_vector
+        glonass_antenna_2_vector = -pX_vector
+    elif glonass_antennas_location == "pmY":
+        glonass_antenna_1_vector = pY_vector
+        glonass_antenna_2_vector = -pY_vector
     else:
-        raise ValueError("galileo_antennas_location must be pmX or pmY")
+        raise ValueError("glonass_antennas_location must be pmX or pmY")
     visibility = [results_dict["epochs"].copy().rename("epochs")]
     sat_results = [results_dict["epochs"].copy().rename("epochs")]
     for sat in tqdm(
         results_dict, ncols=80, desc=f"Satellites", position=1, leave=False
     ):
-        if "GSAT" not in sat:
+        if "COSMOS" not in sat:
             continue
         else:
-            galileo_position = results_dict[sat][["x", "y", "z"]].to_numpy()
+            glonass_position = results_dict[sat][["x", "y", "z"]].to_numpy()
             dx = (results_dict[sat]["x"] - results_dict["Tolosat"]["x"]).to_numpy()
             dy = (results_dict[sat]["y"] - results_dict["Tolosat"]["y"]).to_numpy()
             dz = (results_dict[sat]["z"] - results_dict["Tolosat"]["z"]).to_numpy()
@@ -87,30 +87,30 @@ def compute_doppler_visibility(results_dict):
             )
 
             tolosat_angle_1 = np.arccos(
-                np.sum(relative_position * galileo_antenna_1_vector, axis=1)
+                np.sum(relative_position * glonass_antenna_1_vector, axis=1)
                 / (
                     np.linalg.norm(relative_position, axis=1)
-                    * np.linalg.norm(galileo_antenna_1_vector, axis=1)
+                    * np.linalg.norm(glonass_antenna_1_vector, axis=1)
                 )
             )
             results_dict[sat]["tolosat_angle_1"] = np.rad2deg(tolosat_angle_1)
             tolosat_angle_2 = np.arccos(
-                np.sum(relative_position * galileo_antenna_2_vector, axis=1)
+                np.sum(relative_position * glonass_antenna_2_vector, axis=1)
                 / (
                     np.linalg.norm(relative_position, axis=1)
-                    * np.linalg.norm(galileo_antenna_2_vector, axis=1)
+                    * np.linalg.norm(glonass_antenna_2_vector, axis=1)
                 )
             )
             results_dict[sat]["tolosat_angle_2"] = np.rad2deg(tolosat_angle_2)
 
-            galileo_angle = np.arccos(
-                np.sum(relative_position * galileo_position, axis=1)
+            glonass_angle = np.arccos(
+                np.sum(relative_position * glonass_position, axis=1)
                 / (
                     np.linalg.norm(relative_position, axis=1)
-                    * np.linalg.norm(galileo_position, axis=1)
+                    * np.linalg.norm(glonass_position, axis=1)
                 )
             )
-            results_dict[sat]["galileo_angle"] = np.rad2deg(galileo_angle)
+            results_dict[sat]["glonass_angle"] = np.rad2deg(glonass_angle)
 
             results_dict[sat]["doppler_shift_OK"] = (
                 np.abs(results_dict[sat]["doppler_shift"]) <= delta_f_limit
@@ -122,8 +122,8 @@ def compute_doppler_visibility(results_dict):
                 results_dict[sat]["tolosat_angle_1"] <= semi_angle_limit_tolosat
             ) | (results_dict[sat]["tolosat_angle_2"] <= semi_angle_limit_tolosat)
 
-            results_dict[sat]["galileo_visibility_OK"] = (
-                results_dict[sat]["galileo_angle"] <= semi_angle_limit_galileo
+            results_dict[sat]["glonass_visibility_OK"] = (
+                results_dict[sat]["glonass_angle"] <= semi_angle_limit_glonass
             )
 
             dist = np.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
@@ -135,14 +135,14 @@ def compute_doppler_visibility(results_dict):
                 results_dict[sat]["doppler_shift_OK"]
                 & results_dict[sat]["doppler_rate_OK"]
                 & results_dict[sat]["tolosat_visibility_OK"]
-                & results_dict[sat]["galileo_visibility_OK"]
+                & results_dict[sat]["glonass_visibility_OK"]
                 & results_dict[sat]["distance_OK"]
             )
 
-            if sat == selected_galileo:
+            if sat == selected_glonass:
                 sat_results.append(results_dict[sat]["tolosat_angle_1"])
                 sat_results.append(results_dict[sat]["tolosat_angle_2"])
-                sat_results.append(results_dict[sat]["galileo_angle"])
+                sat_results.append(results_dict[sat]["glonass_angle"])
                 sat_results.append(results_dict[sat]["doppler_shift"])
                 sat_results.append(results_dict[sat]["doppler_rate"])
             visibility.append(results_dict[sat]["all_OK"].rename(sat))
@@ -179,41 +179,41 @@ def compute_doppler_visibility(results_dict):
 
 
 # Initialize DataFrames
-galileo_visibility = pd.DataFrame(columns=[])
-galileo_windows = pd.DataFrame(columns=[])
-galileo_sat_results = pd.DataFrame(columns=[])
+glonass_visibility = pd.DataFrame(columns=[])
+glonass_windows = pd.DataFrame(columns=[])
+glonass_sat_results = pd.DataFrame(columns=[])
 
-folders = get_list_of_contents("galileo_states")
+folders = get_list_of_contents("glonass_states")
 folders = [int(x) for x in folders]
 folders.sort()
 
 print(f"Starting Doppler processing of {len(folders)} datasets...")
 for folder in tqdm(folders, ncols=80, desc="Datasets", position=0, leave=True):
-    results = get_results_dict(f"galileo_states/{folder}")
+    results = get_results_dict(f"glonass_states/{folder}")
     tmp_visibility, tmp_windows, tmp_sat_results = compute_doppler_visibility(results)
-    galileo_visibility = pd.concat([galileo_visibility, tmp_visibility], ignore_index=True)
-    galileo_windows = pd.concat([galileo_windows, tmp_windows], ignore_index=True)
-    galileo_sat_results = pd.concat([galileo_sat_results, tmp_sat_results], ignore_index=True)
+    glonass_visibility = pd.concat([glonass_visibility, tmp_visibility], ignore_index=True)
+    glonass_windows = pd.concat([glonass_windows, tmp_windows], ignore_index=True)
+    glonass_sat_results = pd.concat([glonass_sat_results, tmp_sat_results], ignore_index=True)
 
-galileo_sat_results["seconds"] = galileo_sat_results["epochs"] - galileo_sat_results["epochs"][0]
+glonass_sat_results["seconds"] = glonass_sat_results["epochs"] - glonass_sat_results["epochs"][0]
 
-galileo_windows = galileo_windows[galileo_windows["duration"] > 0]
+glonass_windows = glonass_windows[glonass_windows["duration"] > 0]
 
-galileo_windows["timedelta"] = galileo_windows["start"] - galileo_windows["start"][0]
-galileo_windows["seconds"] = galileo_windows["timedelta"].dt.total_seconds()
-galileo_visibility["seconds"] = galileo_visibility["epochs"] - galileo_visibility["epochs"][0]
-print(f"Minimum galileo window duration: {galileo_windows['duration'].min()} seconds")
-print(f"Maximum galileo window duration: {galileo_windows['duration'].max()} seconds")
-print(f"Average galileo window duration: {galileo_windows['duration'].mean()} seconds")
+glonass_windows["timedelta"] = glonass_windows["start"] - glonass_windows["start"][0]
+glonass_windows["seconds"] = glonass_windows["timedelta"].dt.total_seconds()
+glonass_visibility["seconds"] = glonass_visibility["epochs"] - glonass_visibility["epochs"][0]
+print(f"Minimum glonass window duration: {glonass_windows['duration'].min()} seconds")
+print(f"Maximum glonass window duration: {glonass_windows['duration'].max()} seconds")
+print(f"Average glonass window duration: {glonass_windows['duration'].mean()} seconds")
 print(
-    f"Average galileo passes per day: {len(galileo_windows) / galileo_windows['seconds'].max() * 86400:.2f} passes"
+    f"Average glonass passes per day: {len(glonass_windows) / glonass_windows['seconds'].max() * 86400:.2f} passes"
 )
 print(
-    f"Average galileo visibility per day: "
-    f"{galileo_windows['duration'].sum() / galileo_windows['seconds'].max() * 86400:.2f} seconds"
+    f"Average glonass visibility per day: "
+    f"{glonass_windows['duration'].sum() / glonass_windows['seconds'].max() * 86400:.2f} seconds"
 )
 
-galileo_visibility.to_csv("results/galileo_visibility.csv")
-galileo_windows.to_csv("results/galileo_windows.csv")
+glonass_visibility.to_csv("results/glonass_visibility.csv")
+glonass_windows.to_csv("results/glonass_windows.csv")
 
 print("Done")
