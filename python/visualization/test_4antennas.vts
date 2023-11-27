@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Project Revision="9169">
+<Project Revision="9032">
  <General Name="" StartDateTime="60311 43195.000000" EndDateTime="60312 43195.000000"/>
  <MetaData>
   <Description>###################################### 
@@ -10,14 +10,11 @@
 #
 # Project Name: Test 4Antennas 
 #
-# File generated on 23/11/2023 at 18:52:47 UTC 
+# File generated on 24/11/2023 at 09:02:41 UTC 
 #
 #
 </Description>
  </MetaData>
- <MonitorConfiguration>
-  <Monitor X="0" Y="0" Height="1032" Width="1920"/>
- </MonitorConfiguration>
  <StartOptions TimeRatio="1" UseStateTimeRatio="0" SysTimeSynced="0" Paused="0" Looped="0" Minimized="0" Hidden="0" AutoClosed="0"/>
  <Timeshifting Enabled="0"/>
  <TimelineOptions ProjectLocked="1" CursorLocked="0" CursorRatio="0" ViewStart="33282 0.000000" ViewSpan="0" DateFormat="ISODate" NoBadgeFiltered="0" BadgeFiltered=""/>
@@ -85,9 +82,14 @@
     <LineStyle Color="1 0.167834 0" Style="DashLine" Width="1"/>
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
+   <Events/>
+   <Events/>
+   <Events/>
+   <Events/>
+   <Events/>
    <Component Name="TOLOSAT">
     <Graphics3d>
-     <File3ds Name="TOLOSAT_model.obj"/>
+     <File3ds Name="C:\Users\bpeti\Documents\GitHub\mission-analysis\python\visualization\TOLOSAT_model.obj"/>
      <Radius Value="1"/>
      <LightSensitive Value="1"/>
      <Use3dsCoords Value="0" MeshScale="1"/>
@@ -109,7 +111,7 @@
      </Orientation>
     </Geometry>
     <SensorSatellite>
-     <Sensor Name="sensor1">
+     <Sensor Name="Sensor1">
       <SensorProp>
        <SensorElliptical HalfAngleX="0.174532925199433" HalfAngleY="0.174532925199433"/>
        <SensorGraphics Range="10000" VolumeColor="1 0.499992 0.611658" VolumeOpacity="60">
@@ -136,7 +138,7 @@
      </Sensor>
     </SensorSatellite>
     <SensorSatellite>
-     <Sensor Name="sensor2">
+     <Sensor Name="Sensor2">
       <SensorProp>
        <SensorElliptical HalfAngleX="0.174532925199433" HalfAngleY="0.174532925199433"/>
        <SensorGraphics Range="10000" VolumeColor="1 0.499992 0.611658" VolumeOpacity="60">
@@ -162,8 +164,88 @@
       </Geometry>
      </Sensor>
     </SensorSatellite>
+    <SensorSatellite>
+     <Sensor Name="Sensor3">
+      <SensorProp>
+       <SensorElliptical HalfAngleX="0.174532925199433" HalfAngleY="0.174532925199433"/>
+       <SensorGraphics Range="10000" VolumeColor="1 0.499992 0.611658" VolumeOpacity="60">
+        <SensorContour>
+         <LineStyle Color="1 0 0.223331" Style="SolidLine" Width="1"/>
+        </SensorContour>
+        <SensorTrace Duration="0" Opacity="60"/>
+       </SensorGraphics>
+      </SensorProp>
+      <Geometry>
+       <Position>
+        <Value>
+         <Fixed Data="0 0 0"/>
+        </Value>
+       </Position>
+       <Orientation>
+        <Quaternion>
+         <Value>
+          <Fixed Data="1 0 1 0"/>
+         </Value>
+        </Quaternion>
+       </Orientation>
+      </Geometry>
+     </Sensor>
+    </SensorSatellite>
+    <SensorSatellite>
+     <Sensor Name="Sensor4">
+      <SensorProp>
+       <SensorElliptical HalfAngleX="0.174532925199433" HalfAngleY="0.174532925199433"/>
+       <SensorGraphics Range="10000" VolumeColor="1 0.499992 0.611658" VolumeOpacity="60">
+        <SensorContour>
+         <LineStyle Color="1 0 0.223331" Style="SolidLine" Width="1"/>
+        </SensorContour>
+        <SensorTrace Duration="0" Opacity="60"/>
+       </SensorGraphics>
+      </SensorProp>
+      <Geometry>
+       <Position>
+        <Value>
+         <Fixed Data="0 0 0"/>
+        </Value>
+       </Position>
+       <Orientation>
+        <Quaternion>
+         <Value>
+          <Fixed Data="1 -1 0 0"/>
+         </Value>
+        </Quaternion>
+       </Orientation>
+      </Geometry>
+     </Sensor>
+    </SensorSatellite>
+    <SensorSatellite>
+     <Sensor Name="Sensor5">
+      <SensorProp>
+       <SensorElliptical HalfAngleX="0.174532925199433" HalfAngleY="0.174532925199433"/>
+       <SensorGraphics Range="10000" VolumeColor="1 0.499992 0.611658" VolumeOpacity="60">
+        <SensorContour>
+         <LineStyle Color="1 0 0.223331" Style="SolidLine" Width="1"/>
+        </SensorContour>
+        <SensorTrace Duration="0" Opacity="60"/>
+       </SensorGraphics>
+      </SensorProp>
+      <Geometry>
+       <Position>
+        <Value>
+         <Fixed Data="0 0 0"/>
+        </Value>
+       </Position>
+       <Orientation>
+        <Quaternion>
+         <Value>
+          <Fixed Data="1 0 -1 0"/>
+         </Value>
+        </Quaternion>
+       </Orientation>
+      </Geometry>
+     </Sensor>
+    </SensorSatellite>
    </Component>
-   <Events/>
   </Satellite>
  </Entities>
  <Events/>

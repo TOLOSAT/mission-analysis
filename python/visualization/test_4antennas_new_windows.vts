@@ -10,7 +10,7 @@
 #
 # Project Name: Test 4Antennas 
 #
-# File generated on 23/11/2023 at 17:19:07 UTC 
+# File generated on 24/11/2023 at 09:02:41 UTC 
 #
 #
 </Description>
@@ -20,7 +20,12 @@
  </MonitorConfiguration>
  <StartOptions TimeRatio="1" UseStateTimeRatio="0" SysTimeSynced="0" Paused="0" Looped="0" Minimized="0" Hidden="0" AutoClosed="0"/>
  <Timeshifting Enabled="0"/>
- <TimelineOptions ProjectLocked="1" CursorLocked="0" CursorRatio="0" ViewStart="33282 0.000000" ViewSpan="0" DateFormat="ISODate" NoBadgeFiltered="0" BadgeFiltered=""/>
+ <BrokerOptions WindowMode="Undocked" Collapsed="0" AlwaysOnTop="0" XPos="605" YPos="274" Width="710" Height="512" ActiveTab="0" HiddenTabs=""/>
+ <TimelineOptions ProjectLocked="1" CursorLocked="0" CursorRatio="0" ViewStart="33282 0.000000" ViewSpan="0" DateFormat="ISODate" NoBadgeFiltered="0" BadgeFiltered="">
+  <TimelineScenario Name="Scenario" Pos="0" Size="22"/>
+  <TimelineFile Name="TOLOSAT_POSITION_VELOCITY.TXT" Pos="1" Size="23" Mode="DEFAULT" Overlay="false"/>
+  <TimelineFile Name="TOLOSAT_QUATERNION.TXT" Pos="2" Size="23" Mode="DEFAULT" Overlay="false"/>
+ </TimelineOptions>
  <Sky>
   <Sun>
    <Prop2d>
@@ -46,6 +51,9 @@
  <ToBeUsedApps>
   <Application Name="SurfaceView" Id="0" Label="" AutoStarted="1"/>
   <Application Name="Celestia" Id="1" Label="" AutoStarted="1"/>
+  <Application Name="SensorView" Id="2" Label="" AutoStarted="1"/>
+  <Application Name="InfoBox" Id="3" Label="" AutoStarted="1"/>
+  <Application Name="NadirView" Id="4" Label="" AutoStarted="1"/>
  </ToBeUsedApps>
  <Entities>
   <Body Name="Earth" ParentPath="Sol">
@@ -103,13 +111,13 @@
      <Orientation>
       <Quaternion>
        <Value>
-        <Fixed Data="1 1 0 0"/>
+        <File Name="TOLOSAT_QUATERNION.TXT"/>
        </Value>
       </Quaternion>
      </Orientation>
     </Geometry>
     <SensorSatellite>
-     <Sensor Name="sensor1">
+     <Sensor Name="Sensor1">
       <SensorProp>
        <SensorElliptical HalfAngleX="0.174532925199433" HalfAngleY="0.174532925199433"/>
        <SensorGraphics Range="10000" VolumeColor="1 0.499992 0.611658" VolumeOpacity="60">
@@ -136,12 +144,12 @@
      </Sensor>
     </SensorSatellite>
     <SensorSatellite>
-     <Sensor Name="sensor2">
+     <Sensor Name="Sensor2">
       <SensorProp>
        <SensorElliptical HalfAngleX="0.174532925199433" HalfAngleY="0.174532925199433"/>
-       <SensorGraphics Range="10000" VolumeColor="0.661738 1 0.499992" VolumeOpacity="60">
+       <SensorGraphics Range="10000" VolumeColor="1 0.499992 0.611658" VolumeOpacity="60">
         <SensorContour>
-         <LineStyle Color="0.323507 1 0" Style="SolidLine" Width="1"/>
+         <LineStyle Color="1 0 0.223331" Style="SolidLine" Width="1"/>
         </SensorContour>
         <SensorTrace Duration="0" Opacity="60"/>
        </SensorGraphics>
@@ -162,6 +170,87 @@
       </Geometry>
      </Sensor>
     </SensorSatellite>
+    <SensorSatellite>
+     <Sensor Name="Sensor3">
+      <SensorProp>
+       <SensorElliptical HalfAngleX="0.174532925199433" HalfAngleY="0.174532925199433"/>
+       <SensorGraphics Range="10000" VolumeColor="1 0.499992 0.611658" VolumeOpacity="60">
+        <SensorContour>
+         <LineStyle Color="1 0 0.223331" Style="SolidLine" Width="1"/>
+        </SensorContour>
+        <SensorTrace Duration="0" Opacity="60"/>
+       </SensorGraphics>
+      </SensorProp>
+      <Geometry>
+       <Position>
+        <Value>
+         <Fixed Data="0 0 0"/>
+        </Value>
+       </Position>
+       <Orientation>
+        <Quaternion>
+         <Value>
+          <Fixed Data="1 0 1 0"/>
+         </Value>
+        </Quaternion>
+       </Orientation>
+      </Geometry>
+     </Sensor>
+    </SensorSatellite>
+    <SensorSatellite>
+     <Sensor Name="Sensor4">
+      <SensorProp>
+       <SensorElliptical HalfAngleX="0.174532925199433" HalfAngleY="0.174532925199433"/>
+       <SensorGraphics Range="10000" VolumeColor="1 0.499992 0.611658" VolumeOpacity="60">
+        <SensorContour>
+         <LineStyle Color="1 0 0.223331" Style="SolidLine" Width="1"/>
+        </SensorContour>
+        <SensorTrace Duration="0" Opacity="60"/>
+       </SensorGraphics>
+      </SensorProp>
+      <Geometry>
+       <Position>
+        <Value>
+         <Fixed Data="0 0 0"/>
+        </Value>
+       </Position>
+       <Orientation>
+        <Quaternion>
+         <Value>
+          <Fixed Data="1 -1 0 0"/>
+         </Value>
+        </Quaternion>
+       </Orientation>
+      </Geometry>
+     </Sensor>
+    </SensorSatellite>
+    <SensorSatellite>
+     <Sensor Name="Sensor5">
+      <SensorProp>
+       <SensorElliptical HalfAngleX="0.174532925199433" HalfAngleY="0.174532925199433"/>
+       <SensorGraphics Range="10000" VolumeColor="1 0.499992 0.611658" VolumeOpacity="60">
+        <SensorContour>
+         <LineStyle Color="1 0 0.223331" Style="SolidLine" Width="1"/>
+        </SensorContour>
+        <SensorTrace Duration="0" Opacity="60"/>
+       </SensorGraphics>
+      </SensorProp>
+      <Geometry>
+       <Position>
+        <Value>
+         <Fixed Data="0 0 0"/>
+        </Value>
+       </Position>
+       <Orientation>
+        <Quaternion>
+         <Value>
+          <Fixed Data="1 0 -1 0"/>
+         </Value>
+        </Quaternion>
+       </Orientation>
+      </Geometry>
+     </Sensor>
+    </SensorSatellite>
    </Component>
    <Events/>
   </Satellite>
@@ -170,13 +259,22 @@
  <States>
   <Instant Time="33282 0" TimeRatio="1" Label="Initial state">
    <AppState Id="0">
-    <Command Str="CMD PROP WindowGeometry 0 0 1280 971"/>
+    <Command Str="CMD PROP WindowGeometry 0 0 960 516"/>
    </AppState>
    <AppState Id="1">
-    <Command Str="CMD PROP WindowGeometry 0 0 1280 971"/>
+    <Command Str="CMD PROP WindowGeometry 0 516 960 516"/>
     <Command Str="CMD STRUCT LabelVisible &quot;Sol/Earth/TOLOSAT&quot; false"/>
     <Command Str="CMD STRUCT FrameAxesVisible &quot;Sol/Earth/TOLOSAT&quot; false"/>
     <Command Str="CMD STRUCT SunDirectionVisible &quot;Sol/Earth/TOLOSAT&quot; true"/>
+   </AppState>
+   <AppState Id="2">
+    <Command Str="CMD PROP WindowGeometry 960 103 960 412"/>
+   </AppState>
+   <AppState Id="3">
+    <Command Str="CMD PROP WindowGeometry 960 0 960 103"/>
+   </AppState>
+   <AppState Id="4">
+    <Command Str="CMD PROP WindowGeometry 960 516 960 516"/>
    </AppState>
   </Instant>
  </States>

@@ -101,6 +101,9 @@ def generate_vts_file(
         else:
             add_satellite(xml, entities, satellite_name, oem_file, aem_file)
 
+    # Generate windows
+    generate_windows(xml)
+
     # Generate events and states
     generate_events(xml, project)
     generate_states(xml, project, spacecraft_names)
