@@ -1,5 +1,6 @@
 from xml.dom import minidom
 from useful_functions.get_input_data import get_spacecraft
+import tkinter as tk
 
 tolosat_specs = get_spacecraft("Tolosat")
 iridium_specs = get_spacecraft("Iridium")
@@ -421,54 +422,51 @@ def generate_windows(xml):
     app3 = generate_window(xml, "InfoBox", 3)
     app4 = generate_window(xml, "NadirView", 4)
 
-    apps.apendChild(app0)
-    apps.apendChild(app1)
-    apps.apendChild(app2)
-    apps.apendChild(app3)
-    apps.apendChild(app4)
+    apps.appendChild(app0)
+    apps.appendChild(app1)
+    apps.appendChild(app2)
+    apps.appendChild(app3)
+    apps.appendChild(app4)
 
 def generate_events(xml, project):
     Events = xml.createElement("Events")
     project.appendChild(Events)
     return Events
 
-# TO REDO DYNAMICALLY
-#  <States>
-#   <Instant Time="33282 0" TimeRatio="1" Label="Initial state">
-#    <AppState Id="0">
-#     <Command Str="CMD PROP WindowGeometry 0 0 960 516"/>
-#    </AppState>
-#    <AppState Id="1">
-#     <Command Str="CMD PROP WindowGeometry 0 516 960 516"/>
-#     <Command Str="CMD STRUCT LabelVisible &quot;Sol/Earth/TOLOSAT&quot; false"/>
-#     <Command Str="CMD STRUCT FrameAxesVisible &quot;Sol/Earth/TOLOSAT&quot; false"/>
-#     <Command Str="CMD STRUCT SunDirectionVisible &quot;Sol/Earth/TOLOSAT&quot; true"/>
-#    </AppState>
-#    <AppState Id="2">
-#     <Command Str="CMD PROP WindowGeometry 960 103 960 412"/>
-#    </AppState>
-#    <AppState Id="3">
-#     <Command Str="CMD PROP WindowGeometry 960 0 960 103"/>
-#    </AppState>
-#    <AppState Id="4">
-#     <Command Str="CMD PROP WindowGeometry 960 516 960 516"/>
-#    </AppState>
-#   </Instant>
-#  </States>
 def generate_states(xml, project, spacecraft_names):
     States = xml.createElement("States")
     project.appendChild(States)
+
+
     Instant = xml.createElement("Instant")
     Instant.setAttribute("Time", "33282 0")
     Instant.setAttribute("TimeRatio", "1")
     Instant.setAttribute("Label", "Initial state")
     States.appendChild(Instant)
+
+    # Create a fake window
+    root = tk.Tk()
+
+    # Get the width and height of the screen
+    largeur_ecran = root.winfo_screenwidth()
+    hauteur_ecran = root.winfo_screenheight()
+
+    root.destroy()
+
     AppState = xml.createElement("AppState")
     AppState.setAttribute("Id", "0")
     Instant.appendChild(AppState)
+
     Command = xml.createElement("Command")
-    Command.setAttribute("Str", "CMD PROP WindowGeometry 0 0 1280 971")
+    Command.setAttribute("Str", "CMD PROP Frameless true")
     AppState.appendChild(Command)
+
+    Command = xml.createElement("Command")
+    Command.setAttribute("Str", "CMD PROP WindowGeometry 0 " + str(int(hauteur_ecran/2)) + " " + str(int(largeur_ecran/2)) + " " + str(int(hauteur_ecran/2)))
+    AppState.appendChild(Command)
+
+
+
     for spacecraft_name in spacecraft_names:
         if spacecraft_name == "TOLOSAT":
             continue
@@ -477,22 +475,27 @@ def generate_states(xml, project, spacecraft_names):
             "Str", f'CMD STRUCT TrackVisible "Sol/Earth/{spacecraft_name}" false'
         )
         AppState.appendChild(Command)
+
+
     AppState = xml.createElement("AppState")
     AppState.setAttribute("Id", "1")
     Instant.appendChild(AppState)
+
+
     Command = xml.createElement("Command")
-    Command.setAttribute("Str", "CMD PROP WindowGeometry 0 0 1280 971")
+    Command.setAttribute("Str", "CMD PROP WindowGeometry 0 0 " + str(int(largeur_ecran/2)) + " " + str(int(hauteur_ecran/2)))
     AppState.appendChild(Command)
+
     Command = xml.createElement("Command")
     Command.setAttribute("Str", 'CMD STRUCT LabelVisible "Sol/Earth/TOLOSAT" false')
     AppState.appendChild(Command)
+
     Command = xml.createElement("Command")
     Command.setAttribute("Str", 'CMD STRUCT FrameAxesVisible "Sol/Earth/TOLOSAT" false')
     AppState.appendChild(Command)
+
     Command = xml.createElement("Command")
-    Command.setAttribute(
-        "Str", 'CMD STRUCT SunDirectionVisible "Sol/Earth/TOLOSAT" true'
-    )
+    Command.setAttribute("Str", 'CMD STRUCT SunDirectionVisible "Sol/Earth/TOLOSAT" true')
     AppState.appendChild(Command)
 
 

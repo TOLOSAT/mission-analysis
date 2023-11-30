@@ -10,7 +10,7 @@
 #
 # Project Name: Test 4Antennas 
 #
-# File generated on 24/11/2023 at 09:02:41 UTC 
+# File generated on 30/11/2023 at 17:29:12 UTC 
 #
 #
 </Description>
@@ -252,10 +252,11 @@
  <States>
   <Instant Time="33282 0" TimeRatio="1" Label="Initial state">
    <AppState Id="0">
-    <Command Str="CMD PROP WindowGeometry 0 0 1280 971"/>
+    <Command Str="CMD PROP Frameless true"/>
+    <Command Str="CMD PROP WindowGeometry 0 540 960 540"/>
    </AppState>
    <AppState Id="1">
-    <Command Str="CMD PROP WindowGeometry 0 0 1280 971"/>
+    <Command Str="CMD PROP WindowGeometry 0 0 960 540"/>
     <Command Str="CMD STRUCT LabelVisible &quot;Sol/Earth/TOLOSAT&quot; false"/>
     <Command Str="CMD STRUCT FrameAxesVisible &quot;Sol/Earth/TOLOSAT&quot; false"/>
     <Command Str="CMD STRUCT SunDirectionVisible &quot;Sol/Earth/TOLOSAT&quot; true"/>
