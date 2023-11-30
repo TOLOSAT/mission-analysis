@@ -152,4 +152,4 @@ sun_directions = sun_directions / np.linalg.norm(sun_directions, axis=1, keepdim
 generate_cic_files(epochs, satellite_states, sun_directions, spacecraft_name="TOLOSAT")
 
 # Generate VTS file and start VTS
-generate_vts_file(epochs, "test_4antennas.vts", spacecraft_names=["TOLOSAT"], auto_start=False)
+generate_vts_file(epochs, "test_2antennas.vts", spacecraft_names=["TOLOSAT"], auto_start=False)

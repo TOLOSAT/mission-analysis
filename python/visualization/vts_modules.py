@@ -120,19 +120,42 @@ def generate_sky(xml, project):
 
 def generate_apps(xml, project):
     ToBeUsedApps = xml.createElement("ToBeUsedApps")
+
+    # Application = xml.createElement("Application")
+    # Application.setAttribute("Name", "SurfaceView")
+    # Application.setAttribute("Id", "0")
+    # Application.setAttribute("Label", "")
+    # Application.setAttribute("AutoStarted", "1")
+
+    # ToBeUsedApps.appendChild(Application)
+    # Application = xml.createElement("Application")
+    # Application.setAttribute("Name", "Celestia")
+    # Application.setAttribute("Id", "1")
+    # Application.setAttribute("Label", "")
+    # Application.setAttribute("AutoStarted", "1")
+
+    # ToBeUsedApps.appendChild(Application)
+
+    app0 = generate_app(xml, "Celestia", "0")
+    app1 = generate_app(xml, "SurfaceView", "1")
+    app2 = generate_app(xml, "Celestia", "2")
+    app3 = generate_app(xml, "Celestia", "3")
+
+    ToBeUsedApps.appendChild(app0)
+    ToBeUsedApps.appendChild(app1)
+    ToBeUsedApps.appendChild(app2)
+    ToBeUsedApps.appendChild(app3)
+
     project.appendChild(ToBeUsedApps)
-    Application = xml.createElement("Application")
-    Application.setAttribute("Name", "SurfaceView")
-    Application.setAttribute("Id", "0")
-    Application.setAttribute("Label", "")
-    Application.setAttribute("AutoStarted", "1")
-    ToBeUsedApps.appendChild(Application)
-    Application = xml.createElement("Application")
-    Application.setAttribute("Name", "Celestia")
-    Application.setAttribute("Id", "1")
-    Application.setAttribute("Label", "")
-    Application.setAttribute("AutoStarted", "1")
-    ToBeUsedApps.appendChild(Application)
+
+
+def generate_app(xml, name : str, id : str):
+    app = xml.createElement("Application")
+    app.setAttribute("Name", name)
+    app.setAttribute("Id", id)
+    app.setAttribute("Label", "")
+    app.setAttribute("AutoStarted", "1")
+    return app
 
 
 def generate_entities(xml, project):
@@ -200,7 +223,7 @@ def add_sensor(xml, name: str, quaternion: str):
 
     # create sensor propereties - elliptical
     SensorElliptical = xml.createElement("SensorElliptical")
-    SensorElliptical.setAttribute("HalfAngleX", "0.174532925199433")
+    SensorElliptical.setAttribute("HalfAngleX", "0.174532925199433") # change to 45° in rad
     SensorElliptical.setAttribute("HalfAngleY", "0.174532925199433")
 
     # create sensor properties - graphics
@@ -368,36 +391,15 @@ def add_satellite(xml, entities, name, oem_file, aem_file, model_name=None):
     File.setAttribute("Name", aem_file)
     Value.appendChild(File)
 
-    # ========== Sensor 1 ==========
-    Component.appendChild(add_sensor(xml, 'Sensor1', '1 0 0 0'))
+    # ========== Sensor 1 : Antenna 1 ==========
+    Component.appendChild(add_sensor(xml, 'Sensor1', '1 0 1 0'))
 
     # add default events
     Events = xml.createElement("Events")
     Satellite.appendChild(Events)
 
-    # ========== Sensor 2 : Antenna 1 ==========
-    Component.appendChild(add_sensor(xml, 'Sensor2', '1 1 0 0'))
-
-    # add default events
-    Events = xml.createElement("Events")
-    Satellite.appendChild(Events)
-
-    # ========== Sensor 3 : Antenna 2 ==========
-    Component.appendChild(add_sensor(xml, 'Sensor3', '1 0 1 0'))
-
-    # add default events
-    Events = xml.createElement("Events")
-    Satellite.appendChild(Events)
-
-    # ========== Sensor 4 : Antenna 3 ==========
-    Component.appendChild(add_sensor(xml, 'Sensor4', '1 -1 0 0'))
-
-    # add default events
-    Events = xml.createElement("Events")
-    Satellite.appendChild(Events)
-
-    # ========== Sensor 5 : Antenna 4 ==========
-    Component.appendChild(add_sensor(xml, 'Sensor5', '1 0 -1 0'))
+    # ========== Sensor 2 : Antenna 2 ==========
+    Component.appendChild(add_sensor(xml, 'Sensor2', '1 0 -1 0'))
 
     # add default events
     Events = xml.createElement("Events")
@@ -405,28 +407,6 @@ def add_satellite(xml, entities, name, oem_file, aem_file, model_name=None):
 
     # Final step : add component with all sensors to the satellite
     Satellite.appendChild(Component)
-
-def generate_window(xml, name, id):
-    app = xml.createElement("Application")
-    app.setAttribute("Name", name)
-    app.setAttribute("Id", id)
-    app.setAttribute("Label", "")
-    app.setAttribute("AutoStarted", "1")
-    return app
-def generate_windows(xml):
-    apps = xml.createElement("ToBeUsedApps")
-
-    app0 = generate_window(xml, "SurfaceView", 0)
-    app1 = generate_window(xml, "Celestia", 1)
-    app2 = generate_window(xml, "SensorView", 2)
-    app3 = generate_window(xml, "InfoBox", 3)
-    app4 = generate_window(xml, "NadirView", 4)
-
-    apps.appendChild(app0)
-    apps.appendChild(app1)
-    apps.appendChild(app2)
-    apps.appendChild(app3)
-    apps.appendChild(app4)
 
 def generate_events(xml, project):
     Events = xml.createElement("Events")
@@ -448,13 +428,13 @@ def generate_states(xml, project, spacecraft_names):
     root = tk.Tk()
 
     # Get the width and height of the screen
-    largeur_ecran = root.winfo_screenwidth()
-    hauteur_ecran = root.winfo_screenheight()
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
 
     root.destroy()
 
     AppState = xml.createElement("AppState")
-    AppState.setAttribute("Id", "0")
+    AppState.setAttribute("Id", "1")
     Instant.appendChild(AppState)
 
     Command = xml.createElement("Command")
@@ -462,7 +442,7 @@ def generate_states(xml, project, spacecraft_names):
     AppState.appendChild(Command)
 
     Command = xml.createElement("Command")
-    Command.setAttribute("Str", "CMD PROP WindowGeometry 0 " + str(int(hauteur_ecran/2)) + " " + str(int(largeur_ecran/2)) + " " + str(int(hauteur_ecran/2)))
+    Command.setAttribute("Str", "CMD PROP WindowGeometry 0 " + str(int(screen_height/2)) + " " + str(int(screen_width/2)) + " " + str(int(screen_height/2)))
     AppState.appendChild(Command)
 
 
@@ -477,14 +457,39 @@ def generate_states(xml, project, spacecraft_names):
         AppState.appendChild(Command)
 
 
+    # App 0
+
     AppState = xml.createElement("AppState")
-    AppState.setAttribute("Id", "1")
+    AppState.setAttribute("Id", "0")
     Instant.appendChild(AppState)
 
+    Command = xml.createElement("Command")
+    Command.setAttribute("Str", "CMD PROP WindowGeometry 0 0 " + str(int(screen_width/2)) + " " + str(int(screen_height/2)))
+    AppState.appendChild(Command)
+
+    # App 2
+
+    AppState = xml.createElement("AppState")
+    AppState.setAttribute("Id", "2")
+    Instant.appendChild(AppState)
 
     Command = xml.createElement("Command")
-    Command.setAttribute("Str", "CMD PROP WindowGeometry 0 0 " + str(int(largeur_ecran/2)) + " " + str(int(hauteur_ecran/2)))
+    Command.setAttribute("Str", "CMD PROP WindowGeometry " + str(int(screen_width / 2)) + " 0 " + str(int(screen_width / 4)) + " " + str(
+        int(screen_height / 2)))
     AppState.appendChild(Command)
+
+    # App 3
+
+    AppState = xml.createElement("AppState")
+    AppState.setAttribute("Id", "3")
+    Instant.appendChild(AppState)
+
+    Command = xml.createElement("Command")
+    Command.setAttribute("Str", "CMD PROP WindowGeometry " + str(int(screen_width * 3/4)) + " 0 " + str(int(screen_width / 4)) + " " + str(
+        int(screen_height / 2)))
+    AppState.appendChild(Command)
+
+
 
     Command = xml.createElement("Command")
     Command.setAttribute("Str", 'CMD STRUCT LabelVisible "Sol/Earth/TOLOSAT" false')
