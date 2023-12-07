@@ -1,6 +1,7 @@
 from xml.dom import minidom
 from useful_functions.get_input_data import get_spacecraft
 import tkinter as tk
+import numpy as np
 
 tolosat_specs = get_spacecraft("Tolosat")
 iridium_specs = get_spacecraft("Iridium")
@@ -223,8 +224,8 @@ def add_sensor(xml, name: str, quaternion: str):
 
     # create sensor propereties - elliptical
     SensorElliptical = xml.createElement("SensorElliptical")
-    SensorElliptical.setAttribute("HalfAngleX", "0.174532925199433") # change to 45° in rad
-    SensorElliptical.setAttribute("HalfAngleY", "0.174532925199433")
+    SensorElliptical.setAttribute("HalfAngleX", str(45*np.pi/180)) # in rad (*pi/180)
+    SensorElliptical.setAttribute("HalfAngleY", str(45*np.pi/180))
 
     # create sensor properties - graphics
     SensorGraphics = xml.createElement("SensorGraphics")
