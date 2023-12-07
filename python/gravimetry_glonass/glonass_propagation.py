@@ -192,6 +192,19 @@ for propagation_number in tqdm(
             f"glonass_states/{propagation_number}/{sat[1]}.pkl"
         )
 
+    # Export results to files in gravimetry_merge_graphs
+    makedirs(f"../gravimetry_merge_graphs/glonass_states/{propagation_number}", exist_ok=True)
+    sun_direction_dataframe.iloc[:, 1:4].to_pickle(
+        f"../gravimetry_merge_graphs/glonass_states/{propagation_number}/sun_direction.pkl"
+    )
+    states_dataframe.iloc[:, 0].to_pickle(
+        f"../gravimetry_merge_graphs/glonass_states/{propagation_number}/epochs.pkl"
+    )
+    for sat in enumerate(all_spacecraft_names):
+        states_dataframe.iloc[:, (sat[0] * 6 + 1): (sat[0] * 6 + 7)].to_pickle(
+            f"../gravimetry_merge_graphs/glonass_states/{propagation_number}/{sat[1]}.pkl"
+        )
+
     # Update initial state
     initial_state = states_array[-1, 1:]
 
