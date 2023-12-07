@@ -211,7 +211,7 @@ def add_earth(xml, entities):
     BuiltinLayer.setAttribute("Name", "defaultLayer")
     Layers.appendChild(BuiltinLayer)
 
-def add_sensor(xml, name: str, quaternion: str):
+def add_sensor(xml, name: str, quaternion: str, sensor_half_angles: tuple, sensor_color: tuple, sensor_opacity: int):
     # create sensor satellite
     SensorSatellite = xml.createElement("SensorSatellite")
 
@@ -223,15 +223,18 @@ def add_sensor(xml, name: str, quaternion: str):
     SensorProp = xml.createElement("SensorProp")
 
     # create sensor propereties - elliptical
+    half_angle_x, half_angle_y = sensor_half_angles # sensor half angles in degrees
     SensorElliptical = xml.createElement("SensorElliptical")
-    SensorElliptical.setAttribute("HalfAngleX", str(45*np.pi/180)) # in rad (*pi/180)
-    SensorElliptical.setAttribute("HalfAngleY", str(45*np.pi/180))
+    SensorElliptical.setAttribute("HalfAngleX", str(half_angle_x * np.pi/180)) # in rad (*pi/180)
+    SensorElliptical.setAttribute("HalfAngleY", str(half_angle_y * np.pi/180))
 
     # create sensor properties - graphics
+    r, g, b = sensor_color # RGB values of the color of the sensor (in [0, 255] range)
+    r, g, b = r/255, g/255, b/255 # RGB values in [0, 1] range
     SensorGraphics = xml.createElement("SensorGraphics")
     SensorGraphics.setAttribute("Range", "10000")
-    SensorGraphics.setAttribute("VolumeColor", "1 0.499992 0.611658")
-    SensorGraphics.setAttribute("VolumeOpacity", "60")
+    SensorGraphics.setAttribute("VolumeColor", str(r) + " " + str(g) + " " + str(b)) # 1 0.499992 0.611658
+    SensorGraphics.setAttribute("VolumeOpacity", str(sensor_opacity))
 
     # create sensor properties - graphics - contour
     SensorContour = xml.createElement("SensorContour")
@@ -393,14 +396,14 @@ def add_satellite(xml, entities, name, oem_file, aem_file, model_name=None):
     Value.appendChild(File)
 
     # ========== Sensor 1 : Antenna 1 ==========
-    Component.appendChild(add_sensor(xml, 'Sensor1', '1 0 1 0'))
+    Component.appendChild(add_sensor(xml, 'Sensor1', '1 0 1 0', sensor_half_angles=(45, 45), sensor_color=(121, 172, 120), sensor_opacity=60))
 
     # add default events
     Events = xml.createElement("Events")
     Satellite.appendChild(Events)
 
     # ========== Sensor 2 : Antenna 2 ==========
-    Component.appendChild(add_sensor(xml, 'Sensor2', '1 0 -1 0'))
+    Component.appendChild(add_sensor(xml, 'Sensor2', '1 0 -1 0', sensor_half_angles=(45, 45), sensor_color=(48, 129, 208), sensor_opacity=60))
 
     # add default events
     Events = xml.createElement("Events")

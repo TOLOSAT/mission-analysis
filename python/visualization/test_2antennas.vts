@@ -10,7 +10,7 @@
 #
 # Project Name: Test 2Antennas 
 #
-# File generated on 30/11/2023 at 19:03:19 UTC 
+# File generated on 07/12/2023 at 17:36:35 UTC 
 #
 #
 </Description>
@@ -112,8 +112,8 @@
     <SensorSatellite>
      <Sensor Name="Sensor1">
       <SensorProp>
-       <SensorElliptical HalfAngleX="0.174532925199433" HalfAngleY="0.174532925199433"/>
-       <SensorGraphics Range="10000" VolumeColor="1 0.499992 0.611658" VolumeOpacity="60">
+       <SensorElliptical HalfAngleX="0.7853981633974483" HalfAngleY="0.7853981633974483"/>
+       <SensorGraphics Range="10000" VolumeColor="0.4745098039215686 0.6745098039215687 0.47058823529411764" VolumeOpacity="60">
         <SensorContour>
          <LineStyle Color="1 0 0.223331" Style="SolidLine" Width="1"/>
         </SensorContour>
@@ -139,8 +139,8 @@
     <SensorSatellite>
      <Sensor Name="Sensor2">
       <SensorProp>
-       <SensorElliptical HalfAngleX="0.174532925199433" HalfAngleY="0.174532925199433"/>
-       <SensorGraphics Range="10000" VolumeColor="1 0.499992 0.611658" VolumeOpacity="60">
+       <SensorElliptical HalfAngleX="0.7853981633974483" HalfAngleY="0.7853981633974483"/>
+       <SensorGraphics Range="10000" VolumeColor="0.18823529411764706 0.5058823529411764 0.8156862745098039" VolumeOpacity="60">
         <SensorContour>
          <LineStyle Color="1 0 0.223331" Style="SolidLine" Width="1"/>
         </SensorContour>
