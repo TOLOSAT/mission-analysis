@@ -14,7 +14,7 @@ spice.load_standard_kernels([])
 galileo_all_states = galileo_states_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
 
 # Get input data
-dates_name = "5days_1sec_iter"
+dates_name = "3days_1sec_iter"
 spacecraft_name = "Tolosat"
 orbit_name = "SSO6"
 

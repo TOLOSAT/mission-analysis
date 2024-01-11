@@ -19,7 +19,7 @@ semi_angle_limit_tolosat = Tolosat[
     "galileo_antenna_half_angle"
 ]  # deg semi-angle visibility
 semi_angle_limit_galileo = galileo["antenna_half_angle"]  # deg semi-angle visibility
-galileo_antennas_location = "pmX"  # "pmX" or "pmY"
+galileo_antennas_location = "pmZ"  # "pmX", "pmY" or "pmZ"
 
 selected_galileo = "GSAT0101 (PRN E11)"
 
@@ -32,13 +32,16 @@ selected_galileo_nospace = selected_galileo.replace(" ", "_")
 def compute_doppler_visibility(results_dict):
     sun_directions = results_dict["sun_direction"].to_numpy()
     epochs = results_dict["epochs"].to_numpy()
-    pX_vector, pY_vector, _ = compute_body_vectors(epochs, sun_directions)
+    pX_vector, pY_vector, pZ_vector = compute_body_vectors(epochs, sun_directions)
     if galileo_antennas_location == "pmX":
         galileo_antenna_1_vector = pX_vector
         galileo_antenna_2_vector = -pX_vector
     elif galileo_antennas_location == "pmY":
         galileo_antenna_1_vector = pY_vector
         galileo_antenna_2_vector = -pY_vector
+    elif galileo_antennas_location == "pmZ":
+        galileo_antenna_1_vector = pZ_vector
+        galileo_antenna_2_vector = None         # Only 1 antenna
     else:
         raise ValueError("galileo_antennas_location must be pmX or pmY")
     visibility = [results_dict["epochs"].copy().rename("epochs")]
@@ -94,14 +97,16 @@ def compute_doppler_visibility(results_dict):
                 )
             )
             results_dict[sat]["tolosat_angle_1"] = np.rad2deg(tolosat_angle_1)
-            tolosat_angle_2 = np.arccos(
-                np.sum(relative_position * galileo_antenna_2_vector, axis=1)
-                / (
-                    np.linalg.norm(relative_position, axis=1)
-                    * np.linalg.norm(galileo_antenna_2_vector, axis=1)
+
+            if galileo_antenna_2_vector is not None:
+                tolosat_angle_2 = np.arccos(
+                    np.sum(relative_position * galileo_antenna_2_vector, axis=1)
+                    / (
+                        np.linalg.norm(relative_position, axis=1)
+                        * np.linalg.norm(galileo_antenna_2_vector, axis=1)
+                    )
                 )
-            )
-            results_dict[sat]["tolosat_angle_2"] = np.rad2deg(tolosat_angle_2)
+                results_dict[sat]["tolosat_angle_2"] = np.rad2deg(tolosat_angle_2)
 
             galileo_angle = np.arccos(
                 np.sum(relative_position * galileo_position, axis=1)
@@ -118,9 +123,15 @@ def compute_doppler_visibility(results_dict):
             results_dict[sat]["doppler_rate_OK"] = (
                 np.abs(results_dict[sat]["doppler_rate"]) <= delta_f_dot_limit
             )
+
             results_dict[sat]["tolosat_visibility_OK"] = (
                 results_dict[sat]["tolosat_angle_1"] <= semi_angle_limit_tolosat
-            ) | (results_dict[sat]["tolosat_angle_2"] <= semi_angle_limit_tolosat)
+            )
+
+            if galileo_antenna_2_vector is not None:
+                results_dict[sat]["tolosat_visibility_OK"] |= (
+                        results_dict[sat]["tolosat_angle_2"] <= semi_angle_limit_tolosat
+                )
 
             results_dict[sat]["galileo_visibility_OK"] = (
                 results_dict[sat]["galileo_angle"] <= semi_angle_limit_galileo
@@ -141,7 +152,8 @@ def compute_doppler_visibility(results_dict):
 
             if sat == selected_galileo:
                 sat_results.append(results_dict[sat]["tolosat_angle_1"])
-                sat_results.append(results_dict[sat]["tolosat_angle_2"])
+                if galileo_antenna_2_vector is not None:
+                    sat_results.append(results_dict[sat]["tolosat_angle_2"])
                 sat_results.append(results_dict[sat]["galileo_angle"])
                 sat_results.append(results_dict[sat]["doppler_shift"])
                 sat_results.append(results_dict[sat]["doppler_rate"])
