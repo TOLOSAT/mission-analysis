@@ -12,3 +12,9 @@ dependencies:
   - tqdm
   - sgp4
   - astropy
+  - pip:
+      - tle-tools
+
+#  if this doesn't work comment out
+#  - pip:
+#      - tle-tools
