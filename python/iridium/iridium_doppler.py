@@ -14,13 +14,13 @@ Iridium = get_spacecraft("Iridium")
 f0 = 1621.25e6  # H
 delta_f_limit = 37500  # Hz doppler shift max +/-
 delta_f_dot_limit = 350  # 375 # Hz/s doppler rate max +/-
-max_distance = 800e3  # [m] max distance to establish communication between Tolosat and Iridium
+max_distance = 650e3  # [m] max distance to establish communication between Tolosat and Iridium
 
 semi_angle_limit_tolosat = Tolosat[
     "iridium_antenna_half_angle"
 ]  # deg semi-angle visibility
 semi_angle_limit_iridium = Iridium["antenna_half_angle"]  # deg semi-angle visibility
-iridium_antennas_location = "pmX"  # "pmX" or "pmY" || "pmY" used for 2 antenna case
+iridium_antennas_location = "pmY"  # "pmX" or "pmY" || "pmY" used for 2 antenna case
 
 selected_iridium = "IRIDIUM 100"
 

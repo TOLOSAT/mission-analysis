@@ -165,7 +165,7 @@ def compute_doppler_visibility(results_dict):
     windows["streak_id"] = windows["start_bool"].cumsum()
 
     windows.loc[windows["start_bool"], "start"] = windows["epochs"]
-    windows["start"] = windows["start"].fillna(method="ffill")
+    windows["start"] = windows["start"].ffill()
     windows = windows[windows["end_bool"]]
     windows = windows.rename({"epochs": "end", "bool": "eclipse"}, axis=1)
     windows = windows[["eclipse", "start", "end"]]

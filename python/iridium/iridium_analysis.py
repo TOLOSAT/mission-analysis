@@ -63,7 +63,7 @@ axes[0].plot(
     linestyle="none",
     marker=".",
 )
-axes[0].set_title("Visibility of IRIDIUM satellites satisfying all 4 conditions")
+axes[0].set_title("Visibility of IRIDIUM satellites satisfying all 5 conditions")
 axes[0].set_xlabel("Time since launch [days]")
 axes[0].set_ylabel("Number of satellites [-]")
 axes[0].set_xlim(0, IRIDIUM_visibility["seconds"].max() / 86400)
@@ -78,7 +78,7 @@ axes[0].plot(
     linestyle="none",
     marker=".",
 )
-axes[0].set_title("Visibility of IRIDIUM satellites satisfying all 4 conditions")
+axes[0].set_title("Visibility of IRIDIUM satellites satisfying all 5 conditions")
 axes[0].set_xlabel("Time since launch [days]")
 axes[0].set_ylabel("Number of satellites [-]")
 axes[0].set_xlim(0, IRIDIUM_visibility["seconds"].max() / 86400)
@@ -98,7 +98,7 @@ pf.finish_dark_figure(fig, "results/IRIDIUM_windows.png", show=True)
 fig, axes = pf.light_figure()
 axes[0].vlines(IRIDIUM_windows["seconds"] / 86400, 0, IRIDIUM_windows["duration"] / 60)
 axes[0].set_title("Visibility windows of at least one IRIDIUM satellite")
-axes[0].set_xlabel("Time since launch [days]")
+axes[0].set_xlabel("Time [days]")
 axes[0].set_ylabel("Window duration [mins]")
 axes[0].set_ylim(0, IRIDIUM_windows["duration"].max() / 60)
 axes[0].set_xlim(0, IRIDIUM_windows["seconds"].max() / 86400)
