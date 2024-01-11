@@ -222,11 +222,20 @@ IRIDIUM_sat_results["seconds"] = (
 
 IRIDIUM_windows = IRIDIUM_windows[IRIDIUM_windows["duration"] > 0]
 
-IRIDIUM_windows["timedelta"] = IRIDIUM_windows["start"] - IRIDIUM_windows["start"][0]
-IRIDIUM_windows["seconds"] = IRIDIUM_windows["timedelta"].dt.total_seconds()
-IRIDIUM_visibility["seconds"] = (
-    IRIDIUM_visibility["epochs"] - IRIDIUM_visibility["epochs"][0]
-)
+if 0 in IRIDIUM_windows["start"].index:
+    IRIDIUM_windows["timedelta"] = IRIDIUM_windows["start"] - IRIDIUM_windows["start"][0]
+    IRIDIUM_windows["seconds"] = IRIDIUM_windows["timedelta"].dt.total_seconds()
+    IRIDIUM_visibility["seconds"] = (
+            IRIDIUM_visibility["epochs"] - IRIDIUM_visibility["epochs"][0]
+    )
+else:
+    # Handle the case where the key does not exist
+    print("Key 0 does not exist in the DataFrame.")
+    IRIDIUM_windows["timedelta"] = 0
+    IRIDIUM_windows["seconds"] = 0
+    IRIDIUM_visibility["seconds"] = 0
+
+
 print(f"Minimum IRIDIUM window duration: {IRIDIUM_windows['duration'].min()} seconds")
 print(f"Maximum IRIDIUM window duration: {IRIDIUM_windows['duration'].max()} seconds")
 print(f"Average IRIDIUM window duration: {IRIDIUM_windows['duration'].mean()} seconds")
