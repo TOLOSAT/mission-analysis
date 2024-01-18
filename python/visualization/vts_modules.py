@@ -140,12 +140,12 @@ def generate_apps(xml, project):
     app0 = generate_app(xml, "Celestia", "0")
     app1 = generate_app(xml, "SurfaceView", "1")
     app2 = generate_app(xml, "Celestia", "2")
-    app3 = generate_app(xml, "Celestia", "3")
+    #app3 = generate_app(xml, "Celestia", "3")
 
     ToBeUsedApps.appendChild(app0)
     ToBeUsedApps.appendChild(app1)
     ToBeUsedApps.appendChild(app2)
-    ToBeUsedApps.appendChild(app3)
+    #ToBeUsedApps.appendChild(app3)
 
     project.appendChild(ToBeUsedApps)
 
@@ -395,19 +395,21 @@ def add_satellite(xml, entities, name, oem_file, aem_file, model_name=None):
     File.setAttribute("Name", aem_file)
     Value.appendChild(File)
 
+    sensor_half_angle = tolosat_specs["gps_antenna_half_angle"]
+
     # ========== Sensor 1 : Antenna 1 ==========
-    Component.appendChild(add_sensor(xml, 'Sensor1', '1 0 1 0', sensor_half_angles=(45, 45), sensor_color=(121, 172, 120), sensor_opacity=60))
+    Component.appendChild(add_sensor(xml, 'Sensor1', '1 0 1 0', sensor_half_angles=(sensor_half_angle, sensor_half_angle), sensor_color=(121, 172, 120), sensor_opacity=60))
 
     # add default events
     Events = xml.createElement("Events")
     Satellite.appendChild(Events)
 
     # ========== Sensor 2 : Antenna 2 ==========
-    Component.appendChild(add_sensor(xml, 'Sensor2', '1 0 -1 0', sensor_half_angles=(45, 45), sensor_color=(48, 129, 208), sensor_opacity=60))
+    #Component.appendChild(add_sensor(xml, 'Sensor2', '1 0 -1 0', sensor_half_angles=(sensor_half_angle, sensor_half_angle), sensor_color=(48, 129, 208), sensor_opacity=60))
 
     # add default events
-    Events = xml.createElement("Events")
-    Satellite.appendChild(Events)
+    #Events = xml.createElement("Events")
+    #Satellite.appendChild(Events)
 
     # Final step : add component with all sensors to the satellite
     Satellite.appendChild(Component)
@@ -478,20 +480,23 @@ def generate_states(xml, project, spacecraft_names):
     Instant.appendChild(AppState)
 
     Command = xml.createElement("Command")
-    Command.setAttribute("Str", "CMD PROP WindowGeometry " + str(int(screen_width / 2)) + " 0 " + str(int(screen_width / 4)) + " " + str(
+    Command.setAttribute("Str", "CMD PROP WindowGeometry " + str(int(screen_width / 2)) + " 0 " + str(int(screen_width / 2)) + " " + str(
         int(screen_height / 2)))
+    Command2 = xml.createElement("Command")
+    Command2.setAttribute("Str", "CMD PROP CameraDesc bodyfixed &amp;quot;Sol/Earth/TOLOSAT_ref/TOLOSAT/Sensor1_sens_ref/Sensor1&amp;quot; nil 0.000000000000000 0.000000000000000 -0.000000000105700 -0.707107376820347 -0.000000292166919 -0.000000187028724 0.707106934320807 1.695979475975037")
     AppState.appendChild(Command)
+    AppState.appendChild(Command2)
 
     # App 3
 
-    AppState = xml.createElement("AppState")
-    AppState.setAttribute("Id", "3")
-    Instant.appendChild(AppState)
-
-    Command = xml.createElement("Command")
-    Command.setAttribute("Str", "CMD PROP WindowGeometry " + str(int(screen_width * 3/4)) + " 0 " + str(int(screen_width / 4)) + " " + str(
-        int(screen_height / 2)))
-    AppState.appendChild(Command)
+    # AppState = xml.createElement("AppState")
+    # AppState.setAttribute("Id", "3")
+    # Instant.appendChild(AppState)
+    #
+    # Command = xml.createElement("Command")
+    # Command.setAttribute("Str", "CMD PROP WindowGeometry " + str(int(screen_width * 3/4)) + " 0 " + str(int(screen_width / 4)) + " " + str(
+    #     int(screen_height / 2)))
+    # AppState.appendChild(Command)
 
 
 

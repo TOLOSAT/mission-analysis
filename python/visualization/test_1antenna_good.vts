@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Project Revision="9169">
+<Project Revision="9032">
  <General Name="" StartDateTime="60311 43195.000000" EndDateTime="60312 43195.000000"/>
  <MetaData>
   <Description>###################################### 
@@ -8,23 +8,16 @@
 #
 ###################################### 
 #
-# Project Name: Test 2Antennas 
+# Project Name: Test 1Antenna 
 #
-# File generated on 11/01/2024 at 18:34:42 UTC 
+# File generated on 12/01/2024 at 14:32:12 UTC 
 #
 #
 </Description>
  </MetaData>
- <MonitorConfiguration>
-  <Monitor X="0" Y="0" Height="1032" Width="1920"/>
- </MonitorConfiguration>
  <StartOptions TimeRatio="1" UseStateTimeRatio="0" SysTimeSynced="0" Paused="0" Looped="0" Minimized="0" Hidden="0" AutoClosed="0"/>
  <Timeshifting Enabled="0"/>
- <TimelineOptions ProjectLocked="0" CursorLocked="0" CursorRatio="50" ViewStart="60311 42729.231806" ViewSpan="24.3881" DateFormat="ISODate" NoBadgeFiltered="0" BadgeFiltered="">
-  <TimelineScenario Name="Scenario" Pos="0" Size="22"/>
-  <TimelineFile Name="TOLOSAT_POSITION_VELOCITY.TXT" Pos="1" Size="23" Mode="DEFAULT" Overlay="false"/>
-  <TimelineFile Name="TOLOSAT_QUATERNION.TXT" Pos="2" Size="23" Mode="DEFAULT" Overlay="false"/>
- </TimelineOptions>
+ <TimelineOptions ProjectLocked="1" CursorLocked="0" CursorRatio="0" ViewStart="33282 0.000000" ViewSpan="0" DateFormat="ISODate" NoBadgeFiltered="0" BadgeFiltered=""/>
  <Sky>
   <Sun>
    <Prop2d>
@@ -51,7 +44,6 @@
   <Application Name="Celestia" Id="0" Label="" AutoStarted="1"/>
   <Application Name="SurfaceView" Id="1" Label="" AutoStarted="1"/>
   <Application Name="Celestia" Id="2" Label="" AutoStarted="1"/>
-  <Application Name="Celestia" Id="3" Label="" AutoStarted="1"/>
  </ToBeUsedApps>
  <Entities>
   <Body Name="Earth" ParentPath="Sol">
@@ -91,9 +83,10 @@
     <LineStyle Color="1 0.167834 0" Style="DashLine" Width="1"/>
     <FillStyle Color="1 0.583917 0.499992" Opacity="60"/>
    </EclipseCircle>
+   <Events/>
    <Component Name="TOLOSAT">
     <Graphics3d>
-     <File3ds Name="TOLOSAT_model.obj"/>
+     <File3ds Name="C:\Users\bpeti\Documents\GitHub\mission-analysis\python\visualization\TOLOSAT_model.obj"/>
      <Radius Value="1"/>
      <LightSensitive Value="1"/>
      <Use3dsCoords Value="0" MeshScale="1"/>
@@ -117,8 +110,8 @@
     <SensorSatellite>
      <Sensor Name="Sensor1">
       <SensorProp>
-       <SensorElliptical HalfAngleX="0.785398163397448" HalfAngleY="0.785398163397448"/>
-       <SensorGraphics Range="10000" VolumeColor="0.47451 0.67451 0.470588" VolumeOpacity="60">
+       <SensorElliptical HalfAngleX="0.7853981633974483" HalfAngleY="0.7853981633974483"/>
+       <SensorGraphics Range="10000" VolumeColor="0.4745098039215686 0.6745098039215687 0.47058823529411764" VolumeOpacity="60">
         <SensorContour>
          <LineStyle Color="1 0 0.223331" Style="SolidLine" Width="1"/>
         </SensorContour>
@@ -141,58 +134,21 @@
       </Geometry>
      </Sensor>
     </SensorSatellite>
-    <SensorSatellite>
-     <Sensor Name="Sensor2">
-      <SensorProp>
-       <SensorElliptical HalfAngleX="0.785398163397448" HalfAngleY="0.785398163397448"/>
-       <SensorGraphics Range="10000" VolumeColor="0.188235 0.505882 0.815686" VolumeOpacity="60">
-        <SensorContour>
-         <LineStyle Color="1 0 0.223331" Style="SolidLine" Width="1"/>
-        </SensorContour>
-        <SensorTrace Duration="0" Opacity="60"/>
-       </SensorGraphics>
-      </SensorProp>
-      <Geometry>
-       <Position>
-        <Value>
-         <Fixed Data="0 0 0"/>
-        </Value>
-       </Position>
-       <Orientation>
-        <Quaternion>
-         <Value>
-          <Fixed Data="1 0 -1 0"/>
-         </Value>
-        </Quaternion>
-       </Orientation>
-      </Geometry>
-     </Sensor>
-    </SensorSatellite>
    </Component>
-   <Events/>
   </Satellite>
  </Entities>
  <Events/>
  <States>
   <Instant Time="33282 0" TimeRatio="1" Label="Initial state">
+   <AppState Id="1">
+    <Command Str="CMD PROP Frameless true"/>
+    <Command Str="CMD PROP WindowGeometry 0 540 960 540"/>
+   </AppState>
    <AppState Id="0">
     <Command Str="CMD PROP WindowGeometry 0 0 960 540"/>
-    <Command Str="CMD PROP CameraDesc bodyfixed &quot;Sol/Earth/TOLOSAT_ref/TOLOSAT_QswAxes&quot; nil -0.000000000610260 0.000000000610260 -0.000000000610260 -0.060003137945226 -0.704556370112326 0.540625081468546 0.455767995868508 0.328406840562820"/>
-   </AppState>
-   <AppState Id="1">
-    <Command Str="CMD PROP WindowGeometry 7 540 946 533"/>
-    <Command Str="CMD PROP Frameless true"/>
    </AppState>
    <AppState Id="2">
-    <Command Str="CMD PROP WindowGeometry 960 0 480 540"/>
-    <Command Str="CMD PROP CameraDesc bodyfixed &quot;Sol/Earth/TOLOSAT_ref/TOLOSAT/Sensor1_sens_ref/Sensor1&quot; nil 0.000000000000000 0.000000000000000 -0.000000000105700 -0.707107376820347 -0.000000292166919 -0.000000187028724 0.707106934320807 1.695979475975037"/>
-    <Command Str="CMD PROP SelectObject &quot;Sol/Earth/TOLOSAT_ref/TOLOSAT/Sensor1_sens_ref/Sensor1&quot;"/>
-    <Command Str="CMD STRUCT AimAxisVisible &quot;Sol/Earth/TOLOSAT/Sensor2&quot; true"/>
-   </AppState>
-   <AppState Id="3">
-    <Command Str="CMD PROP WindowGeometry 1440 0 480 538"/>
-    <Command Str="CMD PROP CameraDesc bodyfixed &quot;Sol/Earth/TOLOSAT_ref/TOLOSAT/Sensor2_sens_ref/Sensor2&quot; nil -0.000000000000000 -0.000000000000000 -0.000000000105700 0.707107310018942 -0.000000228907328 -0.000000315830423 -0.707106945981191 1.692009806632996"/>
-    <Command Str="CMD PROP SelectObject &quot;Sol/Earth/TOLOSAT_ref/TOLOSAT/Sensor2_sens_ref/Sensor2&quot;"/>
+    <Command Str="CMD PROP CameraDesc bodyfixed &amp;amp;quot;Sol/Earth/TOLOSAT_ref/TOLOSAT/Sensor1_sens_ref/Sensor1&amp;amp;quot; nil 0.000000000000000 0.000000000000000 -0.000000000105700 -0.707107376820347 -0.000000292166919 -0.000000187028724 0.707106934320807 1.695979475975037"/>
     <Command Str="CMD STRUCT LabelVisible &quot;Sol/Earth/TOLOSAT&quot; false"/>
     <Command Str="CMD STRUCT FrameAxesVisible &quot;Sol/Earth/TOLOSAT&quot; false"/>
     <Command Str="CMD STRUCT SunDirectionVisible &quot;Sol/Earth/TOLOSAT&quot; true"/>
