@@ -14,13 +14,11 @@ Iridium = get_spacecraft("Iridium")
 f0 = 1621.25e6  # H
 delta_f_limit = 37500  # Hz doppler shift max +/-
 delta_f_dot_limit = 350  # 375 # Hz/s doppler rate max +/-
-max_distance = 800e3  # [m] max distance to establish communication between Tolosat and Iridium
-
 semi_angle_limit_tolosat = Tolosat[
     "iridium_antenna_half_angle"
 ]  # deg semi-angle visibility
 semi_angle_limit_iridium = Iridium["antenna_half_angle"]  # deg semi-angle visibility
-iridium_antennas_location = "pmX"  # "pmX" or "pmY" || "pmY" used for 2 antenna case
+iridium_antennas_location = "pmZ"  # "pmX", "pmY" or "pmZ"
 
 selected_iridium = "IRIDIUM 100"
 
@@ -33,15 +31,18 @@ selected_iridium_nospace = selected_iridium.replace(" ", "_")
 def compute_doppler_visibility(results_dict):
     sun_directions = results_dict["sun_direction"].to_numpy()
     epochs = results_dict["epochs"].to_numpy()
-    pX_vector, pY_vector, _ = compute_body_vectors(epochs, sun_directions)
+    pX_vector, pY_vector, pZ_vector = compute_body_vectors(epochs, sun_directions)
     if iridium_antennas_location == "pmX":
         iridium_antenna_1_vector = pX_vector
         iridium_antenna_2_vector = -pX_vector
     elif iridium_antennas_location == "pmY":
         iridium_antenna_1_vector = pY_vector
         iridium_antenna_2_vector = -pY_vector
+    elif iridium_antennas_location == "pmZ":    # 1 antenna in the Z direction
+        iridium_antenna_1_vector = pZ_vector
+        iridium_antenna_2_vector = None
     else:
-        raise ValueError("iridium_antennas_location must be pmX or pmY")
+        raise ValueError("iridium_antennas_location must be pmX, pmY or pmZ")
     visibility = [results_dict["epochs"].copy().rename("epochs")]
     sat_results = [results_dict["epochs"].copy().rename("epochs")]
     for sat in tqdm(
@@ -95,14 +96,16 @@ def compute_doppler_visibility(results_dict):
                 )
             )
             results_dict[sat]["tolosat_angle_1"] = np.rad2deg(tolosat_angle_1)
-            tolosat_angle_2 = np.arccos(
-                np.sum(relative_position * iridium_antenna_2_vector, axis=1)
-                / (
-                    np.linalg.norm(relative_position, axis=1)
-                    * np.linalg.norm(iridium_antenna_2_vector, axis=1)
+
+            if iridium_antenna_2_vector is not None:
+                tolosat_angle_2 = np.arccos(
+                    np.sum(relative_position * iridium_antenna_2_vector, axis=1)
+                    / (
+                        np.linalg.norm(relative_position, axis=1)
+                        * np.linalg.norm(iridium_antenna_2_vector, axis=1)
+                    )
                 )
-            )
-            results_dict[sat]["tolosat_angle_2"] = np.rad2deg(tolosat_angle_2)
+                results_dict[sat]["tolosat_angle_2"] = np.rad2deg(tolosat_angle_2)
 
             iridium_angle = np.arccos(
                 np.sum(relative_position * iridium_position, axis=1)
@@ -120,30 +123,15 @@ def compute_doppler_visibility(results_dict):
                 np.abs(results_dict[sat]["doppler_rate"]) <= delta_f_dot_limit
             )
             results_dict[sat]["tolosat_visibility_OK"] = (
-                results_dict[sat]["tolosat_angle_1"] <= semi_angle_limit_tolosat
-            ) | (results_dict[sat]["tolosat_angle_2"] <= semi_angle_limit_tolosat)
-            results_dict[sat]["iridium_visibility_OK"] = (
-                results_dict[sat]["iridium_angle"] <= semi_angle_limit_iridium
+                    results_dict[sat]["tolosat_angle_1"] <= semi_angle_limit_tolosat
             )
 
-            # # Calculate the line of sight from the satellite to the ground station (Tolosat)
-            # line_of_sight = iridium_position - results_dict["Tolosat"][["x", "y", "z"]].to_numpy()
-            # line_of_sight_norm = np.linalg.norm(line_of_sight,axis = 1)
-            #
-            # # Calculate the line of sight from the satellite to the Earth
-            # earth_vector = - iridium_position # Earth centered frame
-            # earth_vector_norm = np.linalg.norm(earth_vector,axis = 1)
-            #
-            # # Calculate the angle between the two vectors (in radians)
-            # angle = np.arccos(np.sum(line_of_sight*earth_vector,axis = 1) / (line_of_sight_norm * earth_vector_norm))
-
-            # results_dict[sat]["earth_occultation_OK"] = (
-            #         angle >= np.pi / 2
-            # )
-
-            dist = np.sqrt(dx**2 + dy**2 + dz**2)
-            results_dict[sat]["distance_OK"] = (
-                    dist <= max_distance # Maximum distance to establish communication
+            if iridium_antenna_2_vector is not None:
+                results_dict[sat]["tolosat_visibility_OK"] |= (
+                        results_dict[sat]["tolosat_angle_2"] <= semi_angle_limit_tolosat
+                )
+            results_dict[sat]["iridium_visibility_OK"] = (
+                results_dict[sat]["iridium_angle"] <= semi_angle_limit_iridium
             )
 
             results_dict[sat]["all_OK"] = (
@@ -151,21 +139,19 @@ def compute_doppler_visibility(results_dict):
                 & results_dict[sat]["doppler_rate_OK"]
                 & results_dict[sat]["tolosat_visibility_OK"]
                 & results_dict[sat]["iridium_visibility_OK"]
-                # & results_dict[sat]["earth_occultation_OK"]
-                & results_dict[sat]["distance_OK"]
             )
 
             if sat == selected_iridium:
                 sat_results.append(results_dict[sat]["tolosat_angle_1"])
-                sat_results.append(results_dict[sat]["tolosat_angle_2"])
+                if iridium_antenna_2_vector is not None:
+                    sat_results.append(results_dict[sat]["tolosat_angle_2"])
                 sat_results.append(results_dict[sat]["iridium_angle"])
                 sat_results.append(results_dict[sat]["doppler_shift"])
                 sat_results.append(results_dict[sat]["doppler_rate"])
             visibility.append(results_dict[sat]["all_OK"].rename(sat))
 
-            if results_dict[sat]["all_OK"].any():
-                print(f"{sat} OK")
-
+            # if results_dict[sat]["all_OK"].any():
+            #     print(f"{sat} OK")
     sat_results = pd.concat(sat_results, axis=1)
     visibility = pd.concat(visibility, axis=1)
     visibility["sum_ok"] = visibility.select_dtypes(include=["bool"]).sum(axis=1)
@@ -181,7 +167,7 @@ def compute_doppler_visibility(results_dict):
     windows["streak_id"] = windows["start_bool"].cumsum()
 
     windows.loc[windows["start_bool"], "start"] = windows["epochs"]
-    windows["start"] = windows["start"].ffill()
+    windows["start"] = windows["start"].fillna(method="ffill")
     windows = windows[windows["end_bool"]]
     windows = windows.rename({"epochs": "end", "bool": "eclipse"}, axis=1)
     windows = windows[["eclipse", "start", "end"]]
@@ -222,11 +208,20 @@ IRIDIUM_sat_results["seconds"] = (
 
 IRIDIUM_windows = IRIDIUM_windows[IRIDIUM_windows["duration"] > 0]
 
-IRIDIUM_windows["timedelta"] = IRIDIUM_windows["start"] - IRIDIUM_windows["start"][0]
-IRIDIUM_windows["seconds"] = IRIDIUM_windows["timedelta"].dt.total_seconds()
-IRIDIUM_visibility["seconds"] = (
-    IRIDIUM_visibility["epochs"] - IRIDIUM_visibility["epochs"][0]
-)
+if 0 in IRIDIUM_windows["start"].index:
+    IRIDIUM_windows["timedelta"] = IRIDIUM_windows["start"] - IRIDIUM_windows["start"][0]
+    IRIDIUM_windows["seconds"] = IRIDIUM_windows["timedelta"].dt.total_seconds()
+    IRIDIUM_visibility["seconds"] = (
+            IRIDIUM_visibility["epochs"] - IRIDIUM_visibility["epochs"][0]
+    )
+else:
+    # Handle the case where the key does not exist
+    print("Key 0 does not exist in the DataFrame.")
+    IRIDIUM_windows["timedelta"] = 0
+    IRIDIUM_windows["seconds"] = 0
+    IRIDIUM_visibility["seconds"] = 0
+
+
 print(f"Minimum IRIDIUM window duration: {IRIDIUM_windows['duration'].min()} seconds")
 print(f"Maximum IRIDIUM window duration: {IRIDIUM_windows['duration'].max()} seconds")
 print(f"Average IRIDIUM window duration: {IRIDIUM_windows['duration'].mean()} seconds")
