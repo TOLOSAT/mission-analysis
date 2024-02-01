@@ -26,6 +26,16 @@ Any missing package beyond this step (like `TLE-tools`) can be installed by runn
 running the following commands: `conda activate tolosat-tudatpy` and then `conda install <package_name>`
 or `pip install <package_name>`.
 
+If, when running the example code, an error shows up about tudatpy not working, one solution can be to downgrade the
+tudatpy version to 0.7.1 in the following way:
+
+```
+conda install -c tudat-team tudatpy=0.7.1
+conda install tudat=2.11.1 
+```
+Otherwise, if nothing works, try re-creating the environment using the `environment_full.yml`, which is a snapshot 
+of a working environment (11/04/2024). Remember to first deactivate and then delete the old one.
+
 ## Python IDE
 
 The recommended IDE is [PyCharm](https://www.jetbrains.com/pycharm/). A professional license is provided for free to
