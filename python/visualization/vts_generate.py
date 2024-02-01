@@ -79,6 +79,7 @@ def generate_vts_file(
     generate_metadata(xml, project, description)
     generate_start_options(xml, project)
     generate_timeshifting(xml, project)
+    generate_broker_options(xml, project)
     generate_timeline_options(xml, project)
     generate_sky(xml, project)
     generate_apps(xml, project)

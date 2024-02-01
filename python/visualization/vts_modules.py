@@ -56,6 +56,28 @@ def generate_timeshifting(xml, project):
     Timeshifting.setAttribute("Enabled", "0")
     project.appendChild(Timeshifting)
 
+def generate_broker_options(xml, project):
+    # Create a fake window
+    root = tk.Tk()
+
+    # Get the width and height of the screen
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+
+    root.destroy()
+
+    BrokerOptions = xml.createElement("BrokerOptions")
+    BrokerOptions.setAttribute("WindowMode", "Undocked")
+    BrokerOptions.setAttribute("Collapsed", "0")
+    BrokerOptions.setAttribute("AlwaysOnTop", "0")
+    BrokerOptions.setAttribute("XPos", str(int(screen_width / 2)))
+    BrokerOptions.setAttribute("YPos", str(int(screen_height / 2)))
+    BrokerOptions.setAttribute("Width", str(int(screen_width / 2)))
+    BrokerOptions.setAttribute("Height", str(int(screen_height / 2)))
+    BrokerOptions.setAttribute("ActiveTab", "0")
+    BrokerOptions.setAttribute("HiddenTabs", "")
+    project.appendChild(BrokerOptions)
+
 
 def generate_timeline_options(xml, project):
     TimelineOptions = xml.createElement("TimelineOptions")
@@ -329,6 +351,7 @@ def add_satellite(xml, entities, name, oem_file, aem_file, model_name=None):
     LineStyle.setAttribute("Color", "0 1 0.498329")
     LineStyle.setAttribute("Style", "SolidLine")
     LineStyle.setAttribute("Width", "1")
+
     VisibilityCircle.appendChild(LineStyle)
     FillStyle = xml.createElement("FillStyle")
     FillStyle.setAttribute("Color", "0.499992 1 0.749157")
