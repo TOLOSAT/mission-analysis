@@ -39,6 +39,12 @@ def compute_doppler_visibility(results_dict):
     elif galileo_antennas_location == "pmY":
         galileo_antenna_1_vector = pY_vector
         galileo_antenna_2_vector = -pY_vector
+<<<<<<< Updated upstream
+=======
+    elif galileo_antennas_location == "pmZ":    # 1 antenna in the Z direction
+        galileo_antenna_1_vector = pZ_vector
+        galileo_antenna_2_vector = None
+>>>>>>> Stashed changes
     else:
         raise ValueError("galileo_antennas_location must be pmX or pmY")
     visibility = [results_dict["epochs"].copy().rename("epochs")]
@@ -94,11 +100,21 @@ def compute_doppler_visibility(results_dict):
                 )
             )
             results_dict[sat]["tolosat_angle_1"] = np.rad2deg(tolosat_angle_1)
+<<<<<<< Updated upstream
             tolosat_angle_2 = np.arccos(
                 np.sum(relative_position * galileo_antenna_2_vector, axis=1)
                 / (
                     np.linalg.norm(relative_position, axis=1)
                     * np.linalg.norm(galileo_antenna_2_vector, axis=1)
+=======
+            if galileo_antenna_2_vector is not None:
+                tolosat_angle_2 = np.arccos(
+                    np.sum(relative_position * galileo_antenna_2_vector, axis=1)
+                    / (
+                        np.linalg.norm(relative_position, axis=1)
+                        * np.linalg.norm(galileo_antenna_2_vector, axis=1)
+                    )
+>>>>>>> Stashed changes
                 )
             )
             results_dict[sat]["tolosat_angle_2"] = np.rad2deg(tolosat_angle_2)
@@ -119,24 +135,38 @@ def compute_doppler_visibility(results_dict):
                 np.abs(results_dict[sat]["doppler_rate"]) <= delta_f_dot_limit
             )
             results_dict[sat]["tolosat_visibility_OK"] = (
+<<<<<<< Updated upstream
                 results_dict[sat]["tolosat_angle_1"] <= semi_angle_limit_tolosat
             ) | (results_dict[sat]["tolosat_angle_2"] <= semi_angle_limit_tolosat)
+=======
+                    results_dict[sat]["tolosat_angle_1"] <= semi_angle_limit_tolosat
+            )
+
+            if galileo_antenna_2_vector is not None:
+                results_dict[sat]["tolosat_visibility_OK"] |= (
+                        results_dict[sat]["tolosat_angle_2"] <= semi_angle_limit_tolosat
+                )
+            results_dict[sat]["galileo_visibility_OK"] = (
+                    results_dict[sat]["galileo_angle"] <= semi_angle_limit_galileo
+            )
+>>>>>>> Stashed changes
 
             results_dict[sat]["galileo_visibility_OK"] = (
-                results_dict[sat]["galileo_angle"] <= semi_angle_limit_galileo
+                    results_dict[sat]["galileo_angle"] <= semi_angle_limit_galileo
             )
 
-            dist = np.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
-            results_dict[sat]["distance_OK"] = (
-                    dist <= max_distance  # Maximum distance to establish communication
-            )
+
+            #dist = np.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
+            #results_dict[sat]["distance_OK"] = (
+            #        dist <= max_distance  # Maximum distance to establish communication
+            #)
 
             results_dict[sat]["all_OK"] = (
                 results_dict[sat]["doppler_shift_OK"]
                 & results_dict[sat]["doppler_rate_OK"]
                 & results_dict[sat]["tolosat_visibility_OK"]
                 & results_dict[sat]["galileo_visibility_OK"]
-                & results_dict[sat]["distance_OK"]
+                #& results_dict[sat]["distance_OK"]
             )
 
             if sat == selected_galileo:
@@ -147,8 +177,9 @@ def compute_doppler_visibility(results_dict):
                 sat_results.append(results_dict[sat]["doppler_rate"])
             visibility.append(results_dict[sat]["all_OK"].rename(sat))
 
-            if results_dict[sat]["all_OK"].any():
-                print(f"{sat} OK")
+        if results_dict[sat]["all_OK"].any():
+            print(f"{sat} OK")
+
     sat_results = pd.concat(sat_results, axis=1)
     visibility = pd.concat(visibility, axis=1)
     visibility["sum_ok"] = visibility.select_dtypes(include=["bool"]).sum(axis=1)
@@ -198,6 +229,19 @@ for folder in tqdm(folders, ncols=80, desc="Datasets", position=0, leave=True):
 galileo_sat_results["seconds"] = galileo_sat_results["epochs"] - galileo_sat_results["epochs"][0]
 
 galileo_windows = galileo_windows[galileo_windows["duration"] > 0]
+
+if 0 in galileo_windows["start"].index:
+    galileo_windows["timedelta"] = galileo_windows["start"] - galileo_windows["start"][0]
+    galileo_windows["seconds"] = galileo_windows["timedelta"].dt.total_seconds()
+    galileo_visibility["seconds"] = (
+            galileo_visibility["epochs"] - galileo_visibility["epochs"][0]
+    )
+else:
+    # Handle the case where the key does not exist
+    print("Key 0 does not exist in the DataFrame.")
+    galileo_windows["timedelta"] = 0
+    galileo_windows["seconds"] = 0
+    galileo_visibility["seconds"] = 0
 
 galileo_windows["timedelta"] = galileo_windows["start"] - galileo_windows["start"][0]
 galileo_windows["seconds"] = galileo_windows["timedelta"].dt.total_seconds()
