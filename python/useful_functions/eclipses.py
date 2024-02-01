@@ -113,10 +113,13 @@ def compute_eclipses(
         shadow_df.loc[shadow_df.index[-1], "partial"] = True
 
     shadow_df.rename({"start": "start_epoch", "end": "end_epoch"}, axis=1, inplace=True)
-    shadow_df["start"] = epoch_to_datetime(shadow_df["start_epoch"])
-    shadow_df["end"] = epoch_to_datetime(shadow_df["end_epoch"])
+    print(type(shadow_df["start_epoch"]))
+    print(type(shadow_df["end_epoch"]))
 
-    shadow_df = shadow_df[
-        ["start", "end", "start_epoch", "end_epoch", "duration", "partial"]
-    ]
+    # shadow_df["start"] = epoch_to_datetime(shadow_df["start_epoch"])
+    # shadow_df["end"] = epoch_to_datetime(shadow_df["end_epoch"])
+    #
+    # shadow_df = shadow_df[
+    #     ["start", "end", "start_epoch", "end_epoch", "duration", "partial"]
+    # ]
     return shadow_df

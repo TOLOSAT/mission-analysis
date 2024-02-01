@@ -47,8 +47,8 @@ def epoch_to_datetime(epoch):
 
 
 def epoch_to_astrotime_raw(epoch):
-    return J2000 + TimeDelta(epoch, format="sec")
-
+    return J2000 + TimeDelta(epoch, format="sec") #TimeDelta is a way to define a dt, in this case we are defining a dt as "epoch" seconds(epoch is a number, for example)
+    # return J2000 + TimeDelta(epoch)
 
 def epoch_to_astrotime(epoch):
     if isinstance(epoch, float) or isinstance(epoch, int):

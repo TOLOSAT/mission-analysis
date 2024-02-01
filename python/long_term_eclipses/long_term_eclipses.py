@@ -10,7 +10,7 @@ from useful_functions import plot_functions as pf
 
 # Initial settings (independent of tudat)
 orbit_name = "SSO6"
-dates_name = "10years_10sec_iter"
+dates_name = "5days_10sec_iter"
 spacecraft_name = "Tolosat"
 groundstation_name = "toulouse"
 
