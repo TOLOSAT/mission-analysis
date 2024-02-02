@@ -14,7 +14,11 @@ spice.load_standard_kernels([])
 gps_all_states = gps_states_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
 
 # Get input data
+<<<<<<< Updated upstream
 dates_name = "1year_1sec_iter"
+=======
+dates_name = "3days_1sec_iter"
+>>>>>>> Stashed changes
 spacecraft_name = "Tolosat"
 orbit_name = "SSO6"
 

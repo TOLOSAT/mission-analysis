@@ -19,7 +19,7 @@ semi_angle_limit_tolosat = Tolosat[
     "gps_antenna_half_angle"
 ]  # deg semi-angle visibility
 semi_angle_limit_gps = GPS["antenna_half_angle"]  # deg semi-angle visibility
-gps_antennas_location = "pmY"  # "pmX" or "pmY"
+gps_antennas_location = "pmZ"  # "pmX","pmY" or "pmZ"
 
 selected_gps = "GPS BIIR-13 (PRN 02)"
 
@@ -32,13 +32,16 @@ selected_gps_nospace = selected_gps.replace(" ", "_")
 def compute_doppler_visibility(results_dict):
     sun_directions = results_dict["sun_direction"].to_numpy()
     epochs = results_dict["epochs"].to_numpy()
-    pX_vector, pY_vector, _ = compute_body_vectors(epochs, sun_directions)
+    pX_vector, pY_vector, pZ_vector = compute_body_vectors(epochs, sun_directions)
     if gps_antennas_location == "pmX":
         gps_antenna_1_vector = pX_vector
         gps_antenna_2_vector = -pX_vector
     elif gps_antennas_location == "pmY":
         gps_antenna_1_vector = pY_vector
         gps_antenna_2_vector = -pY_vector
+    elif gps_antennas_location == "pmZ":  # 1 antenna in the Z direction
+        gps_antenna_1_vector = pZ_vector
+        gps_antenna_2_vector = None
     else:
         raise ValueError("gps_antennas_location must be pmX or pmY")
     visibility = [results_dict["epochs"].copy().rename("epochs")]
@@ -94,14 +97,15 @@ def compute_doppler_visibility(results_dict):
                 )
             )
             results_dict[sat]["tolosat_angle_1"] = np.rad2deg(tolosat_angle_1)
-            tolosat_angle_2 = np.arccos(
-                np.sum(relative_position * gps_antenna_2_vector, axis=1)
-                / (
-                    np.linalg.norm(relative_position, axis=1)
-                    * np.linalg.norm(gps_antenna_2_vector, axis=1)
+            if gps_antenna_2_vector is not None:
+                tolosat_angle_2 = np.arccos(
+                    np.sum(relative_position * gps_antenna_2_vector, axis=1)
+                    / (
+                        np.linalg.norm(relative_position, axis=1)
+                        * np.linalg.norm(gps_antenna_2_vector, axis=1)
+                    )
                 )
-            )
-            results_dict[sat]["tolosat_angle_2"] = np.rad2deg(tolosat_angle_2)
+                results_dict[sat]["tolosat_angle_2"] = np.rad2deg(tolosat_angle_2)
 
             gps_angle = np.arccos(
                 np.sum(relative_position * gps_position, axis=1)
@@ -119,29 +123,38 @@ def compute_doppler_visibility(results_dict):
                 np.abs(results_dict[sat]["doppler_rate"]) <= delta_f_dot_limit
             )
             results_dict[sat]["tolosat_visibility_OK"] = (
-                results_dict[sat]["tolosat_angle_1"] <= semi_angle_limit_tolosat
-            ) | (results_dict[sat]["tolosat_angle_2"] <= semi_angle_limit_tolosat)
+                    results_dict[sat]["tolosat_angle_1"] <= semi_angle_limit_tolosat
+            )
+
+            if gps_antenna_2_vector is not None:
+                results_dict[sat]["tolosat_visibility_OK"] |= (
+                        results_dict[sat]["tolosat_angle_2"] <= semi_angle_limit_tolosat
+                )
+            results_dict[sat]["gps_visibility_OK"] = (
+                    results_dict[sat]["gps_angle"] <= semi_angle_limit_gps
+            )
 
             results_dict[sat]["gps_visibility_OK"] = (
                 results_dict[sat]["gps_angle"] <= semi_angle_limit_gps
             )
 
-            dist = np.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
-            results_dict[sat]["distance_OK"] = (
-                    dist <= max_distance
-            )
+            #dist = np.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
+            #results_dict[sat]["distance_OK"] = (
+                 #   dist <= max_distance
+            #)
 
             results_dict[sat]["all_OK"] = (
                 results_dict[sat]["doppler_shift_OK"]
                 & results_dict[sat]["doppler_rate_OK"]
                 & results_dict[sat]["tolosat_visibility_OK"]
                 & results_dict[sat]["gps_visibility_OK"]
-                & results_dict[sat]["distance_OK"]
+              #  & results_dict[sat]["distance_OK"]
             )
 
             if sat == selected_gps:
                 sat_results.append(results_dict[sat]["tolosat_angle_1"])
-                sat_results.append(results_dict[sat]["tolosat_angle_2"])
+                if gps_antenna_2_vector is not None:
+                    sat_results.append(results_dict[sat]["tolosat_angle_2"])
                 sat_results.append(results_dict[sat]["gps_angle"])
                 sat_results.append(results_dict[sat]["doppler_shift"])
                 sat_results.append(results_dict[sat]["doppler_rate"])
@@ -165,7 +178,7 @@ def compute_doppler_visibility(results_dict):
     windows["streak_id"] = windows["start_bool"].cumsum()
 
     windows.loc[windows["start_bool"], "start"] = windows["epochs"]
-    windows["start"] = windows["start"].fillna(method="ffill")
+    windows["start"] = windows["start"].ffill()
     windows = windows[windows["end_bool"]]
     windows = windows.rename({"epochs": "end", "bool": "eclipse"}, axis=1)
     windows = windows[["eclipse", "start", "end"]]
@@ -200,6 +213,19 @@ gps_sat_results["seconds"] = gps_sat_results["epochs"] - gps_sat_results["epochs
 
 gps_windows = gps_windows[gps_windows["duration"] > 0]
 
+if 0 in gps_windows["start"].index:
+    gps_windows["timedelta"] = gps_windows["start"] - gps_windows["start"][0]
+    gps_windows["seconds"] = gps_windows["timedelta"].dt.total_seconds()
+    gps_visibility["seconds"] = (
+            gps_visibility["epochs"] - gps_visibility["epochs"][0]
+    )
+else:
+    # Handle the case where the key does not exist
+    print("Key 0 does not exist in the DataFrame.")
+    gps_windows["timedelta"] = 0
+    gps_windows["seconds"] = 0
+    gps_visibility["seconds"] = 0
+
 gps_windows["timedelta"] = gps_windows["start"] - gps_windows["start"][0]
 gps_windows["seconds"] = gps_windows["timedelta"].dt.total_seconds()
 gps_visibility["seconds"] = gps_visibility["epochs"] - gps_visibility["epochs"][0]
@@ -218,3 +244,4 @@ gps_visibility.to_csv("results/gps_visibility.csv")
 gps_windows.to_csv("results/gps_windows.csv")
 
 print("Done")
+

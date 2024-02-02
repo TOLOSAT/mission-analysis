@@ -19,7 +19,7 @@ semi_angle_limit_tolosat = Tolosat[
     "glonass_antenna_half_angle"
 ]  # deg semi-angle visibility
 semi_angle_limit_glonass = glonass["antenna_half_angle"]  # deg semi-angle visibility
-glonass_antennas_location = "pmY"  # "pmX" or "pmY"
+glonass_antennas_location = "pmZ"  # "pmX", "pmY" or "pmZ"
 
 selected_glonass = "COSMOS 2433 (720)"
 
@@ -32,13 +32,16 @@ selected_glonass_nospace = selected_glonass.replace(" ", "_")
 def compute_doppler_visibility(results_dict):
     sun_directions = results_dict["sun_direction"].to_numpy()
     epochs = results_dict["epochs"].to_numpy()
-    pX_vector, pY_vector, _ = compute_body_vectors(epochs, sun_directions)
+    pX_vector, pY_vector, pZ_vector = compute_body_vectors(epochs, sun_directions)
     if glonass_antennas_location == "pmX":
         glonass_antenna_1_vector = pX_vector
         glonass_antenna_2_vector = -pX_vector
     elif glonass_antennas_location == "pmY":
         glonass_antenna_1_vector = pY_vector
         glonass_antenna_2_vector = -pY_vector
+    elif glonass_antennas_location == "pmZ":    # 1 antenna in the Z direction
+        glonass_antenna_1_vector = pZ_vector
+        glonass_antenna_2_vector = None
     else:
         raise ValueError("glonass_antennas_location must be pmX or pmY")
     visibility = [results_dict["epochs"].copy().rename("epochs")]
@@ -94,14 +97,15 @@ def compute_doppler_visibility(results_dict):
                 )
             )
             results_dict[sat]["tolosat_angle_1"] = np.rad2deg(tolosat_angle_1)
-            tolosat_angle_2 = np.arccos(
-                np.sum(relative_position * glonass_antenna_2_vector, axis=1)
-                / (
-                    np.linalg.norm(relative_position, axis=1)
-                    * np.linalg.norm(glonass_antenna_2_vector, axis=1)
+            if glonass_antenna_2_vector is not None:
+                tolosat_angle_2 = np.arccos(
+                    np.sum(relative_position * glonass_antenna_2_vector, axis=1)
+                    / (
+                        np.linalg.norm(relative_position, axis=1)
+                        * np.linalg.norm(glonass_antenna_2_vector, axis=1)
+                    )
                 )
-            )
-            results_dict[sat]["tolosat_angle_2"] = np.rad2deg(tolosat_angle_2)
+                results_dict[sat]["tolosat_angle_2"] = np.rad2deg(tolosat_angle_2)
 
             glonass_angle = np.arccos(
                 np.sum(relative_position * glonass_position, axis=1)
@@ -119,11 +123,19 @@ def compute_doppler_visibility(results_dict):
                 np.abs(results_dict[sat]["doppler_rate"]) <= delta_f_dot_limit
             )
             results_dict[sat]["tolosat_visibility_OK"] = (
-                results_dict[sat]["tolosat_angle_1"] <= semi_angle_limit_tolosat
-            ) | (results_dict[sat]["tolosat_angle_2"] <= semi_angle_limit_tolosat)
+                    results_dict[sat]["tolosat_angle_1"] <= semi_angle_limit_tolosat
+            )
+
+            if glonass_antenna_2_vector is not None:
+                results_dict[sat]["tolosat_visibility_OK"] |= (
+                        results_dict[sat]["tolosat_angle_2"] <= semi_angle_limit_tolosat
+                )
+            results_dict[sat]["glonass_visibility_OK"] = (
+                    results_dict[sat]["glonass_angle"] <= semi_angle_limit_glonass
+            )
 
             results_dict[sat]["glonass_visibility_OK"] = (
-                results_dict[sat]["glonass_angle"] <= semi_angle_limit_glonass
+                    results_dict[sat]["glonass_angle"] <= semi_angle_limit_glonass
             )
 
             dist = np.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
@@ -141,14 +153,16 @@ def compute_doppler_visibility(results_dict):
 
             if sat == selected_glonass:
                 sat_results.append(results_dict[sat]["tolosat_angle_1"])
-                sat_results.append(results_dict[sat]["tolosat_angle_2"])
+                if glonass_antenna_2_vector is not None:
+                    sat_results.append(results_dict[sat]["tolosat_angle_2"])
                 sat_results.append(results_dict[sat]["glonass_angle"])
                 sat_results.append(results_dict[sat]["doppler_shift"])
                 sat_results.append(results_dict[sat]["doppler_rate"])
             visibility.append(results_dict[sat]["all_OK"].rename(sat))
 
-            if results_dict[sat]["all_OK"].any():
-                print(f"{sat} OK")
+        if results_dict[sat]["all_OK"].any():
+            print(f"{sat} OK")
+
     sat_results = pd.concat(sat_results, axis=1)
     visibility = pd.concat(visibility, axis=1)
     visibility["sum_ok"] = visibility.select_dtypes(include=["bool"]).sum(axis=1)
@@ -198,6 +212,19 @@ for folder in tqdm(folders, ncols=80, desc="Datasets", position=0, leave=True):
 glonass_sat_results["seconds"] = glonass_sat_results["epochs"] - glonass_sat_results["epochs"][0]
 
 glonass_windows = glonass_windows[glonass_windows["duration"] > 0]
+
+if 0 in glonass_windows["start"].index:
+    glonass_windows["timedelta"] = glonass_windows["start"] - glonass_windows["start"][0]
+    glonass_windows["seconds"] = glonass_windows["timedelta"].dt.total_seconds()
+    glonass_visibility["seconds"] = (
+            glonass_visibility["epochs"] - glonass_visibility["epochs"][0]
+    )
+else:
+    # Handle the case where the key does not exist
+    print("Key 0 does not exist in the DataFrame.")
+    glonass_windows["timedelta"] = 0
+    glonass_windows["seconds"] = 0
+    glonass_visibility["seconds"] = 0
 
 glonass_windows["timedelta"] = glonass_windows["start"] - glonass_windows["start"][0]
 glonass_windows["seconds"] = glonass_windows["timedelta"].dt.total_seconds()
