@@ -6,11 +6,12 @@ Subfolders of the `input_data` directory contain all the input data for the pyth
 
 The dates CSV files contain the following data (without table headers):
 
-| Field name   |                     Value example and unit                     |
-|--------------|:--------------------------------------------------------------:|
-| `start_date` | `2022-12-31-24:59:59` (parsed into a python `datetime` object) | 
-| `end_date`   | `2022-12-31-24:59:59` (parsed into a python `datetime` object) |
-| `step_size`  |                      `10`    (in seconds)                      |
+| Field name         |                     Value example and unit                     |
+|--------------------|:--------------------------------------------------------------:|
+| `start_date`       | `2022-12-31-24:59:59` (parsed into a python `datetime` object) | 
+| `end_date`         | `2022-12-31-24:59:59` (parsed into a python `datetime` object) |
+| `step_size`        |                      `10`    (in seconds)                      |
+| `propagation_days` |                        `1`    (in days)                        |
 
 ## Ground stations
 
