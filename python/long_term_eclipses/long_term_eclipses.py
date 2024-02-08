@@ -208,8 +208,8 @@ print("Done!")
 
 all_eclipses = all_eclipses[~all_eclipses["partial"]]
 all_eclipses["start"] = pd.to_datetime(all_eclipses["start"], utc=True)
-all_eclipses["timedelta"] = all_eclipses["start"] - simulation_start_date
-all_eclipses["seconds"] = all_eclipses["timedelta"].dt.total_seconds()
+all_eclipses["timedelta"] = all_eclipses["start"] - simulation_start_date #timedelta is the difference between start of the eclipse and the start simulation date (in datetime format)
+all_eclipses["seconds"] = all_eclipses["timedelta"].dt.total_seconds() #seconds is timedelta but in seconds
 
 all_eclipses.to_csv("all_eclipses.csv", index=False)
 

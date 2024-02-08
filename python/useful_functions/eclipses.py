@@ -2,7 +2,7 @@ from tudatpy.kernel.astro.fundamentals import compute_shadow_function
 import numpy as np
 import pandas as pd
 
-from useful_functions.date_transformations import epoch_to_datetime
+from useful_functions.date_transformations import epoch_to_datetime, datetime_to_epoch
 
 
 def compute_shadow_vector(satellite_position, sun_position, sun_radius, earth_radius):
@@ -49,7 +49,7 @@ def compute_eclipses(
     eclipse_type="Umbra",
 ) -> pd.DataFrame:
     """
-    Compute the communications of the spacecraft for a given ground station.
+    Compute the eclipses of the spacecraft.
 
     Parameters
     ----------
@@ -70,12 +70,13 @@ def compute_eclipses(
     -------
     shadow_df: pd.DataFrame
         Returns a data frame containing the following information about the eclipses
-         - 'start' : start date of the communication window
-         - 'end' : end date of the communication window
-         - 'start_epoch' : start epoch of the communication window
-         - 'end_epoch' : end epoch of the communication window
-         - 'duration' : duration of the communication window
-         - 'partial' : True if it is a partial communication window, False if not
+         - 'start' : start date of the eclipse
+         - 'end' : end date of the eclipse
+         - 'start_epoch' : start epoch of the eclipse
+         - 'end_epoch' : end epoch of the eclipse
+         - 'duration' : duration of the eclipse
+         - 'duration_epoch' : duration of the eclipse in seconds
+         - 'partial' : True if it is a partial eclipse, False if not
     """
 
     shadow_vector = compute_shadow_vector(
@@ -112,14 +113,12 @@ def compute_eclipses(
     if shadow_df.loc[shadow_df.index[-1], "end"] == epochs[-1]:
         shadow_df.loc[shadow_df.index[-1], "partial"] = True
 
-    shadow_df.rename({"start": "start_epoch", "end": "end_epoch"}, axis=1, inplace=True)
-    print(type(shadow_df["start_epoch"]))
-    print(type(shadow_df["end_epoch"]))
 
-    # shadow_df["start"] = epoch_to_datetime(shadow_df["start_epoch"])
-    # shadow_df["end"] = epoch_to_datetime(shadow_df["end_epoch"])
-    #
-    # shadow_df = shadow_df[
-    #     ["start", "end", "start_epoch", "end_epoch", "duration", "partial"]
-    # ]
+    shadow_df["start_epoch"] = datetime_to_epoch(shadow_df["start"])
+    shadow_df["end_epoch"] = datetime_to_epoch(shadow_df["end"])
+    shadow_df["duration_epoch"] = shadow_df["end_epoch"] - shadow_df["start_epoch"]
+
+    shadow_df = shadow_df[
+        ["start", "end", "start_epoch", "end_epoch", "duration", "duration_epoch", "partial"]
+    ]
     return shadow_df

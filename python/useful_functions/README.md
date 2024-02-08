@@ -41,7 +41,8 @@
     - 'end' : end date of the eclipse
     - 'start_epoch' : start epoch of the eclipse in seconds since J2000
     - 'end_epoch' : end epoch of the eclipse in seconds since J2000
-    - 'duration' : duration of the eclipse in seconds
+    - 'duration' : duration of the eclipse in datetime format
+    - 'duration_epoch' : duration of the eclipse in seconds
     - 'partial' : True if it is a partial eclipse, False if not
 
 ## Communication windows
