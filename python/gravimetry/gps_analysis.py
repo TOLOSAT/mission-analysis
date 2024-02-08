@@ -8,12 +8,27 @@ from gps_doppler import (
 
 from useful_functions import plot_functions as pf
 
+import pandas as pd
+
+desired_hour_start = 1  # Hours past after the start of the propagation
+desired_window_duration = 2  # Hours
+
+window_start_seconds = gps_sat_results["seconds"][0] + desired_hour_start * 3600
+window_end_seconds = window_start_seconds + desired_window_duration * 3600
+# Find the index of the window that contains the desired time
+window_index_start = gps_sat_results["seconds"].searchsorted(window_start_seconds)
+window_index_end = gps_sat_results["seconds"].searchsorted(window_end_seconds)
+
+gps_sat_results_window = pd.DataFrame(columns=[])
+
+gps_sat_results_window = gps_sat_results.iloc[window_index_start:window_index_end]
+
 fig, axes = pf.dark_figure()
-axes[0].plot(gps_sat_results["seconds"] / 86400, gps_sat_results["doppler_shift"] / 1e3)
-axes[0].set_title(f"Doppler shift of {selected_gps}")
+axes[0].plot(gps_sat_results_window["seconds"] / 86400, gps_sat_results_window["doppler_shift"] / 1e3)
+axes[0].set_title(f"Doppler shift of {selected_gps} from {desired_hour_start} hours after launch to {desired_hour_start + desired_window_duration} hours after launch")
 axes[0].set_xlabel("Time since launch [days]")
 axes[0].set_ylabel("Doppler shift [kHz]")
-axes[0].set_xlim(0, gps_sat_results["seconds"].max() / 86400)
+axes[0].set_xlim(gps_sat_results_window["seconds"].min() / 86400, gps_sat_results_window["seconds"].max() / 86400)
 pf.finish_dark_figure(
     fig, f"results/{selected_gps_nospace}_doppler_shift.png", show=True
 )
