@@ -10,6 +10,7 @@ from gps_doppler import (
 
 from useful_functions import plot_functions as pf
 from useful_functions import datetime_to_epoch
+from useful_functions.get_input_data import get_dates
 
 import pandas as pd
 
@@ -18,10 +19,13 @@ desired_start_time = "13:00:00"
 desired_end_date = "2024-01-03"
 desired_end_time = "13:00:00"
 
+dates_name = "test"
 
+# Create a window of time to analyze
+dates = get_dates(dates_name)
 
-window_start_seconds = datetime_to_epoch(datetime(desired_start_date))
-window_end_seconds = datetime_to_epoch(f"{desired_end_date} {desired_end_time}")
+window_start_seconds = datetime_to_epoch(dates["start_date"])
+window_end_seconds = datetime_to_epoch(dates["end_date"])
 
 # Find the index of the window that contains the desired time
 window_index_start = gps_sat_results["epochs"].searchsorted(window_start_seconds)
