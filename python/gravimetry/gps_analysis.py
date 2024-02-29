@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from gps_doppler import (
     gps_visibility,
     gps_windows,
@@ -11,12 +13,14 @@ from useful_functions import datetime_to_epoch
 
 import pandas as pd
 
-desired_start_date = "2024-01-02"
+desired_start_date = "2024-01-02-13:00:00"
 desired_start_time = "13:00:00"
 desired_end_date = "2024-01-03"
 desired_end_time = "13:00:00"
 
-window_start_seconds = datetime_to_epoch(f"{desired_start_date} {desired_start_time}")
+
+
+window_start_seconds = datetime_to_epoch(datetime(desired_start_date))
 window_end_seconds = datetime_to_epoch(f"{desired_end_date} {desired_end_time}")
 
 # Find the index of the window that contains the desired time
