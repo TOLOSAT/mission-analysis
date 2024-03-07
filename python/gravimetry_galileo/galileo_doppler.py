@@ -43,7 +43,7 @@ def compute_doppler_visibility(results_dict):
         galileo_antenna_1_vector = pZ_vector
         galileo_antenna_2_vector = None         # Only 1 antenna
     else:
-        raise ValueError("galileo_antennas_location must be pmX or pmY")
+        raise ValueError("galileo_antennas_location must be pmX or pmY or pmZ")
     visibility = [results_dict["epochs"].copy().rename("epochs")]
     sat_results = [results_dict["epochs"].copy().rename("epochs")]
     for sat in tqdm(
