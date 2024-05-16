@@ -16,7 +16,7 @@
 </Description>
  </MetaData>
  <MonitorConfiguration>
-  <Monitor X="0" Y="0" Height="1032" Width="1920"/>
+  <Monitor X="0" Y="0" Height="1030" Width="1920"/>
  </MonitorConfiguration>
  <StartOptions TimeRatio="1" UseStateTimeRatio="0" SysTimeSynced="0" Paused="0" Looped="0" Minimized="0" Hidden="0" AutoClosed="0"/>
  <Timeshifting Enabled="0"/>
@@ -140,6 +140,33 @@
       </Geometry>
      </Sensor>
     </SensorSatellite>
+    <SensorSatellite>
+     <Sensor Name="sensor2">
+      <SensorProp>
+       <SensorElliptical HalfAngleX="0.174532925199433" HalfAngleY="0.174532925199433"/>
+       <SensorGraphics Range="10000" VolumeColor="0.499992 0.646662 1" VolumeOpacity="60">
+        <SensorContour>
+         <LineStyle Color="0 0.293339 1" Style="SolidLine" Width="1"/>
+        </SensorContour>
+        <SensorTrace Duration="0" Opacity="60"/>
+       </SensorGraphics>
+      </SensorProp>
+      <Geometry>
+       <Position>
+        <Value>
+         <Fixed Data="0 0 0"/>
+        </Value>
+       </Position>
+       <Orientation>
+        <Quaternion>
+         <Value>
+          <Fixed Data="1 0 0 0"/>
+         </Value>
+        </Quaternion>
+       </Orientation>
+      </Geometry>
+     </Sensor>
+    </SensorSatellite>
    </Component>
    <Events/>
   </Satellite>
@@ -148,7 +175,7 @@
  <States>
   <Instant Time="33282 0" TimeRatio="1" Label="Initial state">
    <AppState Id="0">
-    <Command Str="CMD PROP WindowGeometry 0 0 960 540"/>
+    <Command Str="CMD PROP WindowGeometry 0 0 960 538"/>
     <Command Str="CMD PROP CameraDesc bodyfixed &quot;Sol/Earth/TOLOSAT_ref/TOLOSAT_QswAxes&quot; nil -0.000000000610260 0.000000000610260 -0.000000000610260 -0.060003137945532 -0.704556370112297 0.540625081468651 0.455767995868389 0.328406840562820"/>
    </AppState>
    <AppState Id="1">
@@ -156,7 +183,7 @@
     <Command Str="CMD PROP Frameless true"/>
    </AppState>
    <AppState Id="2">
-    <Command Str="CMD PROP WindowGeometry 960 0 960 540"/>
+    <Command Str="CMD PROP WindowGeometry 960 0 960 538"/>
     <Command Str="CMD PROP CameraDesc bodyfixed &quot;Sol/Earth/TOLOSAT_ref/TOLOSAT/Sensor1_sens_ref/Sensor1&quot; nil 0.000000000000000 -0.000000000000000 -0.000000000105700 0.707106892521737 0.000000158603108 0.000000239235613 -0.707107224355586 1.619566798210144"/>
     <Command Str="CMD PROP SelectObject &quot;Sol/Earth/TOLOSAT_ref/TOLOSAT/Sensor1_sens_ref/Sensor1&quot;"/>
     <Command Str="CMD STRUCT LabelVisible &quot;Sol/Earth/TOLOSAT&quot; false"/>

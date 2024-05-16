@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Project Revision="9032">
+<Project Revision="9169">
  <General Name="" StartDateTime="60311 43195.000000" EndDateTime="60312 43195.000000"/>
  <MetaData>
   <Description>###################################### 
@@ -10,14 +10,22 @@
 #
 # Project Name: Test2 
 #
-# File generated on 16/11/2023 at 18:36:16 UTC 
+# File generated on 16/05/2024 at 17:23:23 UTC 
 #
 #
 </Description>
  </MetaData>
+ <MonitorConfiguration>
+  <Monitor X="0" Y="0" Height="1030" Width="1920"/>
+ </MonitorConfiguration>
  <StartOptions TimeRatio="1" UseStateTimeRatio="0" SysTimeSynced="0" Paused="0" Looped="0" Minimized="0" Hidden="0" AutoClosed="0"/>
  <Timeshifting Enabled="0"/>
- <TimelineOptions ProjectLocked="1" CursorLocked="0" CursorRatio="0" ViewStart="33282 0.000000" ViewSpan="0" DateFormat="ISODate" NoBadgeFiltered="0" BadgeFiltered=""/>
+ <BrokerOptions WindowMode="Undocked" Collapsed="0" AlwaysOnTop="0" XPos="768" YPos="432" Width="768" Height="432" ActiveTab="0" HiddenTabs=""/>
+ <TimelineOptions ProjectLocked="1" CursorLocked="0" CursorRatio="0" ViewStart="33282 0.000000" ViewSpan="0" DateFormat="ISODate" NoBadgeFiltered="0" BadgeFiltered="">
+  <TimelineScenario Name="Scenario" Pos="0" Size="22"/>
+  <TimelineFile Name="TOLOSAT_POSITION_VELOCITY.TXT" Pos="1" Size="30" Mode="DEFAULT" Overlay="false"/>
+  <TimelineFile Name="TOLOSAT_QUATERNION.TXT" Pos="2" Size="30" Mode="DEFAULT" Overlay="false"/>
+ </TimelineOptions>
  <Sky>
   <Sun>
    <Prop2d>
@@ -41,8 +49,9 @@
   </StarCatalog>
  </Sky>
  <ToBeUsedApps>
-  <Application Name="SurfaceView" Id="0" Label="" AutoStarted="1"/>
-  <Application Name="Celestia" Id="1" Label="" AutoStarted="1"/>
+  <Application Name="Celestia" Id="0" Label="" AutoStarted="1"/>
+  <Application Name="SurfaceView" Id="1" Label="" AutoStarted="1"/>
+  <Application Name="Celestia" Id="2" Label="" AutoStarted="1"/>
  </ToBeUsedApps>
  <Entities>
   <Body Name="Earth" ParentPath="Sol">
@@ -84,7 +93,7 @@
    </EclipseCircle>
    <Component Name="TOLOSAT">
     <Graphics3d>
-     <File3ds Name="C:\Users\bpeti\Documents\GitHub\mission-analysis\python\visualization\TOLOSAT_model.obj"/>
+     <File3ds Name="TOLOSAT_model.obj"/>
      <Radius Value="1"/>
      <LightSensitive Value="1"/>
      <Use3dsCoords Value="0" MeshScale="1"/>
@@ -106,17 +115,33 @@
      </Orientation>
     </Geometry>
     <SensorSatellite>
-     <Sensor Name="sensor1">
-      <SensorProp/>
-     </Sensor>
-    </SensorSatellite>
-    <SensorSatellite>
-     <Sensor Name="sensor2">
-      <SensorProp/>
+     <Sensor Name="Sensor1">
+      <SensorProp>
+       <SensorElliptical HalfAngleX="0.785398163397448" HalfAngleY="0.785398163397448"/>
+       <SensorGraphics Range="10000" VolumeColor="0.47451 0.67451 0.470588" VolumeOpacity="60">
+        <SensorContour>
+         <LineStyle Color="1 0 0.223331" Style="SolidLine" Width="1"/>
+        </SensorContour>
+        <SensorTrace Duration="0" Opacity="60"/>
+       </SensorGraphics>
+      </SensorProp>
+      <Geometry>
+       <Position>
+        <Value>
+         <Fixed Data="0 0 0"/>
+        </Value>
+       </Position>
+       <Orientation>
+        <Quaternion>
+         <Value>
+          <Fixed Data="1 0 1 0"/>
+         </Value>
+        </Quaternion>
+       </Orientation>
+      </Geometry>
      </Sensor>
     </SensorSatellite>
    </Component>
-   <Events/>
    <Events/>
   </Satellite>
  </Entities>
@@ -124,10 +149,16 @@
  <States>
   <Instant Time="33282 0" TimeRatio="1" Label="Initial state">
    <AppState Id="0">
-    <Command Str="CMD PROP WindowGeometry 0 0 1280 971"/>
+    <Command Str="CMD PROP WindowGeometry 0 0 768 432"/>
+    <Command Str="CMD PROP CameraDesc bodyfixed &quot;Sol/Earth/TOLOSAT_ref/TOLOSAT_QswAxes&quot; nil -0.000000000610260 0.000000000610260 -0.000000000610260 -0.060003137945426 -0.704556370111756 0.540625081469224 0.455767995868560 0.258503913879395"/>
    </AppState>
    <AppState Id="1">
-    <Command Str="CMD PROP WindowGeometry 0 0 1280 971"/>
+    <Command Str="CMD PROP WindowGeometry 8 432 752 424"/>
+    <Command Str="CMD PROP Frameless true"/>
+   </AppState>
+   <AppState Id="2">
+    <Command Str="CMD PROP WindowGeometry 768 0 768 432"/>
+    <Command Str="CMD PROP CameraDesc bodyfixed &quot;Sol&quot; nil -0.728315854676321 0.000000000000000 0.000000000000000 -0.500000000717207 -0.499999993951619 -0.499999990638693 0.500000014692481 0.258503913879395"/>
     <Command Str="CMD STRUCT LabelVisible &quot;Sol/Earth/TOLOSAT&quot; false"/>
     <Command Str="CMD STRUCT FrameAxesVisible &quot;Sol/Earth/TOLOSAT&quot; false"/>
     <Command Str="CMD STRUCT SunDirectionVisible &quot;Sol/Earth/TOLOSAT&quot; true"/>
