@@ -535,7 +535,7 @@ def generate_states(xml, project, spacecraft_names):
     Command.setAttribute("Str", 'CMD STRUCT SunDirectionVisible "Sol/Earth/TOLOSAT" true')
     AppState.appendChild(Command)
 
-
+#asd
 def write_xml(xml, file_name):
     xml_str = xml.toprettyxml(indent=" ", encoding="UTF-8").decode("utf-8")
     with open(file_name, "w") as f:
