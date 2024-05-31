@@ -2,6 +2,7 @@ from xml.dom import minidom
 from useful_functions.get_input_data import get_spacecraft
 import tkinter as tk
 import numpy as np
+import ctypes
 
 tolosat_specs = get_spacecraft("Tolosat")
 iridium_specs = get_spacecraft("Iridium")
@@ -9,10 +10,19 @@ gps_specs = get_spacecraft("GPS")
 
 iridium_antenna = iridium_specs["antenna_half_angle"]
 
+def get_dpi_scaling_factor():
+    user32 = ctypes.windll.user32
+    user32.SetProcessDPIAware()  # Make sure the process is DPI aware
+    hdc = user32.GetDC(0)
+    dpi = ctypes.windll.gdi32.GetDeviceCaps(hdc, 88)  # Get the logical DPI
+    return dpi / 96.0  # 96 is the standard DPI for 100% scaling
+
+scaling_factor= get_dpi_scaling_factor()
 
 def create_document():
     return minidom.Document()
 
+scaling_factor= get_dpi_scaling_factor()
 
 def create_project(xml):
     project = xml.createElement("Project")
@@ -63,17 +73,16 @@ def generate_broker_options(xml, project):
     # Get the width and height of the screen
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
-
     root.destroy()
 
     BrokerOptions = xml.createElement("BrokerOptions")
     BrokerOptions.setAttribute("WindowMode", "Undocked")
     BrokerOptions.setAttribute("Collapsed", "0")
     BrokerOptions.setAttribute("AlwaysOnTop", "0")
-    BrokerOptions.setAttribute("XPos", str(int(screen_width / 2)))
+    BrokerOptions.setAttribute("XPos", str(int(screen_width  / 2)))
     BrokerOptions.setAttribute("YPos", str(int(screen_height / 2)))
-    BrokerOptions.setAttribute("Width", str(int(screen_width / 2)))
-    BrokerOptions.setAttribute("Height", str(int(screen_height / 2)))
+    BrokerOptions.setAttribute("Width", str(int(screen_width/2)))
+    BrokerOptions.setAttribute("Height", str(int(screen_height /2)))
     BrokerOptions.setAttribute("ActiveTab", "0")
     BrokerOptions.setAttribute("HiddenTabs", "")
     project.appendChild(BrokerOptions)
@@ -459,7 +468,6 @@ def generate_states(xml, project, spacecraft_names):
     # Get the width and height of the screen
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
-
     root.destroy()
 
     AppState = xml.createElement("AppState")
@@ -471,7 +479,7 @@ def generate_states(xml, project, spacecraft_names):
     AppState.appendChild(Command)
 
     Command = xml.createElement("Command")
-    Command.setAttribute("Str", "CMD PROP WindowGeometry 0 " + str(int(screen_height/2)) + " " + str(int(screen_width/2)) + " " + str(int(screen_height/2)))
+    Command.setAttribute("Str", "CMD PROP WindowGeometry 0 " + str(int(screen_height/2)) + " " + str(int(screen_width/2)) + " " + str(int(screen_height/(2*scaling_factor))))
     AppState.appendChild(Command)
 
 
@@ -493,7 +501,7 @@ def generate_states(xml, project, spacecraft_names):
     Instant.appendChild(AppState)
 
     Command = xml.createElement("Command")
-    Command.setAttribute("Str", "CMD PROP WindowGeometry 0 0 " + str(int(screen_width/2)) + " " + str(int(screen_height/2)))
+    Command.setAttribute("Str", "CMD PROP WindowGeometry 0 0 " + str(int(screen_width/(2*scaling_factor))) + " " + str(int(screen_height/(2*scaling_factor))))
     AppState.appendChild(Command)
 
     # App 2
@@ -503,8 +511,7 @@ def generate_states(xml, project, spacecraft_names):
     Instant.appendChild(AppState)
 
     Command = xml.createElement("Command")
-    Command.setAttribute("Str", "CMD PROP WindowGeometry " + str(int(screen_width / 2)) + " 0 " + str(int(screen_width / 2)) + " " + str(
-        int(screen_height / 2)))
+    Command.setAttribute("Str", "CMD PROP WindowGeometry " + str(int(screen_width / (2*scaling_factor))) + " 0 " + str(int(screen_width/(2*scaling_factor))) + " " + str(int(screen_height/(2*scaling_factor))))
     Command2 = xml.createElement("Command")
     Command2.setAttribute("Str", "CMD PROP CameraDesc bodyfixed &amp;quot;Sol/Earth/TOLOSAT_ref/TOLOSAT/Sensor1_sens_ref/Sensor1&amp;quot; nil 0.000000000000000 0.000000000000000 -0.000000000105700 -0.707107376820347 -0.000000292166919 -0.000000187028724 0.707106934320807 1.695979475975037")
     AppState.appendChild(Command)
