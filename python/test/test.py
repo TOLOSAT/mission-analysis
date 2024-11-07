@@ -9,7 +9,7 @@ from useful_functions import *
 
 # Initial settings (independent of tudat)
 orbit_name = "SSO6"
-dates_name = "5days"
+dates_name = "7days"
 spacecraft_name = "Tolosat"
 groundstation_name = "toulouse"
 
@@ -169,7 +169,7 @@ communication_windows = communication_windows.compute_communication_windows(
 )
 print(communication_windows.head(5))
 
-
+print(keplerian_states)
 # Create a static 3D figure of the trajectory
 fig = plt.figure(figsize=(7, 5.2), dpi=500)
 ax = fig.add_subplot(111, projection="3d")
