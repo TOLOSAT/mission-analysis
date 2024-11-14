@@ -9,17 +9,17 @@ from useful_functions import get_spacecraft
 from useful_functions.constants import SPEED_OF_LIGHT
 
 Tolosat = get_spacecraft("Tolosat")
-glonass = get_spacecraft("Galileo")
+Glonass = get_spacecraft("Glonass")
 
 f0 = 1621.25e6  # Hz
 delta_f_limit = 37500  # Hz doppler shift max +/-
 delta_f_dot_limit = 350  # 375 # Hz/s doppler rate max +/-
-max_distance = 20000e3  # [m] max distance to establish communication between Tolosat and Galileo
+max_distance = 20000e3  # [m] max distance to establish communication with glonass satellite
 semi_angle_limit_tolosat = Tolosat[
     "glonass_antenna_half_angle"
 ]  # deg semi-angle visibility
-semi_angle_limit_glonass = glonass["antenna_half_angle"]  # deg semi-angle visibility
-glonass_antennas_location = "pmZ"  # "pmX", "pmY" or "pmZ"
+semi_angle_limit_glonass = Glonass["antenna_half_angle"]  # deg semi-angle visibility
+glonass_antennas_location = "pmZ"  # "pmX","pmY" or "pmZ"
 
 selected_glonass = "COSMOS 2433 (720)"
 
@@ -39,7 +39,7 @@ def compute_doppler_visibility(results_dict):
     elif glonass_antennas_location == "pmY":
         glonass_antenna_1_vector = pY_vector
         glonass_antenna_2_vector = -pY_vector
-    elif glonass_antennas_location == "pmZ":    # 1 antenna in the Z direction
+    elif glonass_antennas_location == "pmZ":  # 1 antenna in the Z direction
         glonass_antenna_1_vector = pZ_vector
         glonass_antenna_2_vector = None
     else:
@@ -135,20 +135,20 @@ def compute_doppler_visibility(results_dict):
             )
 
             results_dict[sat]["glonass_visibility_OK"] = (
-                    results_dict[sat]["glonass_angle"] <= semi_angle_limit_glonass
+                results_dict[sat]["glonass_angle"] <= semi_angle_limit_glonass
             )
 
-            dist = np.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
-            results_dict[sat]["distance_OK"] = (
-                    dist <= max_distance  # Maximum distance to establish communication
-            )
+            #dist = np.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
+            #results_dict[sat]["distance_OK"] = (
+                 #   dist <= max_distance
+            #)
 
             results_dict[sat]["all_OK"] = (
                 results_dict[sat]["doppler_shift_OK"]
                 & results_dict[sat]["doppler_rate_OK"]
                 & results_dict[sat]["tolosat_visibility_OK"]
                 & results_dict[sat]["glonass_visibility_OK"]
-                & results_dict[sat]["distance_OK"]
+              #  & results_dict[sat]["distance_OK"]
             )
 
             if sat == selected_glonass:
@@ -178,7 +178,7 @@ def compute_doppler_visibility(results_dict):
     windows["streak_id"] = windows["start_bool"].cumsum()
 
     windows.loc[windows["start_bool"], "start"] = windows["epochs"]
-    windows["start"] = windows["start"].fillna(method="ffill")
+    windows["start"] = windows["start"].ffill()
     windows = windows[windows["end_bool"]]
     windows = windows.rename({"epochs": "end", "bool": "eclipse"}, axis=1)
     windows = windows[["eclipse", "start", "end"]]
@@ -244,3 +244,4 @@ glonass_visibility.to_csv("results/glonass_visibility.csv")
 glonass_windows.to_csv("results/glonass_windows.csv")
 
 print("Done")
+
