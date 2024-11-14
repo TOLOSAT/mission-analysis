@@ -4,16 +4,21 @@ from tudatpy.kernel.interface import spice
 from tudatpy.kernel.numerical_simulation import environment_setup, propagation_setup
 from tudatpy.util import result2array
 
-from gps_TLE_sync import gps_states_synced, gps_names
+# from gps_TLE_sync import gps_states_synced, gps_names
 from useful_functions import *
 
 # Load spice kernels
 spice.load_standard_kernels([])
 
 # Isolate states
-gps_all_states = gps_states_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
+#  = gps_states_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
+
+# Results dictionary
+
+keplerian_elements_list = []
+
 # Get input data
-dates_name = "5days_1sec_iter"
+dates_name = "1day"
 spacecraft_name = "Tolosat"
 orbit_name = "SSO6"
 
@@ -24,7 +29,10 @@ Tolosat_orbit = get_orbit(orbit_name)
 dates = get_dates(dates_name)
 simulation_start_date = dates["start_date"]
 simulation_end_date = dates["end_date"]
-propagation_duration = dates["propagation_days"]
+try:
+    propagation_duration = dates["propagation_days"]
+except:
+    propagation_duration = simulation_end_date - simulation_start_date
 
 # Create default body settings and bodies system
 bodies_to_create = ["Earth", "Sun", "Moon", "Jupiter"]
@@ -36,11 +44,12 @@ body_settings = environment_setup.get_default_body_settings(
 bodies = environment_setup.create_system_of_bodies(body_settings)
 
 # Define list of gps satellites and the acceleration model to be used
-all_spacecraft_names = ["Tolosat"] + gps_names
+#all_spacecraft_names = ["Tolosat"] + gps_names
+all_spacecraft_names = ["Tolosat"]
 
-acceleration_settings_gps = dict(
-    Earth=[propagation_setup.acceleration.spherical_harmonic_gravity(2, 0)]
-)
+#acceleration_settings_gps = dict(
+    #Earth=[propagation_setup.acceleration.spherical_harmonic_gravity(2, 0)]
+#)
 acceleration_settings_tolosat = dict(
     Earth=[
         propagation_setup.acceleration.spherical_harmonic_gravity(10, 10),
@@ -54,15 +63,14 @@ acceleration_settings_tolosat = dict(
     Jupiter=[propagation_setup.acceleration.point_mass_gravity()],
 )
 acceleration_settings = {"Tolosat": acceleration_settings_tolosat}
-
 # Add vehicle object to system of bodies
 bodies.create_empty_body("Tolosat")
 bodies.get("Tolosat").mass = Tolosat["mass"]
 
 # Create bodies to propagate and define their acceleration settings
-for spacecraft in gps_names:
-    bodies.create_empty_body(spacecraft)
-    acceleration_settings[spacecraft] = acceleration_settings_gps
+#for spacecraft in gps_names:
+ #   bodies.create_empty_body(spacecraft)
+  #  acceleration_settings[spacecraft] = acceleration_settings_gps
 
 # Create aerodynamic coefficient interface settings, and add to vehicle
 Tolosat_aero_settings = environment_setup.aerodynamic_coefficients.constant(
@@ -103,7 +111,7 @@ Tolosat_initial_state = element_conversion.keplerian_to_cartesian_elementwise(
     true_anomaly=np.deg2rad(Tolosat_orbit["true_anomaly"]),
 )
 
-initial_state = Tolosat_initial_state.tolist() + gps_all_states.flatten().tolist()
+initial_state = Tolosat_initial_state.tolist() #+ gps_all_states.flatten().tolist()
 
 # Setup dependent variables
 sun_direction_dep_var = propagation_setup.dependent_variable.relative_position(
@@ -181,15 +189,30 @@ for propagation_number in tqdm(
     sun_direction_dataframe = pd.DataFrame(sun_direction)
 
     # Export results to files
-    makedirs(f"gps_states/{propagation_number}", exist_ok=True)
-    sun_direction_dataframe.iloc[:, 1:4].to_pickle(
-        f"gps_states/{propagation_number}/sun_direction.pkl"
-    )
-    states_dataframe.iloc[:, 0].to_pickle(f"gps_states/{propagation_number}/epochs.pkl")
-    for sat in enumerate(all_spacecraft_names):
-        states_dataframe.iloc[:, (sat[0] * 6 + 1) : (sat[0] * 6 + 7)].to_pickle(
-            f"gps_states/{propagation_number}/{sat[1]}.pkl"
+   # makedirs(f"gps_states/{propagation_number}", exist_ok=True)
+   # sun_direction_dataframe.iloc[:, 1:4].to_pickle(
+    #    f"gps_states/{propagation_number}/sun_direction.pkl"
+    #)
+    #states_dataframe.iloc[:, 0].to_pickle(f"gps_states/{propagation_number}/epochs.pkl")
+    #for sat in enumerate(all_spacecraft_names):
+    #    states_dataframe.iloc[:, (sat[0] * 6 + 1) : (sat[0] * 6 + 7)].to_pickle(
+     #       f"gps_states/{propagation_number}/{sat[1]}.pkl"
+      #  )
+    for epoch, cartesian_state in dynamics_simulator.state_history.items():
+        keplerian_state = element_conversion.cartesian_to_keplerian(
+            cartesian_state,
+            earth_gravitational_parameter
         )
+        # Add the epoch and keplerian elements to the list
+        keplerian_elements_list.append([epoch] + keplerian_state.tolist())
+
+    keplerian_dataframe = pd.DataFrame(keplerian_elements_list, columns=[
+        "epoch", "semi_major_axis", "eccentricity", "inclination",
+        "argument_of_periapsis", "longitude_of_ascending_node", "true_anomaly"
+    ])
+    keplerian_dataframe.to_csv("Tolosat_states.csv", index=False)
+    sun_direction_dataframe.to_csv("Tolosat_sun_direction.csv", index=False)
+
 
     # Update initial state
     initial_state = states_array[-1, 1:]
@@ -199,3 +222,4 @@ for propagation_number in tqdm(
     propagation_end_date = propagation_start_date + propagation_duration
 
 print("Done with gps propagation.")
+print("Current working directory:", os.getcwd())
