@@ -138,10 +138,10 @@ def compute_doppler_visibility(results_dict):
                 results_dict[sat]["glonass_angle"] <= semi_angle_limit_glonass
             )
 
-            #dist = np.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
-            #results_dict[sat]["distance_OK"] = (
-                 #   dist <= max_distance
-            #)
+            dist = np.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
+            results_dict[sat]["distance_OK"] = (
+                    dist <= max_distance
+            )
 
             results_dict[sat]["all_OK"] = (
                 results_dict[sat]["doppler_shift_OK"]
