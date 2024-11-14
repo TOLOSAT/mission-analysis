@@ -181,6 +181,26 @@ for propagation_number in tqdm(
 
     # Extract the resulting state history and convert it to a ndarray
     states = dynamics_simulator.state_history
+
+    # Convert each state to Keplerian elements
+    keplerian_states = {}
+    for time, state in states.items():
+        keplerian_state = element_conversion.cartesian_to_keplerian(
+            state,
+            earth_gravitational_parameter
+        )
+        keplerian_states[time] = keplerian_state
+    # this are the order in which the position will be saved
+    # Semi-major Axis (a):
+    # Eccentricity (e):
+    # Inclination (i):
+    # Right Ascension of the Ascending Node (Ω):
+    # Argument of Periapsis (ω):
+    # True Anomaly (ν):
+    for time, keplerian in keplerian_states.items():
+        print(f"Time (s): {time}, Keplerian State: {keplerian}")
+        break
+
     states_array = result2array(states)
     states_dataframe = pd.DataFrame(states_array)
 
