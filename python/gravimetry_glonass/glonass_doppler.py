@@ -9,16 +9,16 @@ from useful_functions import get_spacecraft
 from useful_functions.constants import SPEED_OF_LIGHT
 
 Tolosat = get_spacecraft("Tolosat")
-glonass = get_spacecraft("Galileo")
+Glonass = get_spacecraft("Glonass")
 
 f0 = 1621.25e6  # Hz
 delta_f_limit = 37500  # Hz doppler shift max +/-
 delta_f_dot_limit = 350  # 375 # Hz/s doppler rate max +/-
-max_distance = 20000e3  # [m] max distance to establish communication between Tolosat and Galileo
+max_distance = 20000e3  # [m] max distance to establish communication between Tolosat and glonass
 semi_angle_limit_tolosat = Tolosat[
     "glonass_antenna_half_angle"
 ]  # deg semi-angle visibility
-semi_angle_limit_glonass = glonass["antenna_half_angle"]  # deg semi-angle visibility
+semi_angle_limit_glonass = Glonass["antenna_half_angle"]  # deg semi-angle visibility
 glonass_antennas_location = "pmZ"  # "pmX", "pmY" or "pmZ"
 
 selected_glonass = "COSMOS 2433 (720)"

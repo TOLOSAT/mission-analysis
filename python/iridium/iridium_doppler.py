@@ -20,7 +20,7 @@ semi_angle_limit_tolosat = Tolosat[
     "iridium_antenna_half_angle"
 ]  # deg semi-angle visibility
 semi_angle_limit_iridium = Iridium["antenna_half_angle"]  # deg semi-angle visibility
-iridium_antennas_location = "pmY"  # "pmX" or "pmY" || "pmY" used for 2 antenna case
+iridium_antennas_location = "pmZ"  # "pmX","pmY" or "pmZ"
 
 selected_iridium = "IRIDIUM 100"
 
@@ -33,13 +33,16 @@ selected_iridium_nospace = selected_iridium.replace(" ", "_")
 def compute_doppler_visibility(results_dict):
     sun_directions = results_dict["sun_direction"].to_numpy()
     epochs = results_dict["epochs"].to_numpy()
-    pX_vector, pY_vector, _ = compute_body_vectors(epochs, sun_directions)
+    pX_vector, pY_vector, pZ_vector = compute_body_vectors(epochs, sun_directions)
     if iridium_antennas_location == "pmX":
         iridium_antenna_1_vector = pX_vector
         iridium_antenna_2_vector = -pX_vector
     elif iridium_antennas_location == "pmY":
         iridium_antenna_1_vector = pY_vector
         iridium_antenna_2_vector = -pY_vector
+    elif iridium_antennas_location == "pmZ":
+        iridium_antenna_1_vector = pZ_vector
+        iridium_antenna_2_vector = -pZ_vector
     else:
         raise ValueError("iridium_antennas_location must be pmX or pmY")
     visibility = [results_dict["epochs"].copy().rename("epochs")]

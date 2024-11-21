@@ -7,4 +7,4 @@ iridium_antenna_half_angle, 60
 gps_antenna_half_angle, 45
 galileo_antenna_half_angle, 45
 glonass_antenna_half_angle, 45
-angular_velocity, 3
+angular_velocity, 0
