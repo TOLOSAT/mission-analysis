@@ -18,7 +18,7 @@ spice.load_standard_kernels([])
 keplerian_elements_list = []
 
 # Get input data
-dates_name = "1day"
+dates_name = "10years_10sec_iter"
 spacecraft_name = "Tolosat"
 orbit_name = "SSO6"
 
