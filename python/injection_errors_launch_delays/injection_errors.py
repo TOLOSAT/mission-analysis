@@ -15,7 +15,7 @@ spice.load_standard_kernels([])
 
 # Results dictionary
 
-results_dict = {}
+keplerian_elements_list = []
 
 # Get input data
 dates_name = "1day"
@@ -47,9 +47,9 @@ bodies = environment_setup.create_system_of_bodies(body_settings)
 #all_spacecraft_names = ["Tolosat"] + gps_names
 all_spacecraft_names = ["Tolosat"]
 
-acceleration_settings_gps = dict(
-    Earth=[propagation_setup.acceleration.spherical_harmonic_gravity(2, 0)]
-)
+#acceleration_settings_gps = dict(
+    #Earth=[propagation_setup.acceleration.spherical_harmonic_gravity(2, 0)]
+#)
 acceleration_settings_tolosat = dict(
     Earth=[
         propagation_setup.acceleration.spherical_harmonic_gravity(10, 10),
@@ -63,7 +63,6 @@ acceleration_settings_tolosat = dict(
     Jupiter=[propagation_setup.acceleration.point_mass_gravity()],
 )
 acceleration_settings = {"Tolosat": acceleration_settings_tolosat}
-
 # Add vehicle object to system of bodies
 bodies.create_empty_body("Tolosat")
 bodies.get("Tolosat").mass = Tolosat["mass"]
@@ -181,26 +180,6 @@ for propagation_number in tqdm(
 
     # Extract the resulting state history and convert it to a ndarray
     states = dynamics_simulator.state_history
-
-    # Convert each state to Keplerian elements
-    keplerian_states = {}
-    for time, state in states.items():
-        keplerian_state = element_conversion.cartesian_to_keplerian(
-            state,
-            earth_gravitational_parameter
-        )
-        keplerian_states[time] = keplerian_state
-    # this are the order in which the position will be saved
-    # Semi-major Axis (a):
-    # Eccentricity (e):
-    # Inclination (i):
-    # Right Ascension of the Ascending Node (Ω):
-    # Argument of Periapsis (ω):
-    # True Anomaly (ν):
-    for time, keplerian in keplerian_states.items():
-        print(f"Time (s): {time}, Keplerian State: {keplerian}")
-        break
-
     states_array = result2array(states)
     states_dataframe = pd.DataFrame(states_array)
 
@@ -219,6 +198,21 @@ for propagation_number in tqdm(
     #    states_dataframe.iloc[:, (sat[0] * 6 + 1) : (sat[0] * 6 + 7)].to_pickle(
      #       f"gps_states/{propagation_number}/{sat[1]}.pkl"
       #  )
+    for epoch, cartesian_state in dynamics_simulator.state_history.items():
+        keplerian_state = element_conversion.cartesian_to_keplerian(
+            cartesian_state,
+            earth_gravitational_parameter
+        )
+        # Add the epoch and keplerian elements to the list
+        keplerian_elements_list.append([epoch] + keplerian_state.tolist())
+
+    keplerian_dataframe = pd.DataFrame(keplerian_elements_list, columns=[
+        "epoch", "semi_major_axis", "eccentricity", "inclination",
+        "argument_of_periapsis", "longitude_of_ascending_node", "true_anomaly"
+    ])
+    keplerian_dataframe.to_csv("Tolosat_states.csv", index=False)
+    sun_direction_dataframe.to_csv("Tolosat_sun_direction.csv", index=False)
+
 
     # Update initial state
     initial_state = states_array[-1, 1:]
@@ -228,3 +222,4 @@ for propagation_number in tqdm(
     propagation_end_date = propagation_start_date + propagation_duration
 
 print("Done with gps propagation.")
+print("Current working directory:", os.getcwd())
