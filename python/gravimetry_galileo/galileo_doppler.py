@@ -21,7 +21,7 @@ semi_angle_limit_tolosat = Tolosat[
 semi_angle_limit_galileo = Galileo["antenna_half_angle"]  # deg semi-angle visibility
 galileo_antennas_location = "pmZ"  # "pmX","pmY" or "pmZ"
 
-selected_galileo = "GSAT0101 (PRN E11)"
+selected_galileo = "GSAT0101 (GALILEO-PFM)"
 
 selected_galileo_nospace = selected_galileo.replace(" ", "_")
 
