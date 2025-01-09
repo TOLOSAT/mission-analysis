@@ -210,6 +210,7 @@ for folder in tqdm(folders, ncols=80, desc="Datasets", position=0, leave=True):
     gps_sat_results = pd.concat([gps_sat_results, tmp_sat_results], ignore_index=True)
 
 gps_sat_results["seconds"] = gps_sat_results["epochs"] - gps_sat_results["epochs"][0]
+gps_sat_results.to_csv("results/gps_sat_results.csv")
 
 gps_windows = gps_windows[gps_windows["duration"] > 0]
 

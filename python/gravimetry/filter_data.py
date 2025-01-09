@@ -4,11 +4,8 @@ from useful_functions.date_transformations import epoch_to_datetime
 import matplotlib.dates as mdates
 import pandas as pd
 
-# NOTE: GPS window plot is not working
-# To be done: Change the paths and names of the plots when saving
-
-start_date = '2024-01-02 12:00:00+00:00'
-end_date = '2024-01-02 18:00:00+00:00'
+start_date = '2024-01-08 12:00:00+00:00'
+end_date = '2024-01-22 18:00:00+00:00'
 
 selected_gps = "GPS BIIR-13 (PRN 02)"
 selected_gps_nospace = selected_gps.replace(" ", "_")
@@ -20,8 +17,11 @@ gps_sat_results_path = 'results/gps_sat_results.csv'
 filtered_visibility, filtered_gps_sat_results, filtered_windows = filter_gps_data(gps_visibility_path, gps_windows_path,gps_sat_results_path,start_date, end_date)
 
 filtered_gps_sat_results["datetime"] = epoch_to_datetime(filtered_gps_sat_results["epochs"])
+print('Filtered gps_sat_results')
 filtered_visibility["datetime"] = epoch_to_datetime(filtered_visibility["epochs"])
+print('Filtered visibility')
 filtered_windows["start_datetime"] = pd.to_datetime(filtered_windows["start"], utc=True)
+print('Filtered windows')
 
 date_format = mdates.DateFormatter('%d-%m-%y\n%H:%M')
 
@@ -35,7 +35,7 @@ fig.autofmt_xdate()
 for label in axes[0].get_xticklabels():
     label.set_fontsize(8)
 pf.finish_dark_figure(
-    fig, f"results/{selected_gps_nospace}_doppler_shift.png", show=True
+    fig, f"results/filtered_{selected_gps_nospace}_doppler_shift.png", show=True
 )
 
 fig, axes = pf.light_figure()
@@ -48,7 +48,7 @@ fig.autofmt_xdate()
 for label in axes[0].get_xticklabels():
     label.set_fontsize(8)
 pf.finish_light_figure(
-    fig, f"results/{selected_gps_nospace}_doppler_shift_light.png", show=True
+    fig, f"results/filtered_{selected_gps_nospace}_doppler_shift_light.png", show=True
 )
 
 fig, axes = pf.dark_figure()
@@ -61,7 +61,7 @@ fig.autofmt_xdate()
 for label in axes[0].get_xticklabels():
     label.set_fontsize(8)
 pf.finish_dark_figure(
-    fig, f"results/{selected_gps_nospace}_doppler_rate.png", show=True
+    fig, f"results/filtered_{selected_gps_nospace}_doppler_rate.png", show=True
 )
 
 fig, axes = pf.light_figure()
@@ -74,7 +74,7 @@ fig.autofmt_xdate()
 for label in axes[0].get_xticklabels():
     label.set_fontsize(8)
 pf.finish_light_figure(
-    fig, f"results/{selected_gps_nospace}_doppler_rate_light.png", show=True
+    fig, f"results/filtered_{selected_gps_nospace}_doppler_rate_light.png", show=True
 )
 
 fig, axes = pf.dark_figure()
@@ -91,7 +91,7 @@ axes[0].xaxis.set_major_formatter(date_format)
 fig.autofmt_xdate()
 for label in axes[0].get_xticklabels():
     label.set_fontsize(8)
-pf.finish_dark_figure(fig, "results/gps_visibility.png", show=True, force_y_int=True)
+pf.finish_dark_figure(fig, "results/filtered_gps_visibility.png", show=True, force_y_int=True)
 
 fig, axes = pf.light_figure()
 axes[0].plot(
@@ -108,7 +108,7 @@ fig.autofmt_xdate()
 for label in axes[0].get_xticklabels():
     label.set_fontsize(8)
 pf.finish_light_figure(
-    fig, "results/gps_visibility_light.png", show=True, force_y_int=True
+    fig, "results/filtered_gps_visibility_light.png", show=True, force_y_int=True
 )
 
 fig, axes = pf.dark_figure()
@@ -121,7 +121,7 @@ axes[0].xaxis.set_major_formatter(date_format)
 fig.autofmt_xdate()
 for label in axes[0].get_xticklabels():
     label.set_fontsize(8)
-pf.finish_dark_figure(fig, "results/gps_windows.png", show=True)
+pf.finish_dark_figure(fig, "results/filtered_gps_windows.png", show=True)
 
 fig, axes = pf.light_figure()
 axes[0].vlines(filtered_windows["start_datetime"], 0, filtered_windows["duration"] / 60)
@@ -133,14 +133,7 @@ axes[0].xaxis.set_major_formatter(date_format)
 fig.autofmt_xdate()
 for label in axes[0].get_xticklabels():
     label.set_fontsize(8)
-pf.finish_light_figure(fig, "results/gps_windows_light.png", show=True)
-
-
-
-
-
-
-
+pf.finish_light_figure(fig, "results/filtered_gps_windows_light.png", show=True)
 
 
 

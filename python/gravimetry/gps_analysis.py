@@ -1,3 +1,4 @@
+'''
 from gps_doppler import (
     gps_visibility,
     gps_windows,
@@ -5,8 +6,23 @@ from gps_doppler import (
     selected_gps,
     selected_gps_nospace,
 )
+'''
 
+import pandas as pd
 from useful_functions import plot_functions as pf
+
+
+selected_gps = "GPS BIIR-13 (PRN 02)"
+selected_gps_nospace = selected_gps.replace(" ", "_")
+
+gps_visibility_path = 'results/gps_visibility.csv'
+gps_windows_path = 'results/gps_windows.csv'
+gps_sat_results_path = 'results/gps_sat_results.csv'
+
+gps_visibility = pd.read_csv(gps_visibility_path)
+gps_windows = pd.read_csv(gps_windows_path)
+gps_sat_results = pd.read_csv(gps_sat_results_path)
+
 
 fig, axes = pf.dark_figure()
 axes[0].plot(gps_sat_results["seconds"] / 86400, gps_sat_results["doppler_shift"] / 1e3)
