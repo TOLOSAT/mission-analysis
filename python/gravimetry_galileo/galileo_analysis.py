@@ -6,7 +6,22 @@ from galileo_doppler import (
     selected_galileo_nospace,
 )
 
+
+import pandas as pd
 from useful_functions import plot_functions as pf
+
+'''
+selected_galileo = "GSAT0101 (GALILEO-PFM)"
+selected_galileo_nospace = selected_galileo.replace(" ", "_")
+
+galileo_visibility_path = 'results/galileo_visibility.csv'
+galileo_windows_path = 'results/galileo_windows.csv'
+galileo_sat_results_path = 'results/galileo_sat_results.csv'
+
+galileo_visibility = pd.read_csv(galileo_visibility_path)
+galileo_windows = pd.read_csv(galileo_windows_path)
+galileo_sat_results = pd.read_csv(galileo_sat_results_path)
+'''
 
 fig, axes = pf.dark_figure()
 axes[0].plot(galileo_sat_results["seconds"] / 86400, galileo_sat_results["doppler_shift"] / 1e3)

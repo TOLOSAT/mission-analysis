@@ -14,11 +14,7 @@ spice.load_standard_kernels([])
 glonass_all_states = glonass_states_synced[["x", "y", "z", "vx", "vy", "vz"]].to_numpy()
 
 # Get input data
-<<<<<<< Updated upstream
-dates_name = "1year_1sec_iter"
-=======
-dates_name = "3days_1sec_iter"
->>>>>>> Stashed changes
+dates_name = "5days_1sec_iter"
 spacecraft_name = "Tolosat"
 orbit_name = "SSO6"
 

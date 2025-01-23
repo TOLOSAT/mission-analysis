@@ -210,6 +210,7 @@ for folder in tqdm(folders, ncols=80, desc="Datasets", position=0, leave=True):
     glonass_sat_results = pd.concat([glonass_sat_results, tmp_sat_results], ignore_index=True)
 
 glonass_sat_results["seconds"] = glonass_sat_results["epochs"] - glonass_sat_results["epochs"][0]
+glonass_sat_results.to_csv("results/glonass_sat_results.csv")
 
 glonass_windows = glonass_windows[glonass_windows["duration"] > 0]
 

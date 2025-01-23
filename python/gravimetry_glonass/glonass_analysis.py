@@ -1,3 +1,4 @@
+
 from glonass_doppler import (
     glonass_visibility,
     glonass_windows,
@@ -6,7 +7,23 @@ from glonass_doppler import (
     selected_glonass_nospace,
 )
 
+
+import pandas as pd
 from useful_functions import plot_functions as pf
+
+'''
+selected_glonass = "COSMOS 2433 (720)"
+selected_glonass_nospace = selected_glonass.replace(" ", "_")
+
+
+glonass_visibility_path = 'results/glonass_visibility.csv'
+glonass_windows_path = 'results/glonass_windows.csv'
+glonass_sat_results_path = 'results/glonass_sat_results.csv'
+
+glonass_visibility = pd.read_csv(glonass_visibility_path)
+glonass_windows = pd.read_csv(glonass_windows_path)
+glonass_sat_results = pd.read_csv(glonass_sat_results_path)
+'''
 
 fig, axes = pf.dark_figure()
 axes[0].plot(glonass_sat_results["seconds"] / 86400, glonass_sat_results["doppler_shift"] / 1e3)

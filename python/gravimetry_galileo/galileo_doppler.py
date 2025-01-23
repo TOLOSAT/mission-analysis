@@ -9,19 +9,19 @@ from useful_functions import get_spacecraft
 from useful_functions.constants import SPEED_OF_LIGHT
 
 Tolosat = get_spacecraft("Tolosat")
-galileo = get_spacecraft("Galileo")
+Galileo = get_spacecraft("Galileo")
 
 f0 = 1621.25e6  # Hz
 delta_f_limit = 37500  # Hz doppler shift max +/-
 delta_f_dot_limit = 350  # 375 # Hz/s doppler rate max +/-
-max_distance = 20000e3  # [m] max distance to establish communication between Tolosat and Galileo
+max_distance = 20000e3  # [m] max distance to establish communication with galileo satellite
 semi_angle_limit_tolosat = Tolosat[
     "galileo_antenna_half_angle"
 ]  # deg semi-angle visibility
-semi_angle_limit_galileo = galileo["antenna_half_angle"]  # deg semi-angle visibility
-galileo_antennas_location = "pmZ"  # "pmX", "pmY" or "pmZ"
+semi_angle_limit_galileo = Galileo["antenna_half_angle"]  # deg semi-angle visibility
+galileo_antennas_location = "pmZ"  # "pmX","pmY" or "pmZ"
 
-selected_galileo = "GSAT0101 (PRN E11)"
+selected_galileo = "GSAT0101 (GALILEO-PFM)"
 
 selected_galileo_nospace = selected_galileo.replace(" ", "_")
 
@@ -39,11 +39,11 @@ def compute_doppler_visibility(results_dict):
     elif galileo_antennas_location == "pmY":
         galileo_antenna_1_vector = pY_vector
         galileo_antenna_2_vector = -pY_vector
-    elif galileo_antennas_location == "pmZ":
+    elif galileo_antennas_location == "pmZ":  # 1 antenna in the Z direction
         galileo_antenna_1_vector = pZ_vector
-        galileo_antenna_2_vector = None         # Only 1 antenna
+        galileo_antenna_2_vector = None
     else:
-        raise ValueError("galileo_antennas_location must be pmX or pmY or pmZ")
+        raise ValueError("galileo_antennas_location must be pmX or pmY")
     visibility = [results_dict["epochs"].copy().rename("epochs")]
     sat_results = [results_dict["epochs"].copy().rename("epochs")]
     for sat in tqdm(
@@ -97,7 +97,6 @@ def compute_doppler_visibility(results_dict):
                 )
             )
             results_dict[sat]["tolosat_angle_1"] = np.rad2deg(tolosat_angle_1)
-
             if galileo_antenna_2_vector is not None:
                 tolosat_angle_2 = np.arccos(
                     np.sum(relative_position * galileo_antenna_2_vector, axis=1)
@@ -123,15 +122,17 @@ def compute_doppler_visibility(results_dict):
             results_dict[sat]["doppler_rate_OK"] = (
                 np.abs(results_dict[sat]["doppler_rate"]) <= delta_f_dot_limit
             )
-
             results_dict[sat]["tolosat_visibility_OK"] = (
-                results_dict[sat]["tolosat_angle_1"] <= semi_angle_limit_tolosat
+                    results_dict[sat]["tolosat_angle_1"] <= semi_angle_limit_tolosat
             )
 
             if galileo_antenna_2_vector is not None:
                 results_dict[sat]["tolosat_visibility_OK"] |= (
                         results_dict[sat]["tolosat_angle_2"] <= semi_angle_limit_tolosat
                 )
+            results_dict[sat]["galileo_visibility_OK"] = (
+                    results_dict[sat]["galileo_angle"] <= semi_angle_limit_galileo
+            )
 
             results_dict[sat]["galileo_visibility_OK"] = (
                 results_dict[sat]["galileo_angle"] <= semi_angle_limit_galileo
@@ -139,7 +140,7 @@ def compute_doppler_visibility(results_dict):
 
             dist = np.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
             results_dict[sat]["distance_OK"] = (
-                    dist <= max_distance  # Maximum distance to establish communication
+                    dist <= max_distance
             )
 
             results_dict[sat]["all_OK"] = (
@@ -147,7 +148,7 @@ def compute_doppler_visibility(results_dict):
                 & results_dict[sat]["doppler_rate_OK"]
                 & results_dict[sat]["tolosat_visibility_OK"]
                 & results_dict[sat]["galileo_visibility_OK"]
-                & results_dict[sat]["distance_OK"]
+              #  & results_dict[sat]["distance_OK"]
             )
 
             if sat == selected_galileo:
@@ -159,8 +160,9 @@ def compute_doppler_visibility(results_dict):
                 sat_results.append(results_dict[sat]["doppler_rate"])
             visibility.append(results_dict[sat]["all_OK"].rename(sat))
 
-            if results_dict[sat]["all_OK"].any():
-                print(f"{sat} OK")
+        if results_dict[sat]["all_OK"].any():
+            print(f"{sat} OK")
+
     sat_results = pd.concat(sat_results, axis=1)
     visibility = pd.concat(visibility, axis=1)
     visibility["sum_ok"] = visibility.select_dtypes(include=["bool"]).sum(axis=1)
@@ -176,7 +178,7 @@ def compute_doppler_visibility(results_dict):
     windows["streak_id"] = windows["start_bool"].cumsum()
 
     windows.loc[windows["start_bool"], "start"] = windows["epochs"]
-    windows["start"] = windows["start"].fillna(method="ffill")
+    windows["start"] = windows["start"].ffill()
     windows = windows[windows["end_bool"]]
     windows = windows.rename({"epochs": "end", "bool": "eclipse"}, axis=1)
     windows = windows[["eclipse", "start", "end"]]
@@ -208,8 +210,22 @@ for folder in tqdm(folders, ncols=80, desc="Datasets", position=0, leave=True):
     galileo_sat_results = pd.concat([galileo_sat_results, tmp_sat_results], ignore_index=True)
 
 galileo_sat_results["seconds"] = galileo_sat_results["epochs"] - galileo_sat_results["epochs"][0]
+galileo_sat_results.to_csv("results/galileo_sat_results.csv")
 
 galileo_windows = galileo_windows[galileo_windows["duration"] > 0]
+
+if 0 in galileo_windows["start"].index:
+    galileo_windows["timedelta"] = galileo_windows["start"] - galileo_windows["start"][0]
+    galileo_windows["seconds"] = galileo_windows["timedelta"].dt.total_seconds()
+    galileo_visibility["seconds"] = (
+            galileo_visibility["epochs"] - galileo_visibility["epochs"][0]
+    )
+else:
+    # Handle the case where the key does not exist
+    print("Key 0 does not exist in the DataFrame.")
+    galileo_windows["timedelta"] = 0
+    galileo_windows["seconds"] = 0
+    galileo_visibility["seconds"] = 0
 
 galileo_windows["timedelta"] = galileo_windows["start"] - galileo_windows["start"][0]
 galileo_windows["seconds"] = galileo_windows["timedelta"].dt.total_seconds()
