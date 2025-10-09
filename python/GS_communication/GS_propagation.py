@@ -13,9 +13,11 @@ spice.load_standard_kernels([])
 dates_name = "5days_1sec_iter"
 spacecraft_name = "Tolosat"
 orbit_name = "SSO6"
+gs_name = "toulouse"
 
 Tolosat = get_spacecraft(spacecraft_name)
 Tolosat_orbit = get_orbit(orbit_name)
+Ground_station = get_station(gs_name)
 
 # Set simulation start and end epochs (in seconds since J2000 = January 1, 2000 at 00:00:00)
 dates = get_dates(dates_name)
@@ -190,4 +192,4 @@ for propagation_number in tqdm(
     propagation_start_date = propagation_end_date
     propagation_end_date = propagation_start_date + propagation_duration
 
-print("Done with gps propagation.")
+print("Done with ground station propagation.")

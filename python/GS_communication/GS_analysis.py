@@ -8,6 +8,10 @@ from GS_functions import (
 
 from useful_functions import plot_functions as pf
 
+# MODIFY, it was imported from GPS
+
+
+
 fig, axes = pf.dark_figure()
 axes[0].plot(gps_sat_results["seconds"] / 86400, gps_sat_results["doppler_shift"] / 1e3)
 axes[0].set_title(f"Doppler shift of {selected_gps}")
