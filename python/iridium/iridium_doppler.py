@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-
 from attitude.sun_pointing_rotation import compute_body_vectors
 from results_processing import get_list_of_contents, get_results_dict
 from useful_functions import date_transformations as dt
@@ -9,18 +8,18 @@ from useful_functions import get_spacecraft
 from useful_functions.constants import SPEED_OF_LIGHT
 
 Tolosat = get_spacecraft("Tolosat")
-Iridium = get_spacecraft("Iridium")
+iridium = get_spacecraft("iridium")
 
 f0 = 1621.25e6  # H
 delta_f_limit = 37500  # Hz doppler shift max +/-
 delta_f_dot_limit = 350  # 375 # Hz/s doppler rate max +/-
-max_distance = 650e3  # [m] max distance to establish communication between Tolosat and Iridium
+max_distance = 650e3  # [m] max distance to establish communication between Tolosat and iridium
 
 semi_angle_limit_tolosat = Tolosat[
     "iridium_antenna_half_angle"
 ]  # deg semi-angle visibility
-semi_angle_limit_iridium = Iridium["antenna_half_angle"]  # deg semi-angle visibility
-iridium_antennas_location = "pmY"  # "pmX" or "pmY" || "pmY" used for 2 antenna case
+semi_angle_limit_iridium = iridium["antenna_half_angle"]  # deg semi-angle visibility
+iridium_antennas_location = "pmY"  # "pmX","pmY" or "pmZ"
 
 selected_iridium = "IRIDIUM 100"
 
@@ -33,13 +32,16 @@ selected_iridium_nospace = selected_iridium.replace(" ", "_")
 def compute_doppler_visibility(results_dict):
     sun_directions = results_dict["sun_direction"].to_numpy()
     epochs = results_dict["epochs"].to_numpy()
-    pX_vector, pY_vector, _ = compute_body_vectors(epochs, sun_directions)
+    pX_vector, pY_vector, pZ_vector = compute_body_vectors(epochs, sun_directions)
     if iridium_antennas_location == "pmX":
         iridium_antenna_1_vector = pX_vector
         iridium_antenna_2_vector = -pX_vector
     elif iridium_antennas_location == "pmY":
         iridium_antenna_1_vector = pY_vector
         iridium_antenna_2_vector = -pY_vector
+    elif iridium_antennas_location == "pmZ":
+        iridium_antenna_1_vector = pZ_vector
+        iridium_antenna_2_vector = -pZ_vector
     else:
         raise ValueError("iridium_antennas_location must be pmX or pmY")
     visibility = [results_dict["epochs"].copy().rename("epochs")]
@@ -152,7 +154,7 @@ def compute_doppler_visibility(results_dict):
                 & results_dict[sat]["tolosat_visibility_OK"]
                 & results_dict[sat]["iridium_visibility_OK"]
                 # & results_dict[sat]["earth_occultation_OK"]
-                & results_dict[sat]["distance_OK"]
+                # & results_dict[sat]["distance_OK"]
             )
 
             if sat == selected_iridium:
@@ -196,58 +198,50 @@ def compute_doppler_visibility(results_dict):
 
 
 # Initialize DataFrames
-IRIDIUM_visibility = pd.DataFrame(columns=[])
-IRIDIUM_windows = pd.DataFrame(columns=[])
-IRIDIUM_sat_results = pd.DataFrame(columns=[])
+iridium_visibility = pd.DataFrame(columns=[])
+iridium_windows = pd.DataFrame(columns=[])
+iridium_sat_results = pd.DataFrame(columns=[])
 
 folders = get_list_of_contents("iridium_states")
 folders = [int(x) for x in folders]
 folders.sort()
+latest_folder = folders[-1]
+folders = [latest_folder]
 
 print(f"Starting Doppler processing of {len(folders)} datasets...")
 for folder in tqdm(folders, ncols=80, desc="Datasets", position=0, leave=True):
     results = get_results_dict(f"iridium_states/{folder}")
     tmp_visibility, tmp_windows, tmp_sat_results = compute_doppler_visibility(results)
-    IRIDIUM_visibility = pd.concat(
-        [IRIDIUM_visibility, tmp_visibility], ignore_index=True
+    iridium_visibility = pd.concat(
+        [iridium_visibility, tmp_visibility], ignore_index=True
     )
-    IRIDIUM_windows = pd.concat([IRIDIUM_windows, tmp_windows], ignore_index=True)
-    IRIDIUM_sat_results = pd.concat(
-        [IRIDIUM_sat_results, tmp_sat_results], ignore_index=True
+    iridium_windows = pd.concat([iridium_windows, tmp_windows], ignore_index=True)
+    iridium_sat_results = pd.concat(
+        [iridium_sat_results, tmp_sat_results], ignore_index=True
     )
 
-IRIDIUM_sat_results["seconds"] = (
-    IRIDIUM_sat_results["epochs"] - IRIDIUM_sat_results["epochs"][0]
+iridium_sat_results["seconds"] = (
+    iridium_sat_results["epochs"] - iridium_sat_results["epochs"][0]
 )
 
-IRIDIUM_windows = IRIDIUM_windows[IRIDIUM_windows["duration"] > 0]
+iridium_sat_results.to_csv("results/iridium_sat_results.csv")
 
-if 0 in IRIDIUM_windows["start"].index:
-    IRIDIUM_windows["timedelta"] = IRIDIUM_windows["start"] - IRIDIUM_windows["start"][0]
-    IRIDIUM_windows["seconds"] = IRIDIUM_windows["timedelta"].dt.total_seconds()
-    IRIDIUM_visibility["seconds"] = (
-            IRIDIUM_visibility["epochs"] - IRIDIUM_visibility["epochs"][0]
+iridium_windows = iridium_windows[iridium_windows["duration"] > 0]
+
+if 0 in iridium_windows["start"].index:
+    iridium_windows["timedelta"] = iridium_windows["start"] - iridium_windows["start"][0]
+    iridium_windows["seconds"] = iridium_windows["timedelta"].dt.total_seconds()
+    iridium_visibility["seconds"] = (
+            iridium_visibility["epochs"] - iridium_visibility["epochs"][0]
     )
 else:
     # Handle the case where the key does not exist
     print("Key 0 does not exist in the DataFrame.")
-    IRIDIUM_windows["timedelta"] = 0
-    IRIDIUM_windows["seconds"] = 0
-    IRIDIUM_visibility["seconds"] = 0
+    iridium_windows["timedelta"] = 0
+    iridium_windows["seconds"] = 0
+    iridium_visibility["seconds"] = 0
 
-
-print(f"Minimum IRIDIUM window duration: {IRIDIUM_windows['duration'].min()} seconds")
-print(f"Maximum IRIDIUM window duration: {IRIDIUM_windows['duration'].max()} seconds")
-print(f"Average IRIDIUM window duration: {IRIDIUM_windows['duration'].mean()} seconds")
-print(
-    f"Average IRIDIUM passes per day: {len(IRIDIUM_windows) / IRIDIUM_windows['seconds'].max() * 86400:.2f} passes"
-)
-print(
-    f"Average IRIDIUM visibility per day: "
-    f"{IRIDIUM_windows['duration'].sum() / IRIDIUM_windows['seconds'].max() * 86400:.2f} seconds"
-)
-
-IRIDIUM_visibility.to_csv("results/iridium_visibility.csv")
-IRIDIUM_windows.to_csv("results/iridium_windows.csv")
+iridium_visibility.to_csv("results/iridium_visibility.csv")
+iridium_windows.to_csv("results/iridium_windows.csv")
 
 print("Done")
