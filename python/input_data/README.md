@@ -25,14 +25,15 @@ The dates CSV files contain the following data (without table headers):
 
 ## Orbits
 
-| Field name                    | Value example and unit |
-|-------------------------------|:----------------------:|
-| `semi_major_axis`             | `6978140` (in meters)  | 
-| `eccentricity`                |   `1e-3` (unitless)    |
-| `inclination`                 | `97.8`    (in degrees) |
-| `argument_of_periapsis`       |  `15`    (in degrees)  |
-| `mean_local_time`             |   `6`    (in hours)    |
-| `true_anomaly`                | `0.1`    (in degrees)  |
+| Field name              | Value example and unit |
+|-------------------------|:----------------------:|
+| `semi_major_axis`       | `6978140` (in meters)  | 
+| `eccentricity`          |   `2e-3` (unitless)    |
+| `inclination`           | `97.4`    (in degrees) |
+| `argument_of_periapsis` |  `90`    (in degrees)  |
+| `mean_local_time`       |   `6`    (in hours)    |
+| `true_anomaly`          |  `0`    (in degrees)   |
+| `RAAN`                  |   `0.18`    (in rad)   |
 
 ## Spacecraft
 
