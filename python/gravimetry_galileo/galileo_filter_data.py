@@ -11,9 +11,9 @@ end_date = '2024-01-20 18:00:00+00:00'
 selected_galileo = "GSAT0101 (GALILEO-PFM)"
 selected_galileo_nospace = selected_galileo.replace(" ", "_")
 
-galileo_visibility_path = 'results/galileo_visibility.csv'
-galileo_windows_path = 'results/galileo_windows.csv'
-galileo_sat_results_path = 'results/galileo_sat_results.csv'
+galileo_visibility_path = 'results/1orbit/galileo_visibility.csv'
+galileo_windows_path = 'results/1orbit/galileo_windows.csv'
+galileo_sat_results_path = 'results/1orbit/galileo_sat_results.csv'
 
 filtered_visibility, filtered_galileo_sat_results, filtered_windows = filter_sat_data(galileo_visibility_path, galileo_windows_path,galileo_sat_results_path,start_date, end_date)
 

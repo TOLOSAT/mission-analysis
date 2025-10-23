@@ -1,110 +1,224 @@
-from galileo_doppler import (
-    galileo_visibility,
-    galileo_windows,
-    galileo_sat_results,
-    selected_galileo,
-    selected_galileo_nospace,
-)
-
-
+import os
 import pandas as pd
+import numpy as np
 from useful_functions import plot_functions as pf
 
-'''
+# =============================
+# Configuration
+# =============================
 selected_galileo = "GSAT0101 (GALILEO-PFM)"
 selected_galileo_nospace = selected_galileo.replace(" ", "_")
+results_dir = "results/1day"
 
-galileo_visibility_path = 'results/galileo_visibility.csv'
-galileo_windows_path = 'results/galileo_windows.csv'
-galileo_sat_results_path = 'results/galileo_sat_results.csv'
+# Choose time unit: "seconds", "hours", or "days"
+time_unit = "hours"  # Change depending on simulation
+unit_factors = {
+    "seconds": 1,
+    "minutes": 60,
+    "hours": 3600,
+    "days": 86400,
+    "years": 365.25,
+}
+time_factor = unit_factors[time_unit]
+time_label = f"Time since launch [{time_unit}]"
 
-galileo_visibility = pd.read_csv(galileo_visibility_path)
-galileo_windows = pd.read_csv(galileo_windows_path)
-galileo_sat_results = pd.read_csv(galileo_sat_results_path)
-'''
+# =============================
+# Load data
+# =============================
+galileo_visibility = pd.read_csv(os.path.join(results_dir, "galileo_visibility.csv"), low_memory=False)
+galileo_windows = pd.read_csv(os.path.join(results_dir, "galileo_windows.csv"), low_memory=False)
+galileo_sat_results = pd.read_csv(os.path.join(results_dir, "galileo_sat_results.csv"), low_memory=False)
 
-fig, axes = pf.dark_figure()
-axes[0].plot(galileo_sat_results["seconds"] / 86400, galileo_sat_results["doppler_shift"] / 1e3)
-axes[0].set_title(f"Doppler shift of {selected_galileo}")
-axes[0].set_xlabel("Time since launch [days]")
-axes[0].set_ylabel("Doppler shift [kHz]")
-axes[0].set_xlim(0, galileo_sat_results["seconds"].max() / 86400)
-pf.finish_dark_figure(
-    fig, f"results/{selected_galileo_nospace}_doppler_shift.png", show=True
-)
+# =============================
+# Plot 1: Doppler Shift
+# =============================
+for style in ["dark", "light"]:
+    fig, axes = getattr(pf, f"{style}_figure")()
+    axes[0].plot(galileo_sat_results["seconds"] / time_factor, galileo_sat_results["doppler_shift"] / 1e3)
+    axes[0].set_title(f"Doppler shift of {selected_galileo}")
+    axes[0].set_xlabel(time_label)
+    axes[0].set_ylabel("Doppler shift [kHz]")
+    axes[0].set_xlim(0, galileo_sat_results["seconds"].max() / time_factor)
+    getattr(pf, f"finish_{style}_figure")(
+        fig, os.path.join(results_dir, f"{selected_galileo_nospace}_doppler_shift_{style}.png"), show=True
+    )
 
-fig, axes = pf.light_figure()
-axes[0].plot(galileo_sat_results["seconds"] / 86400, galileo_sat_results["doppler_shift"] / 1e3)
-axes[0].set_title(f"Doppler shift of {selected_galileo}")
-axes[0].set_xlabel("Time since launch [days]")
-axes[0].set_ylabel("Doppler shift [kHz]")
-axes[0].set_xlim(0, galileo_sat_results["seconds"].max() / 86400)
-pf.finish_light_figure(
-    fig, f"results/{selected_galileo_nospace}_doppler_shift_light.png", show=True
-)
+# =============================
+# Plot 2: Doppler Rate
+# =============================
+for style in ["dark", "light"]:
+    fig, axes = getattr(pf, f"{style}_figure")()
+    axes[0].plot(galileo_sat_results["seconds"] / time_factor, galileo_sat_results["doppler_rate"])
+    axes[0].set_title(f"Doppler rate of {selected_galileo}")
+    axes[0].set_xlabel(time_label)
+    axes[0].set_ylabel("Doppler rate [Hz/s]")
+    axes[0].set_xlim(0, galileo_sat_results["seconds"].max() / time_factor)
+    getattr(pf, f"finish_{style}_figure")(
+        fig, os.path.join(results_dir, f"{selected_galileo_nospace}_doppler_rate_{style}.png"), show=True
+    )
 
-fig, axes = pf.dark_figure()
-axes[0].plot(galileo_sat_results["seconds"] / 86400, galileo_sat_results["doppler_rate"])
-axes[0].set_title(f"Doppler rate of {selected_galileo}")
-axes[0].set_xlabel("Time since launch [days]")
-axes[0].set_ylabel("Doppler rate [Hz/s]")
-axes[0].set_xlim(0, galileo_sat_results["seconds"].max() / 86400)
-pf.finish_dark_figure(
-    fig, f"results/{selected_galileo_nospace}_doppler_rate.png", show=True
-)
+# =============================
+# Plot 3: Visibility Count
+# =============================
+for style in ["dark", "light"]:
+    fig, axes = getattr(pf, f"{style}_figure")()
+    axes[0].plot(galileo_visibility["seconds"] / time_factor, galileo_visibility["sum_ok"], linestyle="none", marker=".")
+    axes[0].set_title("Visibility of Galileo satellites satisfying all 4 conditions")
+    axes[0].set_xlabel(time_label)
+    axes[0].set_ylabel("Number of satellites [-]")
+    axes[0].set_xlim(0, galileo_visibility["seconds"].max() / time_factor)
+    getattr(pf, f"finish_{style}_figure")(
+        fig, os.path.join(results_dir, f"galileo_visibility_{style}.png"), show=True, force_y_int=True
+    )
 
-fig, axes = pf.light_figure()
-axes[0].plot(galileo_sat_results["seconds"] / 86400, galileo_sat_results["doppler_rate"])
-axes[0].set_title(f"Doppler rate of {selected_galileo}")
-axes[0].set_xlabel("Time since launch [days]")
-axes[0].set_ylabel("Doppler rate [Hz/s]")
-axes[0].set_xlim(0, galileo_sat_results["seconds"].max() / 86400)
-pf.finish_light_figure(
-    fig, f"results/{selected_galileo_nospace}_doppler_rate_light.png", show=True
-)
+# =============================
+# Plot 4: Visibility Windows
+# =============================
+for style in ["dark", "light"]:
+    fig, axes = getattr(pf, f"{style}_figure")()
+    x_vals = galileo_windows["seconds"] / time_factor
+    y_vals = galileo_windows["duration"] / 60
+    if not x_vals.empty and not y_vals.empty:
+        axes[0].vlines(x_vals, 0, y_vals, linewidth=2)
+        axes[0].set_ylim(0, max(y_vals.max() * 1.1, 1))
+        axes[0].set_xlim(-0.01, x_vals.max() + 0.01)
+    else:
+        axes[0].text(0.5, 0.5, "No visibility windows", transform=axes[0].transAxes, ha="center", va="center")
+    axes[0].set_title("Visibility windows of at least one Galileo satellite")
+    axes[0].set_xlabel(time_label)
+    axes[0].set_ylabel("Window duration [mins]")
+    axes[0].set_xlim(0, x_vals.max() if not x_vals.empty else 1)
+    getattr(pf, f"finish_{style}_figure")(
+        fig, os.path.join(results_dir, f"galileo_windows_{style}.png"), show=True
+    )
 
-fig, axes = pf.dark_figure()
-axes[0].plot(
-    galileo_visibility["seconds"] / 86400,
-    galileo_visibility["sum_ok"],
-    linestyle="none",
-    marker=".",
-)
-axes[0].set_title("Visibility of galileo satellites satisfying all 4 conditions")
-axes[0].set_xlabel("Time since launch [days]")
-axes[0].set_ylabel("Number of satellites [-]")
-axes[0].set_xlim(0, galileo_visibility["seconds"].max() / 86400)
-pf.finish_dark_figure(fig, "results/galileo_visibility.png", show=True, force_y_int=True)
+# =============================
+# Plot 5: True Visibility per PRN
+# =============================
+galileo_prns_only = galileo_visibility.select_dtypes(include=bool)
+galileo_visibility["time_unit_column"] = galileo_visibility["seconds"] / time_factor
+segments = []
 
-fig, axes = pf.light_figure()
-axes[0].plot(
-    galileo_visibility["seconds"] / 86400,
-    galileo_visibility["sum_ok"],
-    linestyle="none",
-    marker=".",
-)
-axes[0].set_title("Visibility of galileo satellites satisfying all 4 conditions")
-axes[0].set_xlabel("Time since launch [days]")
-axes[0].set_ylabel("Number of satellites [-]")
-axes[0].set_xlim(0, galileo_visibility["seconds"].max() / 86400)
-pf.finish_light_figure(
-    fig, "results/galileo_visibility_light.png", show=True, force_y_int=True
-)
+# Function to extract content inside parentheses
+def extract_inside_parentheses(label):
+    if "(" in label and ")" in label:
+        return label.split("(")[-1].split(")")[0]
+    return label  # fallback in case no parentheses
 
-fig, axes = pf.dark_figure()
-axes[0].vlines(galileo_windows["seconds"] / 86400, 0, galileo_windows["duration"] / 60)
-axes[0].set_title("Visibility windows of at least one galileo satellite")
-axes[0].set_xlabel("Time since launch [days]")
-axes[0].set_ylabel("Window duration [mins]")
-axes[0].set_ylim(0, galileo_windows["duration"].max() / 60)
-axes[0].set_xlim(0, galileo_windows["seconds"].max() / 86400)
-pf.finish_dark_figure(fig, "results/galileo_windows.png", show=True)
+# Map PRNs to y-axis values
+prn_to_y = {prn: i for i, prn in enumerate(sorted(galileo_prns_only.columns))}
+yticklabels_clean = [extract_inside_parentheses(prn) for prn in prn_to_y.keys()]
 
-fig, axes = pf.light_figure()
-axes[0].vlines(galileo_windows["seconds"] / 86400, 0, galileo_windows["duration"] / 60)
-axes[0].set_title("Visibility windows of at least one galileo satellite")
-axes[0].set_xlabel("Time since launch [days]")
-axes[0].set_ylabel("Window duration [mins]")
-axes[0].set_ylim(0, galileo_windows["duration"].max() / 60)
-axes[0].set_xlim(0, galileo_windows["seconds"].max() / 86400)
-pf.finish_light_figure(fig, "results/galileo_windows_light.png", show=True)
+# Build visibility segments
+for prn, y_val in prn_to_y.items():
+    visibility = galileo_prns_only[prn].astype(int)
+    time = galileo_visibility["time_unit_column"]
+    changes = visibility.diff().fillna(0)
+    starts = time[changes == 1].values
+    ends = time[changes == -1].values
+    if visibility.iloc[0] == 1:
+        starts = np.insert(starts, 0, time.iloc[0])
+    if visibility.iloc[-1] == 1 and len(ends) < len(starts):
+        ends = np.append(ends, time.iloc[-1])
+    for start, end in zip(starts, ends):
+        segments.append((start, end, y_val))
+
+# Plot for both dark and light styles
+for style in ["dark", "light"]:
+    fig, axes = getattr(pf, f"{style}_figure")()
+    for start, end, y in segments:
+        axes[0].hlines(y, start, end, linewidth=2)
+    axes[0].set_xlabel(time_label)
+    axes[0].set_ylabel("Galileo PRNs available")
+    axes[0].set_title("True visibility duration of each Galileo satellite")
+    axes[0].set_yticks(list(prn_to_y.values()))
+    axes[0].set_yticklabels(yticklabels_clean)
+    axes[0].grid(True)
+    getattr(pf, f"finish_{style}_figure")(
+        fig, os.path.join(results_dir, f"galileo_visibility_true_per_prn_{style}.png"), show=True
+    )
+
+# =============================
+# Plot 5: Histogram of Window Durations
+# =============================
+durations_min = galileo_windows["duration"] / 60  # seconds to minutes
+
+mean_dur = durations_min.mean()
+median_dur = durations_min.median()
+
+# Text box content
+param_text = f"Mean: {mean_dur:.1f} min\nMedian: {median_dur:.1f} min"
+textbox_x = 0.7  # Position in figure coordinates (0–1)
+textbox_y = 0.85
+
+for style in ["dark", "light"]:
+    fig, axes = getattr(pf, f"{style}_figure")()
+
+    # Plot histogram
+    axes[0].hist(durations_min, bins=30, color="skyblue", edgecolor="black")
+    axes[0].set_xlabel("Window duration [min]")
+    axes[0].set_ylabel("Count")
+    axes[0].set_title("Visibility duration of Iridium windows")
+    axes[0].grid(True)
+
+    # Place annotation box
+    fig.text(
+        textbox_x, textbox_y,
+        param_text,
+        fontsize=10,
+        verticalalignment='top',
+        bbox=dict(boxstyle="round", facecolor='white', edgecolor='lightgray', alpha=0.9)
+    )
+
+    getattr(pf, f"finish_{style}_figure")(
+        fig,
+        os.path.join(results_dir, f"iridium_visibility_duration_stats_{style}.png"),
+        show=True
+    )
+
+# =============================
+# Visibility coverage calculation
+# =============================
+# Compute total simulation duration in seconds
+total_time_seconds = galileo_visibility["seconds"].max()
+total_time_days = total_time_seconds / 86400
+
+# Get all merged visibility intervals (seconds since start)
+merged_segments = galileo_windows[["start", "end"]].copy()
+start_time = pd.to_datetime(galileo_windows["start"].iloc[0])
+merged_segments["start_s"] = (pd.to_datetime(merged_segments["start"]) - start_time).dt.total_seconds()
+merged_segments["end_s"] = (pd.to_datetime(merged_segments["end"]) - start_time).dt.total_seconds()
+merged_segments = merged_segments[["start_s", "end_s"]].sort_values("start_s").values.tolist()
+
+# Merge overlapping/adjacent intervals
+merged_intervals = []
+for start, end in merged_segments:
+    if not merged_intervals:
+        merged_intervals.append([start, end])
+    else:
+        last_start, last_end = merged_intervals[-1]
+        if start <= last_end:
+            merged_intervals[-1][1] = max(last_end, end)
+        else:
+            merged_intervals.append([start, end])
+
+# Calculate total visibility
+total_unique_visibility_seconds = sum((end - start) for start, end in merged_intervals)
+total_unique_visibility_days = total_unique_visibility_seconds / 86400
+coverage_percentage = 100 * total_unique_visibility_days / total_time_days
+
+# Durations of individual windows
+all_durations = galileo_windows["duration"].to_numpy()
+
+# =============================
+# Save stats
+# =============================
+with open(os.path.join(results_dir, "galileo_visibility_stats.txt"), "w") as f:
+    f.write("=== galileo Visibility Stats ===\n")
+    f.write(f"Total simulation duration: {total_time_days:.3f} days\n")
+    f.write(f"Total time with visibility of at least one galileo satellite (satisfying the 4 conditions): {total_unique_visibility_days:.3f} days\n")
+    f.write(f"Overall visibility coverage (% of simulation time with at least one visible satellite): {coverage_percentage:.2f} %\n")
+    f.write(f"Number of individual visibility intervals: {len(all_durations)}\n")
+    f.write(f"Average duration of visibility intervals: {np.mean(all_durations):.1f} seconds\n")
+    f.write(f"Maximum duration of a visibility interval: {np.max(all_durations):.1f} seconds\n")
+    f.write(f"Minimum duration of a visibility interval: {np.min(all_durations):.1f} seconds\n")

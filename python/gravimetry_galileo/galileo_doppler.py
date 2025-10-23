@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
+import os
 from tqdm import tqdm
-
 from attitude.sun_pointing_rotation import compute_body_vectors
 from results_processing import get_list_of_contents, get_results_dict
 from useful_functions import date_transformations as dt
@@ -15,9 +15,7 @@ f0 = 1621.25e6  # Hz
 delta_f_limit = 37500  # Hz doppler shift max +/-
 delta_f_dot_limit = 350  # 375 # Hz/s doppler rate max +/-
 max_distance = 20000e3  # [m] max distance to establish communication with galileo satellite
-semi_angle_limit_tolosat = Tolosat[
-    "galileo_antenna_half_angle"
-]  # deg semi-angle visibility
+semi_angle_limit_tolosat = Tolosat["galileo_antenna_half_angle"]  # deg semi-angle visibility
 semi_angle_limit_galileo = Galileo["antenna_half_angle"]  # deg semi-angle visibility
 galileo_antennas_location = "pmZ"  # "pmX","pmY" or "pmZ"
 
@@ -189,7 +187,27 @@ def compute_doppler_visibility(results_dict):
     windows["duration"] = windows["end_epoch"] - windows["start_epoch"]
     windows.drop(["start_epoch", "end_epoch"], axis=1, inplace=True)
     windows = windows.reset_index(drop=True)
+
+    # Save available satellites in each visibility window
+    available_sats_per_window = []
+
+    for _, row in windows.iterrows():
+        start_epoch = dt.datetime_to_epoch(row["start"])
+        end_epoch = dt.datetime_to_epoch(row["end"])
+        mask = (visibility["epochs"] >= start_epoch) & (visibility["epochs"] <= end_epoch)
+        sats_available = visibility.loc[mask].select_dtypes(include=bool).any()
+        sats_list = sats_available[sats_available].index.tolist()
+        available_sats_per_window.append(sats_list)
+
+    windows["available_sats"] = available_sats_per_window
+
     return visibility, windows, sat_results
+
+# Delete previous data
+for filename in ["gps_visibility.csv", "gps_windows.csv", "gps_sat_results.csv"]:
+    path = f"results/{filename}"
+    if os.path.exists(path):
+        os.remove(path)
 
 
 # Initialize DataFrames
@@ -200,6 +218,8 @@ galileo_sat_results = pd.DataFrame(columns=[])
 folders = get_list_of_contents("galileo_states")
 folders = [int(x) for x in folders]
 folders.sort()
+latest_folder = folders[-1]
+folders = [latest_folder]
 
 print(f"Starting Doppler processing of {len(folders)} datasets...")
 for folder in tqdm(folders, ncols=80, desc="Datasets", position=0, leave=True):
@@ -230,17 +250,8 @@ else:
 galileo_windows["timedelta"] = galileo_windows["start"] - galileo_windows["start"][0]
 galileo_windows["seconds"] = galileo_windows["timedelta"].dt.total_seconds()
 galileo_visibility["seconds"] = galileo_visibility["epochs"] - galileo_visibility["epochs"][0]
-print(f"Minimum galileo window duration: {galileo_windows['duration'].min()} seconds")
-print(f"Maximum galileo window duration: {galileo_windows['duration'].max()} seconds")
-print(f"Average galileo window duration: {galileo_windows['duration'].mean()} seconds")
-print(
-    f"Average galileo passes per day: {len(galileo_windows) / galileo_windows['seconds'].max() * 86400:.2f} passes"
-)
-print(
-    f"Average galileo visibility per day: "
-    f"{galileo_windows['duration'].sum() / galileo_windows['seconds'].max() * 86400:.2f} seconds"
-)
 
+# save data
 galileo_visibility.to_csv("results/galileo_visibility.csv")
 galileo_windows.to_csv("results/galileo_windows.csv")
 
