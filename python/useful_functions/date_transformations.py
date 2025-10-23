@@ -47,7 +47,7 @@ def epoch_to_datetime(epoch):
 
 
 def epoch_to_astrotime_raw(epoch):
-    return J2000 + TimeDelta(epoch, format="sec")
+    return J2000 + TimeDelta(float(epoch), format="sec")
 
 
 def epoch_to_astrotime(epoch):
