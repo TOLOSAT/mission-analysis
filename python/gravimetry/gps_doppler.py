@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
+import os
 from tqdm import tqdm
-
 from attitude.sun_pointing_rotation import compute_body_vectors
 from results_processing import get_list_of_contents, get_results_dict
 from useful_functions import date_transformations as dt
@@ -15,9 +15,7 @@ f0 = 1621.25e6  # Hz
 delta_f_limit = 37500  # Hz doppler shift max +/-
 delta_f_dot_limit = 350  # 375 # Hz/s doppler rate max +/-
 max_distance = 20000e3  # [m] max distance to establish communication with gps satellite
-semi_angle_limit_tolosat = Tolosat[
-    "gps_antenna_half_angle"
-]  # deg semi-angle visibility
+semi_angle_limit_tolosat = Tolosat["gps_antenna_half_angle"]  # deg semi-angle visibility
 semi_angle_limit_gps = GPS["antenna_half_angle"]  # deg semi-angle visibility
 gps_antennas_location = "pmZ"  # "pmX","pmY" or "pmZ"
 
@@ -181,7 +179,7 @@ def compute_doppler_visibility(results_dict):
     windows["start"] = windows["start"].ffill()
     windows = windows[windows["end_bool"]]
     windows = windows.rename({"epochs": "end", "bool": "eclipse"}, axis=1)
-    windows = windows[["eclipse", "start", "end"]]
+    windows = windows[["eclipse", "start", "end", "streak_id"]]
     windows = windows[windows["eclipse"]].drop("eclipse", axis=1)
     windows.rename({"start": "start_epoch", "end": "end_epoch"}, axis=1, inplace=True)
     windows["start"] = dt.epoch_to_datetime(windows["start_epoch"])
@@ -189,7 +187,27 @@ def compute_doppler_visibility(results_dict):
     windows["duration"] = windows["end_epoch"] - windows["start_epoch"]
     windows.drop(["start_epoch", "end_epoch"], axis=1, inplace=True)
     windows = windows.reset_index(drop=True)
+
+    # Save available satellites in each visibility window
+    available_sats_per_window = []
+
+    for _, row in windows.iterrows():
+        start_epoch = dt.datetime_to_epoch(row["start"])
+        end_epoch = dt.datetime_to_epoch(row["end"])
+        mask = (visibility["epochs"] >= start_epoch) & (visibility["epochs"] <= end_epoch)
+        sats_available = visibility.loc[mask].select_dtypes(include=bool).any()
+        sats_list = sats_available[sats_available].index.tolist()
+        available_sats_per_window.append(sats_list)
+
+    windows["available_sats"] = available_sats_per_window
+
     return visibility, windows, sat_results
+
+# Delete previous data
+for filename in ["gps_visibility.csv", "gps_windows.csv", "gps_sat_results.csv"]:
+    path = f"results/{filename}"
+    if os.path.exists(path):
+        os.remove(path)
 
 
 # Initialize DataFrames
@@ -200,6 +218,8 @@ gps_sat_results = pd.DataFrame(columns=[])
 folders = get_list_of_contents("gps_states")
 folders = [int(x) for x in folders]
 folders.sort()
+latest_folder = folders[-1]
+folders = [latest_folder]
 
 print(f"Starting Doppler processing of {len(folders)} datasets...")
 for folder in tqdm(folders, ncols=80, desc="Datasets", position=0, leave=True):
@@ -227,22 +247,8 @@ else:
     gps_windows["seconds"] = 0
     gps_visibility["seconds"] = 0
 
-gps_windows["timedelta"] = gps_windows["start"] - gps_windows["start"][0]
-gps_windows["seconds"] = gps_windows["timedelta"].dt.total_seconds()
-gps_visibility["seconds"] = gps_visibility["epochs"] - gps_visibility["epochs"][0]
-print(f"Minimum gps window duration: {gps_windows['duration'].min()} seconds")
-print(f"Maximum gps window duration: {gps_windows['duration'].max()} seconds")
-print(f"Average gps window duration: {gps_windows['duration'].mean()} seconds")
-print(
-    f"Average gps passes per day: {len(gps_windows) / gps_windows['seconds'].max() * 86400:.2f} passes"
-)
-print(
-    f"Average gps visibility per day: "
-    f"{gps_windows['duration'].sum() / gps_windows['seconds'].max() * 86400:.2f} seconds"
-)
-
+# save data
 gps_visibility.to_csv("results/gps_visibility.csv")
 gps_windows.to_csv("results/gps_windows.csv")
 
 print("Done")
-

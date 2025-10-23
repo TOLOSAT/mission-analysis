@@ -10,9 +10,9 @@ end_date = '2024-01-22 18:00:00+00:00'
 selected_gps = "GPS BIIR-13 (PRN 02)"
 selected_gps_nospace = selected_gps.replace(" ", "_")
 
-gps_visibility_path = 'results/gps_visibility.csv'
-gps_windows_path = 'results/gps_windows.csv'
-gps_sat_results_path = 'results/gps_sat_results.csv'
+gps_visibility_path = 'results/5days/gps_visibility.csv'
+gps_windows_path = 'results/5days/gps_windows.csv'
+gps_sat_results_path = 'results/5days/gps_sat_results.csv'
 
 filtered_visibility, filtered_gps_sat_results, filtered_windows = filter_sat_data(gps_visibility_path, gps_windows_path,gps_sat_results_path,start_date, end_date)
 
