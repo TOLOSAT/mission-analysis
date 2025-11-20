@@ -25,21 +25,41 @@ Once the repository is cloned, you can proceed to step 2.
 If you already have [Anaconda](https://www.anaconda.com/) installed, you can use it. Otherwise, we recommend
 installing [Miniforge](https://github.com/conda-forge/miniforge).
 
-### 2.2 - Create the environment
+### 2.2 - Install the environment
 
 On Mac, you will use the `Terminal`. On Windows, you will use `Anaconda prompt` or `Miniforge prompt`.
-Use the `cd [path_to_repository]` command to navigate to the `python` sub-folder of the `mission-analysis` repository.
-Your active path should look something like this: `.../GitHub/mission-analysis/python`.
 
-Then, run the following command to create the environment:
+**Navigate to the Python folder in the repository**
+
+Use the `cd` command to navigate to the `python` sub-folder within the `mission-analysis` repository. Your active directory should look like this:  
+`.../GitHub/mission-analysis/python`
+
+Example command:
+```
+cd [path_to_repository]/mission-analysis/python
+```
+
+
+**Create the environment** 
+
+Next, run the following command to create the environment with Python 3.9:
 
 ```
-conda env create -f environment.yaml
+conda create -n tolosat-tudatpy python=3.9
+conda activate tolosat-tudatpy
 ```
 
-If any conflict is detected, use `CTRL+C` to cancel the operation and seek help from the team.
+**Update the environment with project dependencies**  
+After activating the environment, update it with the project dependencies by running:
 
-Once the installation is completed, you can proceed to step 3.
+```
+conda env update -n tolosat-tudatpy -f environment.yaml
+```
+
+If any conflicts arise during this process, press `CTRL+C` to cancel the operation and reach out to the team for assistance.
+
+Once the installation is complete, you can proceed to the next step.
+
 
 ## 3 - Setting up the IDE
 
