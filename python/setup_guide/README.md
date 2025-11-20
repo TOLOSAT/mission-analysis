@@ -39,7 +39,6 @@ Example command:
 cd [path_to_repository]/mission-analysis/python
 ```
 
-
 **Create the environment** 
 
 Next, run the following command to create the environment with Python 3.9:
@@ -50,6 +49,7 @@ conda activate tolosat-tudatpy
 ```
 
 **Update the environment with project dependencies**  
+
 After activating the environment, update it with the project dependencies by running:
 
 ```
