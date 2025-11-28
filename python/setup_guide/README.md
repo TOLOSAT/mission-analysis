@@ -119,7 +119,7 @@ Process finished with exit code 0
 
 A total of four plots should also be displayed.
 
-## Bonus - Running scripts in the Python console
+### Bonus - Running scripts in the Python console
 
 To run scripts in the Python console, which allows to keep interacting with them after they are run and to
 see all the variables and their value, you can follow the next steps:
@@ -131,3 +131,8 @@ see all the variables and their value, you can follow the next steps:
 You can now run the script again with the green `Run` button in the right corner.
 The script will now run in the Python console and you will see all the variables created along with their type and
 value.
+
+## 5 - Possible Errors 
+
+- **Exit Code -1066598273 (0xC06D007F)**: This error is caused by a binary compatibility mismatch with the required TudatPy version. To solve it, activate the environment and downgrade numpy by running the following command: `conda install numpy=1.23`
+
