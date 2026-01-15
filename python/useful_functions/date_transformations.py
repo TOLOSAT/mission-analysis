@@ -47,7 +47,6 @@ def epoch_to_datetime(epoch):
 
 
 def epoch_to_astrotime_raw(epoch):
-    # Handle pandas.Timestamp
     if isinstance(epoch, pandas.Timestamp):
         epoch = (epoch - pandas.Timestamp("2000-01-01T12:00:00Z")).total_seconds()
     # Ensure epoch is numeric
@@ -59,8 +58,8 @@ def epoch_to_astrotime_raw(epoch):
         epoch = epoch.astype(float)  # Convert Series to float
     else:
         raise ValueError(f"Invalid type for epoch: {type(epoch)}. Expected float, int, or list/array of these.")
-    return J2000 + TimeDelta(epoch, format="sec")
 
+    return J2000 + TimeDelta(float(epoch), format="sec")
 
 
 def epoch_to_astrotime(epoch):
