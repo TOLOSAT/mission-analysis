@@ -1,1 +1,2 @@
 antenna_half_angle,45
+gps_url,https://celestrak.org/NORAD/elements/gp.php?GROUP=gps-ops&FORMAT=tle

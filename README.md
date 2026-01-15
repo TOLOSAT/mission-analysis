@@ -20,7 +20,7 @@ Progress on the main milestones is visible [here](https://github.com/TOLOSAT/mis
 * [Python](python)
   * [Input data](python/input_data)
   * [Iridium studies](python/iridium)
-  * [Long-term eclipses study](python/long_term_eclipses)
+  * [Long-term eclipses study](python/orbit studies/eclipses)
   * [Setup guide](python/setup_guide)
   * [Useful functions](python/useful_functions)
 * [CelestLab](celestlab) (⚠️ deprecated)

@@ -1,1 +1,2 @@
 antenna_half_angle,45
+galileo_url,https://celestrak.org/NORAD/elements/gp.php?GROUP=galileo&FORMAT=tle
