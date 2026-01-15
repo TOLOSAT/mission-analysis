@@ -28,7 +28,7 @@ def compute_shadow_vector(satellite_position, sun_position, sun_radius, earth_ra
          - a value between 0 and 1 if the satellite is in penumbra
     """
     shadow_vector = np.empty(len(satellite_position))
-    shadow_vector[:] = np.NaN
+    shadow_vector[:] = np.nan
     for ii in range(len(satellite_position)):
         shadow_vector[ii] = compute_shadow_function(
             sun_position[ii],
@@ -96,7 +96,7 @@ def compute_eclipses(
     shadow_df["streak_id"] = shadow_df["start_bool"].cumsum()
 
     shadow_df.loc[shadow_df["start_bool"], "start"] = shadow_df["epochs"]
-    shadow_df["start"] = shadow_df["start"].fillna(method="ffill")
+    shadow_df["start"] = shadow_df["start"].ffill()
     shadow_df = shadow_df[shadow_df["end_bool"]]
     shadow_df = shadow_df.rename({"epochs": "end", "bool": "eclipse"}, axis=1)
     shadow_df = shadow_df[["eclipse", "start", "end"]]
