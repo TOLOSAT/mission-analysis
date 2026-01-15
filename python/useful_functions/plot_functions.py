@@ -62,13 +62,15 @@ def light_figure(subplots=(1, 1), figsize=(7, 5.2)):
 
 
 def finish_dark_figure(fig, path, show=True, force_x_int=False, force_y_int=False):
-    plt.tight_layout()
+
     if force_x_int:
         for ax in fig.axes:
             ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     if force_y_int:
         for ax in fig.axes:
             ax.yaxis.set_major_locator(MaxNLocator(integer=True))
+
+    plt.tight_layout()
     fig.subplots_adjust(bottom=0.20)
     fig_axes1 = fig.add_axes([0.772, 0.01, 0.22, 0.3], anchor="SE", zorder=1)
     Badge_TOLOSAT_dark = Image.open(assets_path + "/TOLOSAT_dark.png")
@@ -119,6 +121,83 @@ def finish_light_figure(fig, path, show=True, force_x_int=False, force_y_int=Fal
     if show:
         plt.show()
     plt.close()
+
+def dark_figure_subplots(rows=1, cols=1, figsize=(7, 6), suptitle=None):
+    fig, axs = plt.subplots(rows, cols, figsize=figsize, facecolor="#0D1117")
+    axs = np.atleast_1d(axs).flatten()
+    for ax in axs:
+        ax.set_facecolor("#0D1117")
+        ax.tick_params(axis="x", colors="white", which="both")
+        ax.tick_params(axis="y", colors="white", which="both")
+        ax.yaxis.label.set_color("white")
+        ax.xaxis.label.set_color("white")
+        ax.title.set_color("white")
+        ax.grid(color="#161C22", linewidth=0.5)
+        for spine in ax.spines.values():
+            spine.set_color("white")
+
+    if suptitle:
+        fig.subplots_adjust(top=0.95)
+        fig.suptitle(suptitle, color="white", fontsize=14)
+
+    # badge TOLOSAT
+    fig_axes1 = fig.add_axes([0.772, 0.01, 0.22, 0.3], anchor="SE", zorder=1)
+    Badge_TOLOSAT_dark = Image.open(assets_path + "/TOLOSAT_dark.png")
+    fig_axes1.imshow(Badge_TOLOSAT_dark)
+    Badge_TOLOSAT_dark.close()
+    fig_axes1.axis("off")
+
+    # Date
+    fig_axes2 = fig.add_axes([0.02, 0.02, 1, 1], anchor="SW", zorder=1)
+    fig_axes2.text(
+        0,
+        0,
+        datetime.now(timezone.utc).strftime(
+            "Plot generated on %Y/%m/%d at %H:%M:%S UTC."
+        ),
+        color="dimgray",
+    )
+    fig_axes2.axis("off")
+
+    return fig, axs
+
+
+def light_figure_subplots(rows=1, cols=1, figsize=(7, 5.2), suptitle=None):
+    fig, axs = plt.subplots(rows, cols, figsize=figsize, facecolor="white")
+    axs = np.atleast_1d(axs).flatten()
+    for ax in axs:
+        ax.set_facecolor("white")
+        ax.tick_params(axis="x", colors="black", which="both")
+        ax.tick_params(axis="y", colors="black", which="both")
+        ax.yaxis.label.set_color("black")
+        ax.xaxis.label.set_color("black")
+        ax.title.set_color("black")
+        ax.grid(color="lightgrey", linewidth=0.5)
+        for spine in ax.spines.values():
+            spine.set_color("black")
+
+    if suptitle:
+        fig.subplots_adjust(top=0.95)
+        fig.suptitle(suptitle, color="black", fontsize=14)
+
+    fig_axes1 = fig.add_axes([0.772, 0.01, 0.22, 0.3], anchor="SE", zorder=1)
+    Badge_TOLOSAT_light = Image.open(assets_path + "/TOLOSAT_light.png")
+    fig_axes1.imshow(Badge_TOLOSAT_light)
+    Badge_TOLOSAT_light.close()
+    fig_axes1.axis("off")
+
+    fig_axes2 = fig.add_axes([0.02, 0.02, 1, 1], anchor="SW", zorder=1)
+    fig_axes2.text(
+        0,
+        0,
+        datetime.now(timezone.utc).strftime(
+            "Plot generated on %Y/%m/%d at %H:%M:%S UTC."
+        ),
+        color="silver",
+    )
+    fig_axes2.axis("off")
+
+    return fig, axs
 
 
 def flip_legend(ncol, reverse=False, handles_in=None, labels_in=None):
