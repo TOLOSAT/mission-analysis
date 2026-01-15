@@ -1,0 +1,98 @@
+from datetime import datetime as dt, timezone
+from useful_functions.date_transformations import datetime_to_epoch
+import pandas as pd
+from astropy.time import Time
+
+def filter_sat_data(visibility_path, windows_path, sat_results_path, start_date, end_date, output_path):
+    """
+    Filter visibility data for a specified date range and save the results.
+
+    Parameters
+    ----------
+    visibility_path: str
+        path to the visibility CSV file.
+    windows_path: str
+        path to the windows CSV file.
+    sat_results_path: str
+        path to the satellite results CSV file.
+    start_date: str
+        start date in 'YYYY-MM-DD-HH:MM:SS' format.
+    end_date: str
+        end date in 'YYYY-MM-DD-HH:MM:SS' format.
+    output_path: str
+        path to the output CSV file.
+    """
+
+    # Parse start and end dates
+    start_datetime = dt.strptime(start_date, "%Y-%m-%d %H:%M:%S+00:00").replace(tzinfo=timezone.utc)
+    end_datetime = dt.strptime(end_date, "%Y-%m-%d %H:%M:%S+00:00").replace(tzinfo=timezone.utc)
+
+    start_epoch = datetime_to_epoch(start_datetime)
+    end_epoch = datetime_to_epoch(end_datetime)
+
+    # Filter GPS visibility data
+    try:
+        visibility = pd.read_csv(visibility_path)
+    except FileNotFoundError:
+        print(f"Error: File not found at {visibility_path}.")
+        return None
+
+    filtered_visibility = visibility[
+        (visibility['epochs'] >= start_epoch) & (visibility['epochs'] <= end_epoch)
+        ]
+
+    # Filter sat_results data
+    try:
+        sat_results = pd.read_csv(sat_results_path)
+    except FileNotFoundError:
+        print(f"Error: File not found at {sat_results_path}.")
+        return None
+
+    filtered_sat_results = sat_results[
+        (sat_results['epochs'] >= start_epoch) & (sat_results['epochs'] <= end_epoch)
+        ]
+
+    # Filter windows data
+    try:
+        windows = pd.read_csv(windows_path)
+    except FileNotFoundError:
+        print(f"Error: File not found at {windows_path}.")
+        return None
+
+    start_j2000, startfile_j2000 = iso_to_J2000(start_date, windows, 'start')
+    end_j2000, endfile_j2000 = iso_to_J2000(end_date, windows, 'end')
+
+    filtered_windows = windows[
+        (endfile_j2000 >= start_j2000) & ((endfile_j2000 <= end_j2000) | (startfile_j2000 < end_j2000))]
+
+    start_str = start_datetime.strftime('%Y%m%d')
+    end_str = end_datetime.strftime('%Y%m%d')
+
+    output_filename_visibility = f'{output_path}/filtered_visibility_{start_str}_to_{end_str}.csv'
+    filtered_visibility.to_csv(output_filename_visibility)
+
+    output_filename_sat_results = f'{output_path}/filtered_sat_results_{start_str}_to_{end_str}.csv'
+    filtered_sat_results.to_csv(output_filename_sat_results)
+
+    output_filename_windows = f'{output_path}/filtered_windows_{start_str}_to_{end_str}.csv'
+    filtered_windows.to_csv(output_filename_windows)
+
+    print(f'Data saved for range {start_date} to {end_date}.')
+
+    return filtered_visibility, filtered_sat_results, filtered_windows
+
+
+def iso_to_J2000(date, gps_windows, str_label):
+    ISO_datetime = dt.fromisoformat(date)
+    formatted_ISO = ISO_datetime.strftime('%Y-%m-%dT%H:%M:%S')
+
+    formatted_file_dt = [
+        dt.fromisoformat(file_dt).strftime('%Y-%m-%dT%H:%M:%S')
+        for file_dt in gps_windows[str_label]
+    ]
+
+    date_j200 = Time(formatted_ISO, format='isot', scale='utc').jyear
+    date_file_j200 = Time(formatted_file_dt, format='isot', scale='utc').jyear
+
+    return date_j200, date_file_j200
+
