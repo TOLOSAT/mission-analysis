@@ -3,7 +3,7 @@ from useful_functions.date_transformations import datetime_to_epoch
 import pandas as pd
 from astropy.time import Time
 
-def filter_sat_data(visibility_path, windows_path, sat_results_path, start_date, end_date):
+def filter_sat_data(visibility_path, windows_path, sat_results_path, start_date, end_date, output_path):
     """
     Filter visibility data for a specified date range and save the results.
 
@@ -19,6 +19,8 @@ def filter_sat_data(visibility_path, windows_path, sat_results_path, start_date,
         start date in 'YYYY-MM-DD-HH:MM:SS' format.
     end_date: str
         end date in 'YYYY-MM-DD-HH:MM:SS' format.
+    output_path: str
+        path to the output CSV file.
     """
 
     # Parse start and end dates
@@ -66,13 +68,13 @@ def filter_sat_data(visibility_path, windows_path, sat_results_path, start_date,
     start_str = start_datetime.strftime('%Y%m%d')
     end_str = end_datetime.strftime('%Y%m%d')
 
-    output_filename_visibility = f'results/filtered_visibility_{start_str}_to_{end_str}.csv'
+    output_filename_visibility = f'{output_path}/filtered_visibility_{start_str}_to_{end_str}.csv'
     filtered_visibility.to_csv(output_filename_visibility)
 
-    output_filename_sat_results = f'results/filtered_sat_results_{start_str}_to_{end_str}.csv'
+    output_filename_sat_results = f'{output_path}/filtered_sat_results_{start_str}_to_{end_str}.csv'
     filtered_sat_results.to_csv(output_filename_sat_results)
 
-    output_filename_windows = f'results/filtered_windows_{start_str}_to_{end_str}.csv'
+    output_filename_windows = f'{output_path}/filtered_windows_{start_str}_to_{end_str}.csv'
     filtered_windows.to_csv(output_filename_windows)
 
     print(f'Data saved for range {start_date} to {end_date}.')
