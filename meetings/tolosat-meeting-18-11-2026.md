@@ -4,9 +4,5 @@
 - Reorganized the github dashboard--> Mission Analysis Phase C
 - Think about management structure and organisation (meetings, goals, deadlines)
 - Clarify the requirements
-
-
-## Way forward (see todo github dashboard)
-
-- Update and refactor python
-- 
+- Set first items in the dashboard
+- Defined some new questions for Maxime Largeaud
